@@ -429,6 +429,166 @@ export const languagesData: Record<string, LanguageData> = {
         example: "Getting a certificate is a proud achievement.",
         category: "Umumiy",
       },
+      {
+        id: "41",
+        word: "Research",
+        translation: "Tadqiqot / Izlanish",
+        pronunciation: "/rɪˈsɜːtʃ/",
+        example: "Students do research for their science project.",
+        category: "Fan",
+      },
+      {
+        id: "42",
+        word: "Algorithm",
+        translation: "Algoritm",
+        pronunciation: "/ˈæl.ɡə.rɪ.ðəm/",
+        example: "Every computer program follows a clear algorithm.",
+        category: "Texnologiya",
+      },
+      {
+        id: "43",
+        word: "Creativity",
+        translation: "Ijodkorlik",
+        pronunciation: "/ˌkriː.eɪˈtɪv.ə.ti/",
+        example: "Robotics clubs develop students' creativity.",
+        category: "Sifatlar",
+      },
+      {
+        id: "44",
+        word: "Solution",
+        translation: "Yechim",
+        pronunciation: "/səˈluː.ʃən/",
+        example: "We found a smart solution to the math problem.",
+        category: "Ta'lim",
+      },
+      {
+        id: "45",
+        word: "Challenge",
+        translation: "Sinov / Murakkab vazifa",
+        pronunciation: "/ˈtʃæl.ɪndʒ/",
+        example: "Learning a new language is an exciting challenge.",
+        category: "Umumiy",
+      },
+      {
+        id: "46",
+        word: "Experience",
+        translation: "Tajriba",
+        pronunciation: "/ɪkˈspɪə.ri.əns/",
+        example: "Speaking with teachers gives great experience.",
+        category: "Umumiy",
+      },
+      {
+        id: "47",
+        word: "Encourage",
+        translation: "Ruhlantirmoq / Qo‘llab-quvvatlamoq",
+        pronunciation: "/ɪnˈkʌr.ɪdʒ/",
+        example: "Our teachers always encourage us to ask questions.",
+        category: "Fe'llar",
+      },
+      {
+        id: "48",
+        word: "Responsible",
+        translation: "Mas’uliyatli",
+        pronunciation: "/rɪˈspɒn.sə.bəl/",
+        example: "A good student is responsible for homework.",
+        category: "Sifatlar",
+      },
+      {
+        id: "49",
+        word: "Teamwork",
+        translation: "Jamoaviy ish",
+        pronunciation: "/ˈtiːm.wɜːk/",
+        example: "Teamwork helps us win school competitions.",
+        category: "Muloqot",
+      },
+      {
+        id: "50",
+        word: "Presentation",
+        translation: "Taqdimot",
+        pronunciation: "/ˌprez.ənˈteɪ.ʃən/",
+        example: "Farangiz prepared an impressive presentation.",
+        category: "Ta'lim",
+      },
+      {
+        id: "51",
+        word: "Environment",
+        translation: "Atrof-muhit",
+        pronunciation: "/ɪnˈvaɪ.rən.mənt/",
+        example: "We should keep our school environment clean.",
+        category: "Tabiat",
+      },
+      {
+        id: "52",
+        word: "Opportunity",
+        translation: "Imkoniyat",
+        pronunciation: "/ˌɒp.əˈtʃuː.nə.ti/",
+        example: "This platform gives every pupil a chance to grow.",
+        category: "Umumiy",
+      },
+      {
+        id: "53",
+        word: "Communicate",
+        translation: "Muloqot qilmoq",
+        pronunciation: "/kəˈmjuː.nɪ.keɪt/",
+        example: "Languages help people communicate worldwide.",
+        category: "Fe'llar",
+      },
+      {
+        id: "54",
+        word: "Curious",
+        translation: "Qiziquvchan",
+        pronunciation: "/ˈkjʊə.ri.əs/",
+        example: "Curious learners discover new facts every day.",
+        category: "Sifatlar",
+      },
+      {
+        id: "55",
+        word: "Goal",
+        translation: "Maqsad",
+        pronunciation: "/ɡəʊl/",
+        example: "Set a clear goal before starting your studies.",
+        category: "Umumiy",
+      },
+      {
+        id: "56",
+        word: "Improve",
+        translation: "Yaxshilamoq / Rivojlantirmoq",
+        pronunciation: "/ɪmˈpruːv/",
+        example: "Listen to audio books to improve pronunciation.",
+        category: "Fe'llar",
+      },
+      {
+        id: "57",
+        word: "Attention",
+        translation: "Diqqat / E’tibor",
+        pronunciation: "/əˈten.ʃən/",
+        example: "Pay attention to the teacher's explanation.",
+        category: "Ta'lim",
+      },
+      {
+        id: "58",
+        word: "Success",
+        translation: "Muvaffaqiyat",
+        pronunciation: "/səkˈses/",
+        example: "Hard work and discipline lead to success.",
+        category: "Umumiy",
+      },
+      {
+        id: "59",
+        word: "Memory",
+        translation: "Xotira",
+        pronunciation: "/ˈmem.ər.i/",
+        example: "Flashcards train your visual memory very fast.",
+        category: "Ta'lim",
+      },
+      {
+        id: "60",
+        word: "Competition",
+        translation: "Musobaqa / Tanlov",
+        pronunciation: "/ˌkɒm.pəˈtɪʃ.ən/",
+        example: "Our school team won first place in the competition.",
+        category: "Maktab",
+      },
     ],
     lessons: [
       {
@@ -666,6 +826,116 @@ export const languagesData: Record<string, LanguageData> = {
           },
         ],
       },
+      {
+        id: "en-11",
+        title: "11-dars: Present Continuous (Hozirgi davomiy zamon)",
+        duration: "22 daqiqa",
+        level: "A2",
+        description:
+          "Aynan hozir, nutq so‘zlanayotgan paytda sodir bo‘layotgan ish-harakatlarni ifodalash.",
+        topics: [
+          {
+            title: "am / is / are + V-ing qolipi",
+            explanation:
+              "Hozirgi davomiy zamon uchun 'to be' (am/is/are) hamda fe'lga -ing qo‘shimchasi qo‘shiladi. Signal so‘zlar: now, at the moment, right now, look!",
+            examples: [
+              "I am learning new English words right now.",
+              "Look! The students are doing a science project.",
+            ],
+          },
+          {
+            title: "Inkor va so‘roq shakllari",
+            explanation:
+              "Inkorda 'am/is/are + not + V-ing', so‘roqda esa 'Am/Is/Are' ega oldiga chiqadi.",
+            examples: [
+              "He is not playing games; he is reading.",
+              "Are you listening to the audiobook now?",
+            ],
+          },
+        ],
+      },
+      {
+        id: "en-12",
+        title: "12-dars: Present Perfect (Natijali hozirgi zamon)",
+        duration: "25 daqiqa",
+        level: "B1",
+        description:
+          "Hozirgina tugagan yoki natijasi hozirgi paytda ko‘rinib turgan harakatlar (have / has + V3).",
+        topics: [
+          {
+            title: "Have / Has + V3 (-ed / 3-shakl)",
+            explanation:
+              "I/You/We/They uchun 'have', He/She/It uchun 'has' ishlatiladi. Ko‘pincha already (allaqachon), just (hozirgina), yet (hali), ever (qachondir) so‘zlari bilan keladi.",
+            examples: [
+              "I have already completed ten lessons.",
+              "She has just finished her English test.",
+            ],
+          },
+          {
+            title: "Ever / Never bilan tajriba haqida gapirish",
+            explanation:
+              "Hayotiy tajribani so‘rashda 'Have you ever...?', inkor etishda 'never' qo‘llaniladi.",
+            examples: [
+              "Have you ever participated in an English Olympiad?",
+              "We have never missed our club classes.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "en-13",
+        title: "13-dars: Modal fe'llar (Must, Should, Have to)",
+        duration: "20 daqiqa",
+        level: "A2 - B1",
+        description: "Majburiyat, maktab qoidalari, ruxsat va foydali maslahat berish usullari.",
+        topics: [
+          {
+            title: "Must / Mustn't va Have to",
+            explanation:
+              "'Must' — ichki majburiyat va qat'iy qoida ('mustn't' — taqiq!). 'Have to / Has to' — tashqi sharoit talab qilgan zarurat.",
+            examples: [
+              "Students must respect their teachers and classmates.",
+              "You mustn't use phones during the exam.",
+            ],
+          },
+          {
+            title: "Should / Shouldn't (Maslahat)",
+            explanation: "Do‘stona maslahat va tavsiya berish uchun 'should + V1' ishlatiladi.",
+            examples: [
+              "You should repeat flashcards every morning.",
+              "You shouldn't stay up too late before school.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "en-14",
+        title: "14-dars: First Conditional (1-shart ergash gap) va Bog‘lovchilar",
+        duration: "24 daqiqa",
+        level: "B1",
+        description:
+          "'If + Present Simple, ... will + V1' qolipi yordamida kelajakdagi shartli vaziyatlarni aytish.",
+        topics: [
+          {
+            title: "Real shart gaplar (If ... will ...)",
+            explanation:
+              "'If' qismida kelasi zamon ('will') emas, Present Simple ishlatiladi! Natija qismida esa 'will + V1' qo‘llaniladi.",
+            examples: [
+              "If you practice every day, you will speak fluently.",
+              "If we work as a team, we will win the competition.",
+            ],
+          },
+          {
+            title: "Muhim bog‘lovchilar (because, so, although, however)",
+            explanation:
+              "'Because' (chunki), 'so' (shuning uchun), 'although' (garchi), 'however' (biroq) gaplarni mantiqan bog‘laydi.",
+            examples: [
+              "I study English because I want a bright future.",
+              "The task was challenging, so we solved it together.",
+            ],
+          },
+        ],
+      },
     ],
     quiz: [
       {
@@ -782,6 +1052,64 @@ export const languagesData: Record<string, LanguageData> = {
         answer: 2,
         explanation: "Narsa yoki fanni so‘rashda 'What' (Nima / Qaysi) ishlatiladi.",
       },
+      {
+        id: "q17",
+        question: "'Look! The students ___ a presentation right now' gapini to‘ldiring:",
+        options: ["prepare", "prepares", "are preparing", "prepared"],
+        answer: 2,
+        explanation: "'Right now' va 'Look!' hozirgi davomiy zamon (are preparing) belgisidir.",
+      },
+      {
+        id: "q18",
+        question: "'She has already ___ her project' (Present Perfect) gapiga mos shaklni tanlang:",
+        options: ["finish", "finished", "finishing", "finishes"],
+        answer: 1,
+        explanation: "Present Perfect da 'has/have' dan keyin V3 (finished) keladi.",
+      },
+      {
+        id: "q19",
+        question:
+          "'If you ___ hard, you will get a certificate' (First Conditional) gapini to‘ldiring:",
+        options: ["will study", "studied", "study", "studying"],
+        answer: 2,
+        explanation: "First Conditional ning 'If' qismida Present Simple (study) ishlatiladi.",
+      },
+      {
+        id: "q20",
+        question:
+          "'You ___ respect your teachers' (maslahat/qoida) gapiga eng mos modal fe'l qaysi?",
+        options: ["should", "did", "was", "does"],
+        answer: 0,
+        explanation: "'Should' maslahat va to‘g‘ri xulq-atvorni tavsiya qilishda ishlatiladi.",
+      },
+      {
+        id: "q21",
+        question: "'Algorithm' so‘zining o‘zbekcha ma'nosi nima?",
+        options: ["Taqdimot", "Algoritm", "Tadqiqot", "Sinov"],
+        answer: 1,
+        explanation: "'Algorithm' — biror masalani yechishning aniq qadamlari (algoritm).",
+      },
+      {
+        id: "q22",
+        question: "'Have you ___ visited Tashkent?' savol gapiga qaysi so‘z mos keladi?",
+        options: ["never", "ever", "yesterday", "tomorrow"],
+        answer: 1,
+        explanation: "Tajriba haqidagi so‘roq gaplarda 'ever' (qachondir) ishlatiladi.",
+      },
+      {
+        id: "q23",
+        question: "'I learn English ___ it helps me in IT' gapini mantiqan bog‘lang:",
+        options: ["because", "but", "or", "when"],
+        answer: 0,
+        explanation: "Sababni tushuntirish uchun 'because' (chunki) bog‘lovchisi qo‘llaniladi.",
+      },
+      {
+        id: "q24",
+        question: "'Teamwork' so‘zi nimani anglatadi?",
+        options: ["Yakka tartibda o‘qish", "Jamoaviy ish", "Uy vazifasi", "Imtihon"],
+        answer: 1,
+        explanation: "'Teamwork' — jamoa bo‘lib hamkorlikda ishlash demakdir.",
+      },
     ],
     tasks: [
       {
@@ -885,6 +1213,57 @@ export const languagesData: Record<string, LanguageData> = {
         answer: "Why",
         explanation: "'Why' — 'nima uchun' degan ma'noni beradi.",
       },
+      {
+        id: "en-task-13",
+        type: "Present Continuous",
+        prompt: "Right now I ___ (learn) new English vocabulary with flashcards.",
+        hint: "am / is / are + V-ing qoidasini qo‘llang.",
+        answer: "am learning",
+        acceptableAnswers: ["'m learning"],
+        explanation: "'I' bilan hozirgi davomiy zamonda 'am learning' ishlatiladi.",
+      },
+      {
+        id: "en-task-14",
+        type: "Present Perfect",
+        prompt: "We ___ already ___ (finish) five lessons today. (have/has + V3 ni birga yozing)",
+        hint: "'We' bilan 'have finished' bo‘ladi (already ni tashlab faqat fe'l qismini yozing: have finished).",
+        answer: "have finished",
+        acceptableAnswers: ["'ve finished"],
+        explanation: "Present Perfect da ko‘plik ('We') bilan 'have finished' ishlatiladi.",
+      },
+      {
+        id: "en-task-15",
+        type: "First Conditional",
+        prompt: "If she ___ (practice) every day, she will speak fluently.",
+        hint: "'If' qismida 3-shaxs birlik (she) uchun Present Simple: oxiriga -s qo‘shing.",
+        answer: "practices",
+        explanation: "'If' bandida kelasi zamon emas, Present Simple ('practices') ishlatiladi.",
+      },
+      {
+        id: "en-task-16",
+        type: "Modal fe'l tanlang",
+        prompt: "You ___ listen carefully during the lesson. (maslahat: should)",
+        hint: "'Kerak / lozim' ma'nosidagi maslahat modal fe'lini yozing.",
+        answer: "should",
+        explanation: "'Should' — foydali maslahat berish uchun ishlatiladi.",
+      },
+      {
+        id: "en-task-17",
+        type: "Tarjima topshirig‘i",
+        prompt: "'Jamoaviy ish' so‘zini ingliz tilida bir so‘z bilan yozing:",
+        hint: "team + work",
+        answer: "teamwork",
+        explanation: "'Teamwork' — jamoaviy hamkorlikdagi ish.",
+      },
+      {
+        id: "en-task-18",
+        type: "Bog‘lovchi qo‘ying",
+        prompt:
+          "He improved his pronunciation ___ he listened to audiobooks daily. (because / but)",
+        hint: "Sababni bildirish uchun mos bog‘lovchini yozing.",
+        answer: "because",
+        explanation: "Sababni izohlashda 'because' (chunki) ishlatiladi.",
+      },
     ],
     grammarRules: [
       {
@@ -950,6 +1329,41 @@ export const languagesData: Record<string, LanguageData> = {
           "Can — qobiliyat/ruxsat; Must — majburiyat; Should — maslahat va tavsiya berish uchun.",
         examples: ["I can speak two languages.", "You should read every day."],
       },
+      {
+        title: "Present Continuous (Hozirgi davomiy zamon)",
+        level: "A2",
+        formula: "Subject + am / is / are + V-ing",
+        explanation:
+          "Aynan hozirgi daqiqada davom etayotgan ish-harakatlar va yaqin rejalar uchun qo‘llaniladi.",
+        examples: ["I am reading an audiobook right now.", "They are practicing English dialogue."],
+      },
+      {
+        title: "Present Perfect (Natijali hozirgi zamon)",
+        level: "B1",
+        formula: "Subject + have / has + V3 (-ed / irregular)",
+        explanation:
+          "O‘tmishda boshlanib, natijasi hozirgi payt uchun muhim bo‘lgan ish-harakat va hayotiy tajribani bildiradi.",
+        examples: ["I have learned 60 new English words.", "Have you ever won a school quiz?"],
+      },
+      {
+        title: "First Conditional (1-shart ergash gap)",
+        level: "B1",
+        formula: "If + Subject + Present Simple, Subject + will + V1",
+        explanation:
+          "Kelajakda sodir bo‘lishi mumkin bo‘lgan real shart va uning natijasini ifodalaydi.",
+        examples: [
+          "If you study consistently, you will achieve high scores.",
+          "We will pass the test if we revise grammar rules.",
+        ],
+      },
+      {
+        title: "Egalik va o‘zlik olmoshlari (Possessive & Reflexive)",
+        level: "A2 - B1",
+        formula: "my / your / his / her / our / their + noun | myself / yourself / ourselves",
+        explanation:
+          "Egalik olmoshlari narsa kimga tegishliligini, o‘zlik olmoshlari esa harakat bajaruvchining o‘ziga qaytishini ko‘rsatadi.",
+        examples: ["This is our school library.", "I prepared this presentation by myself."],
+      },
     ],
     dialogue: [
       {
@@ -994,6 +1408,29 @@ export const languagesData: Record<string, LanguageData> = {
         text: "Thank you very much, teacher! I will do all the exercises today.",
         translation: "Katta rahmat, ustoz! Bugun barcha mashqlarni bajaraman.",
       },
+      {
+        speaker: "Ustoz (John)",
+        text: "Have you tried using flashcards and grammar rules on our platform?",
+        translation:
+          "Platformamizdagi fleshcardlar va grammatika qoidalaridan foydalanib ko‘rdingizmi?",
+      },
+      {
+        speaker: "O‘quvchi (Malika)",
+        text: "Yes! Flashcards have really helped improve my memory and pronunciation.",
+        translation:
+          "Ha! Fleshcardlar xotiram va talaffuzimni yaxshilashga juda katta yordam berdi.",
+      },
+      {
+        speaker: "Ustoz (John)",
+        text: "If you keep this teamwork spirit, our class will win the language competition!",
+        translation:
+          "Agar shu jamoaviy ruhni saqlasangiz, sinfimiz tillar tanlovida albatta g‘olib bo‘ladi!",
+      },
+      {
+        speaker: "O‘quvchi (Malika)",
+        text: "We are ready for the challenge, teacher. See you at the club!",
+        translation: "Biz bu sinovga tayyormiz, ustoz. To‘garakda ko‘rishguncha!",
+      },
     ],
     tips: [
       "Har kuni kamida 5 ta yangi so‘z yod oling va ularni gapda ishlating.",
@@ -1002,6 +1439,8 @@ export const languagesData: Record<string, LanguageData> = {
       "Present Simple va 'To be' fe'llari bo‘yicha amaliy topshiriqlarni har kuni takrorlab turing.",
       "Kuniga 10 daqiqa AI Ustoz bo‘limida ingliz tilida qisqa suhbat qilib ko‘ring.",
       "Yangi so‘zlarni daftarga mavzular bo‘yicha (maktab, texnologiya, muloqot) ajratib yozing.",
+      "Fleshcardlar rejimida 'Aralashtirish' tugmasini bosib, o‘zingizni kutilmagan tartibda sinang.",
+      "Har hafta bir marta ingliz tilida 3–4 jumlali kichik kundalik yozib boring.",
     ],
   },
 
@@ -1350,6 +1789,166 @@ export const languagesData: Record<string, LanguageData> = {
         example: "Получение сертификата — важное достижение.",
         category: "Umumiy",
       },
+      {
+        id: "41",
+        word: "Исследование",
+        translation: "Tadqiqot / Izlanish",
+        pronunciation: "Issledovaniye",
+        example: "Ученики провели научное исследование.",
+        category: "Fan",
+      },
+      {
+        id: "42",
+        word: "Решение",
+        translation: "Yechim / Qaror",
+        pronunciation: "Resheniye",
+        example: "Мы нашли правильное решение задачи.",
+        category: "Ta'lim",
+      },
+      {
+        id: "43",
+        word: "Творчество",
+        translation: "Ijodkorlik",
+        pronunciation: "Tvorchestvo",
+        example: "Кружки развивают детское творчество.",
+        category: "Umumiy",
+      },
+      {
+        id: "44",
+        word: "Опыт",
+        translation: "Tajriba",
+        pronunciation: "Opit",
+        example: "Практический опыт очень важен для программиста.",
+        category: "Fan",
+      },
+      {
+        id: "45",
+        word: "Ответственность",
+        translation: "Mas’uliyat",
+        pronunciation: "Otvetstvennost",
+        example: "Ответственность помогает достичь успеха.",
+        category: "Sifatlar",
+      },
+      {
+        id: "46",
+        word: "Команда",
+        translation: "Jamoa",
+        pronunciation: "Komanda",
+        example: "Наша команда выиграла школьный турнир.",
+        category: "Maktab",
+      },
+      {
+        id: "47",
+        word: "Презентация",
+        translation: "Taqdimot",
+        pronunciation: "Prezentatsiya",
+        example: "Мы подготовили яркую презентацию проекта.",
+        category: "Ta'lim",
+      },
+      {
+        id: "48",
+        word: "Природа",
+        translation: "Tabiat",
+        pronunciation: "Priroda",
+        example: "Нужно беречь природу родного края.",
+        category: "Tabiat",
+      },
+      {
+        id: "49",
+        word: "Возможность",
+        translation: "Imkoniyat",
+        pronunciation: "Vozmozhnost",
+        example: "У нас есть отличная возможность учиться.",
+        category: "Umumiy",
+      },
+      {
+        id: "50",
+        word: "Общаться",
+        translation: "Muloqot qilmoq",
+        pronunciation: "Obshchatsya",
+        example: "Приятно общаться на русском языке.",
+        category: "Fe'llar",
+      },
+      {
+        id: "51",
+        word: "Любознательный",
+        translation: "Qiziquvchan",
+        pronunciation: "Lyuboznatelniy",
+        example: "Любознательный ученик задаёт много вопросов.",
+        category: "Sifatlar",
+      },
+      {
+        id: "52",
+        word: "Цель",
+        translation: "Maqsad",
+        pronunciation: "Tsel",
+        example: "Моя главная цель — выучить два иностранных языка.",
+        category: "Umumiy",
+      },
+      {
+        id: "53",
+        word: "Улучшать",
+        translation: "Yaxshilamoq",
+        pronunciation: "Uluchshat",
+        example: "Нужно каждый день улучшать своё произношение.",
+        category: "Fe'llar",
+      },
+      {
+        id: "54",
+        word: "Внимание",
+        translation: "Diqqat / E’tibor",
+        pronunciation: "Vnimaniye",
+        example: "Обратите внимание на окончание слова.",
+        category: "Ta'lim",
+      },
+      {
+        id: "55",
+        word: "Память",
+        translation: "Xotira",
+        pronunciation: "Pamyat",
+        example: "Карточки отлично тренируют память.",
+        category: "Ta'lim",
+      },
+      {
+        id: "56",
+        word: "Соревнование",
+        translation: "Musobaqa",
+        pronunciation: "Sorevnovaniye",
+        example: "В субботу состоится соревнование по шахматам.",
+        category: "Maktab",
+      },
+      {
+        id: "57",
+        word: "Библиотекарь",
+        translation: "Kutubxonachi",
+        pronunciation: "Bibliotekar",
+        example: "Библиотекарь посоветовал интересную книгу.",
+        category: "Kasblar",
+      },
+      {
+        id: "58",
+        word: "Программист",
+        translation: "Dasturchi",
+        pronunciation: "Programmist",
+        example: "Мой брат хочет стать программистом.",
+        category: "Kasblar",
+      },
+      {
+        id: "59",
+        word: "Полезный",
+        translation: "Foydali",
+        pronunciation: "Polezniy",
+        example: "Аудиокниги — очень полезный ресурс для учёбы.",
+        category: "Sifatlar",
+      },
+      {
+        id: "60",
+        word: "Уверенно",
+        translation: "Ishonch bilan",
+        pronunciation: "Uverenno",
+        example: "Она уверенно отвечает на все вопросы.",
+        category: "Ravishlar",
+      },
     ],
     lessons: [
       {
@@ -1546,6 +2145,102 @@ export const languagesData: Record<string, LanguageData> = {
           },
         ],
       },
+      {
+        id: "ru-11",
+        title: "11-dars: Fe’llarning turi (Несовершенный и Совершенный вид)",
+        duration: "25 daqiqa",
+        level: "A2 - B1",
+        description:
+          "Jarayon (читать, делать, писать) va tugallangan natija (прочитать, сделать, написать) fe'llarini farqlash.",
+        topics: [
+          {
+            title: "Что делать? vs Что сделать?",
+            explanation:
+              "Tugallanmagan tur (НСВ — делать, читать) davomiy yoki takroriy harakatni bildiradi. Tugallangan tur (СВ — сделать, прочитать) esa aniq yakuniy natijani ko‘rsatadi.",
+            examples: [
+              "Я читал книгу целый вечер. (jarayon)",
+              "Я прочитал всю книгу вчера. (natija)",
+            ],
+          },
+          {
+            title: "Eng ko‘p uchraydigan juftliklar",
+            explanation:
+              "делать — сделать (qilmoq), писать — написать (yozmoq), учить — выучить (o‘rganmoq), решать — решить (yechmoq).",
+            examples: ["Мы учили новые слова.", "Наконец я выучил все правила!"],
+          },
+        ],
+      },
+      {
+        id: "ru-12",
+        title: "12-dars: Roditelniy padej (У меня есть / У меня нет)",
+        duration: "24 daqiqa",
+        level: "A2 - B1",
+        description: "Mavjudlik va yo‘qlikni bildirish, sanoq va tegishlilikni to‘g‘ri ifodalash.",
+        topics: [
+          {
+            title: "'У меня нет + Родительный падеж'",
+            explanation:
+              "Biror narsaning yo‘qligini aytishda erkak/o‘rta jins otlarga -а/-я (нет учебника, нет времени), ayol jinsiga esa -ы/-и qo‘shiladi (нет тетради, нет книги).",
+            examples: ["У меня есть интересный словарь.", "У меня нет ошибок в диктанте."],
+          },
+          {
+            title: "2, 3, 4 sonlaridan keyin ot shakli",
+            explanation:
+              "1 dan keyin bosh kelishik (одна книга), 2–4 dan keyin birlik Roditelniy (две книги, три урока), 5 dan keyin ko‘plik Roditelniy keladi (пять книг).",
+            examples: ["два новых учебника", "пять интересных рассказов"],
+          },
+        ],
+      },
+      {
+        id: "ru-13",
+        title: "13-dars: Harakat fe’llari (Идти / Ходить va Ехать / Ездить)",
+        duration: "22 daqiqa",
+        level: "B1",
+        description:
+          "Piyoda yurish va transportda borish fe'llarini bir yo‘nalishda hamda muntazam harakatda qo‘llash.",
+        topics: [
+          {
+            title: "Piyoda: идти (hozir bir tomonga) vs ходить (muntazam)",
+            explanation:
+              "'Идти' — hozir aniq bir manzilga ketayotganda (Я сейчас иду в школу). 'Ходить' — tez-tez borib-kelib turadigan odat uchun (Я хожу в библиотеку каждый день).",
+            examples: [
+              "Сейчас мы идём на урок информатики.",
+              "После уроков я хожу в кружок робототехники.",
+            ],
+          },
+          {
+            title: "Transportda: ехать vs ездить",
+            explanation:
+              "Avtobus, poyezd yoki mashinada harakatlanish uchun 'ехать' (bir marta/hozir) va 'ездить' (muntazam) fe'llari ishlatiladi.",
+            examples: ["Мы едем на олимпиаду в центр города."],
+          },
+        ],
+      },
+      {
+        id: "ru-14",
+        title: "14-dars: Modal so‘zlar (Можно, Нужно, Должен) va Qiyosiy daraja",
+        duration: "24 daqiqa",
+        level: "B1",
+        description:
+          "Ruxsat so‘rash, zarurat bildirish hamda sifatlarni taqqoslash (лучше, быстрее, интереснее).",
+        topics: [
+          {
+            title: "Можно / Нельзя / Нужно / Должен",
+            explanation:
+              "'Можно?' — mumkinmi?, 'Нужно + инфинитив' — kerak/lozim, 'должен / должна / должны' — majbur/qilishi shart.",
+            examples: ["Можно задать вопрос, учитель?", "Ученик должен регулярно повторять слова."],
+          },
+          {
+            title: "Sifatlarning qiyosiy darajasi",
+            explanation:
+              "Ko‘pchilik sifatlarga -ее qo‘shiladi: быстрый -> быстрее, умный -> умнее, интересный -> интереснее. Istisnolar: хороший -> лучше, плохой -> хуже.",
+            examples: [
+              "С карточками учить слова гораздо быстрее и интереснее!",
+              "Сегодня ты читаешь намного лучше, чем вчера.",
+            ],
+          },
+        ],
+      },
     ],
     quiz: [
       {
@@ -1661,6 +2356,63 @@ export const languagesData: Record<string, LanguageData> = {
         answer: 3,
         explanation: "Ko‘plikdagi otlar bilan sifatga -ые/-ие qo‘shiladi: новые учебники.",
       },
+      {
+        id: "q17",
+        question: "Natija va tugallangan harakatni bildiruvchi fe'l (Совершенный вид) qaysi?",
+        options: ["читать", "писать", "прочитать", "учить"],
+        answer: 2,
+        explanation: "'Прочитать' — o‘qib tugatmoq (Что сделать?) ma'nosida natijani bildiradi.",
+      },
+      {
+        id: "q18",
+        question: "'У меня нет ___' (xato yo‘q) birikmasida qaysi shakl to‘g‘ri?",
+        options: ["ошибка", "ошибки", "ошибку", "ошибке"],
+        answer: 1,
+        explanation: "'Нет' so‘zidan keyin Родительный падеж keladi: ошибка -> нет ошибки.",
+      },
+      {
+        id: "q19",
+        question: "'Я каждый день ___ в библиотеку' (muntazam boraman) gapiga mos fe'l qaysi?",
+        options: ["иду", "хожу", "еду", "бегу"],
+        answer: 1,
+        explanation: "Muntazam takrorlanadigan piyoda harakat uchun 'хожу' (ходить) ishlatiladi.",
+      },
+      {
+        id: "q20",
+        question: "'Хороший' (yaxshi) sifatining qiyosiy darajasi (yaxshiroq) qaysi?",
+        options: ["хорошее", "лучше", "более хороший", "хуже"],
+        answer: 1,
+        explanation: "'Хороший -> лучше' rus tilidagi asosiy istisno qiyosiy darajadir.",
+      },
+      {
+        id: "q21",
+        question: "'Мадина ___ готовиться к олимпиаде' (majbur / kerak) gapini to‘ldiring:",
+        options: ["должен", "должна", "должно", "должны"],
+        answer: 1,
+        explanation: "'Мадина' ayol jinsida bo‘lgani uchun 'должна' shakli tanlanadi.",
+      },
+      {
+        id: "q22",
+        question: "'Исследование' so‘zining o‘zbekcha ma'nosi nima?",
+        options: ["Tadqiqot", "Taqdimot", "Tanaffus", "Jadval"],
+        answer: 0,
+        explanation: "'Исследование' — ilmiy izlanish, tadqiqot demakdir.",
+      },
+      {
+        id: "q23",
+        question: "'Два ___' (ikkita dars) birikmasida ot qanday shaklda bo‘ladi?",
+        options: ["урок", "урока", "уроков", "уроке"],
+        answer: 1,
+        explanation:
+          "2, 3, 4 sonlaridan keyin ot birlik Родительный падеж (-а) da keladi: два урока.",
+      },
+      {
+        id: "q24",
+        question: "'___ задать вопрос?' (Savol bersam mumkinmi?) gapini to‘ldiring:",
+        options: ["Должен", "Можно", "Нет", "Есть"],
+        answer: 1,
+        explanation: "Ruxsat so‘rashda 'Можно...?' (Mumkinmi?) so‘zi qo‘llaniladi.",
+      },
     ],
     tasks: [
       {
@@ -1759,6 +2511,55 @@ export const languagesData: Record<string, LanguageData> = {
         answer: "большое",
         explanation: "Большое достижение (katta yutuq).",
       },
+      {
+        id: "ru-task-13",
+        type: "Родительный падеж (Нет)",
+        prompt: "Сегодня у меня нет ___ (учебник). (Kelishik shaklini yozing)",
+        hint: "Erkak jinsida 'нет' dan keyin -а qo‘shiladi.",
+        answer: "учебника",
+        explanation: "Нет учебника (darslik yo‘q).",
+      },
+      {
+        id: "ru-task-14",
+        type: "Harakat fe'li",
+        prompt: "Каждый вторник мы ___ (ходить) на кружок робототехники.",
+        hint: "'Мы' bilan muntazam borish: ход + ...",
+        answer: "ходим",
+        explanation: "Мы ходим (biz muntazam boramiz).",
+      },
+      {
+        id: "ru-task-15",
+        type: "Tugallangan fe'l (СВ)",
+        prompt: "Вчера я ___ (прочитать) интересный рассказ за один час.",
+        hint: "Erkak/umumiy birlikda o‘tgan zamon: прочитал.",
+        answer: "прочитал",
+        acceptableAnswers: ["прочитала"],
+        explanation: "Natijali harakat uchun 'прочитал / прочитала' ishlatiladi.",
+      },
+      {
+        id: "ru-task-16",
+        type: "Qiyosiy daraja",
+        prompt: "Эта книга ___ (интересный) той книги. (-ее qo‘shimchasi bilan yozing)",
+        hint: "интересн + ее",
+        answer: "интереснее",
+        explanation: "'Интереснее' — qiziqarliroq.",
+      },
+      {
+        id: "ru-task-17",
+        type: "Modal so‘z",
+        prompt: "___ войти в класс? (Kirsam mumkinmi?)",
+        hint: "Ruxsat so‘rash so‘zi...",
+        answer: "Можно",
+        explanation: "'Можно войти?' — Kirsam maylimi / mumkinmi?",
+      },
+      {
+        id: "ru-task-18",
+        type: "Son va ot moslashuvi",
+        prompt: "На столе лежат три ___ (книга). (Birlik Родительный shaklini yozing)",
+        hint: "2, 3, 4 dan keyin 'книга' -> книг + ...",
+        answer: "книги",
+        explanation: "Три книги (uchta kitob).",
+      },
     ],
     grammarRules: [
       {
@@ -1823,6 +2624,38 @@ export const languagesData: Record<string, LanguageData> = {
           "Joylashuvni aytishda 'в школе', harakat yo‘nalishini aytishda esa 'в школу' ishlatiladi.",
         examples: ["Я учусь в школе №8 (Где?)", "Я иду в школу №8 (Куда?)"],
       },
+      {
+        title: "Fe’l turlari: Несовершенный (НСВ) vs Совершенный (СВ)",
+        level: "A2 - B1",
+        formula: "НСВ: Что делать? (jarayon) | СВ: Что сделать? (natija)",
+        explanation:
+          "Davomli va odatiy harakatlar uchun НСВ, yakuniy natija uchun esa СВ fe'llari qo‘llaniladi.",
+        examples: ["читать -> прочитать", "учить -> выучить", "писать -> написать"],
+      },
+      {
+        title: "Родительный падеж: У меня есть / нет va Sonlar",
+        level: "A2 - B1",
+        formula: "нет + -а/-я (он, оно) | -ы/-и (она) | 2,3,4 + ед.ч. Род.п.",
+        explanation:
+          "Yo‘qlikni bildirganda hamda 2, 3, 4 sonlaridan keyin otlar Родительный kelishigida keladi.",
+        examples: ["У меня нет ошибки.", "У нас три урока и пять книг."],
+      },
+      {
+        title: "Harakat fe’llari (Идти / Ходить, Ехать / Ездить)",
+        level: "B1",
+        formula: "Сейчас (bir tomonga): идти / ехать | Регулярно (doim): ходить / ездить",
+        explanation:
+          "Piyoda yurish va transportda borishda harakatning bir martalik yoki takroriyligiga qarab fe'l tanlanadi.",
+        examples: ["Сейчас я иду в класс.", "Каждый день я хожу в школу."],
+      },
+      {
+        title: "Modal konstruksiyalar va Qiyosiy daraja",
+        level: "B1",
+        formula: "можно / нужно + инфинитив | должен / должна / должны | -ее (быстрее)",
+        explanation:
+          "Ruxsat va zaruriyat so‘zlari fe'lning noaniq shakli bilan keladi; sifatlar -ее qo‘shimchasi bilan qiyoslanadi.",
+        examples: ["Нужно учить слова каждый день.", "Эта книга интереснее и полезнее."],
+      },
     ],
     dialogue: [
       {
@@ -1865,6 +2698,27 @@ export const languagesData: Record<string, LanguageData> = {
         text: "Большое спасибо, учитель! Мы обязательно выполним все задания.",
         translation: "Katta rahmat, ustoz! Albatta barcha topshiriqlarni bajaramiz.",
       },
+      {
+        speaker: "Учитель",
+        text: "Вы уже выучили разницу между глаголами 'идти' и 'ходить'?",
+        translation: "'Идти' va 'ходить' fe'llari orasidagi farqni o‘rganib oldingizmi?",
+      },
+      {
+        speaker: "Ученик",
+        text: "Да! Сейчас мы идём на кружок, а вообще мы ходим туда каждую неделю.",
+        translation:
+          "Ha! Hozir biz to‘garakka ketayapmiz, umuman esa u yerga har hafta borib turamiz.",
+      },
+      {
+        speaker: "Учитель",
+        text: "Молодцы! У вас нет ни одной ошибки, вы говорите всё увереннее.",
+        translation: "Barakalla! Birorta ham xatoyingiz yo‘q, tobora ishonch bilan gapiryapsiz.",
+      },
+      {
+        speaker: "Ученик",
+        text: "Наша команда готова к школьной олимпиаде по русскому языку!",
+        translation: "Jamoamiz rus tili bo‘yicha maktab olimpiadasiga tayyor!",
+      },
     ],
     tips: [
       "Urg'uga (ударение) doim e'tibor bering, chunki 'о' harfi urg'usiz 'а' kabi aytiladi.",
@@ -1873,6 +2727,8 @@ export const languagesData: Record<string, LanguageData> = {
       "Kutubxonadagi audio kitoblar va lug‘atdagi ovozli talaffuzni muntazam tinglang.",
       "1- va 2-tuslanish fe'llarini kundalik gaplarda qo‘llab, amaliy topshiriqlarni bajaring.",
       "AI Ustoz bilan rus tilida qisqa savol-javoblar o‘tkazib, nutq ravonligini oshiring.",
+      "Fleshcardlar orqali 60 ta asosiy so‘zni ruscha-o‘zbekcha tarjimasi bilan yoddan tekshirib turing.",
+      "Fe'llarni juftligi bilan (читать — прочитать, делать — сделать) o‘rganish nutqni tez rivojlantiradi.",
     ],
   },
 

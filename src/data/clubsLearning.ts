@@ -142,6 +142,20 @@ void loop() {
               "To‘siqlardan qochuvchi robotlar aynan shu sensor asosida yaratiladi.",
             ],
           },
+          {
+            title: "Masofani kodda o‘lchash va Serial ga chiqarish",
+            explanation:
+              "pulseIn(echoPin, HIGH) funksiyasi aks-sado qaytgunicha ketgan mikrosoniyalarni o‘lchaydi. So‘ngra uni 0.034 / 2 ga ko‘paytirib santimetrga aylantiramiz.",
+            codeSnippet: `digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+
+long duration = pulseIn(echoPin, HIGH);
+float distanceCm = duration * 0.034 / 2.0;`,
+            tips: ["Aniq o‘lchash uchun ikkita o‘lchov orasida kamida 50 ms pauza bering."],
+          },
         ],
       },
       {
@@ -276,6 +290,80 @@ void loop() {
               "Arduino ga kod yuklayotgan paytda RX va TX simlarini vaqtincha uzib qo‘yish kerak, aks holda yuklash xatoligi chiqadi.",
             ],
           },
+          {
+            title: "Ko‘p buyruqli robot harakatini boshqarish",
+            explanation:
+              "Telefondagi dasturdan kelayotgan harfga qarab (switch/case) robotni oldinga, orqaga, chapga, o‘ngga burish va signal chalish mumkin.",
+            codeSnippet: `switch (cmd) {
+  case 'F': moveForward(); break;
+  case 'B': moveBackward(); break;
+  case 'L': turnLeft(); break;
+  case 'R': turnRight(); break;
+  case 'S': stopMotors(); break;
+}`,
+            tips: ["Bluetooth aloqa tezligi (Baud rate) odatda 9600 bps qilib sozlanadi."],
+          },
+        ],
+      },
+      {
+        id: "rob-7",
+        title: "7-dars: I2C LCD ekran va Ovozli signalizatsiya (Buzzer)",
+        duration: "25 daqiqa",
+        level: "Amaliy",
+        description:
+          "16x2 belgili LCD ekranga sensor natijalarini chiqarish hamda p'ezo-buzzer bilan ogohlantirish yaratish.",
+        topics: [
+          {
+            title: "I2C protokoli orqali 4 ta sim bilan ekran ulash",
+            explanation:
+              "Oddiy LCD uchun 12 ta sim kerak bo‘lsa, I2C adapteri yordamida faqat 4 ta sim (GND, VCC, SDA -> A4, SCL -> A5) kifoya qiladi.",
+            codeSnippet: `#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("8-maktab RoboLab");
+}`,
+            tips: [
+              "Agar ekranda matn ko‘rinmasa, I2C modul orqasidagi ko‘k kontrast vintini sekin burang.",
+            ],
+          },
+          {
+            title: "tone() funksiyasi bilan tovush chiqarish",
+            explanation:
+              "Passiv buzzer ga ma'lum chastota (Hz) berib musiqa yoki ogohlantiruvchi signal chalish mumkin: tone(pin, chastota, davomiylik).",
+            tips: ["Avtomobil parkovka datchigi kabi masofa kamayganda signal tezligini oshiring."],
+          },
+        ],
+      },
+      {
+        id: "rob-8",
+        title: "8-dars: Elektr xavfsizligi, Quvvat manbalari va Musobaqaga tayyorgarlik",
+        duration: "25 daqiqa",
+        level: "Yuqori",
+        description:
+          "Li-Ion akkumulyatorlar bilan xavfsiz ishlash, sxemani multimetrdan o‘tkazish va RoboUz qoidalari.",
+        topics: [
+          {
+            title: "Qisqa tutashuvning oldini olish va quvvat taqsimoti",
+            explanation:
+              "Motorlar ko‘p tok tortgani uchun Arduino dan alohida 7.4V–9V batareya bloki orqali L298N drayverni quvvatlantirish, ammo GND (minus) simlarini birlashtirish shart.",
+            tips: [
+              "Musobaqa oldidan barcha vintlar, g‘ildiraklar va sim ulanishlarini issiq elim yoki shtir bilan mahkamlang.",
+            ],
+          },
+          {
+            title: "Multimetr bilan kuchlanish va qarshilikni tekshirish",
+            explanation:
+              "DCV rejimida batareya zaryadini (masalan 7.4V) tekshirish robotning kutilmaganda sekinlashib qolishini oldini oladi.",
+            tips: [
+              "Simlarni ulashdan oldin qizil (+) va qora (-) qutblarni ikki marta tekshiring.",
+            ],
+          },
         ],
       },
     ],
@@ -354,6 +442,20 @@ void loop() {
         ],
         expectedResult: "Xona mikroiqlimi haqida aniq raqamli ko‘rsatkichlar ekranda ko‘rinadi.",
       },
+      {
+        id: "p5",
+        title: "Loyiha 5: Avtomobil parkovka datchigi (HC-SR04 + Buzzer + LCD)",
+        level: "Yuqori",
+        description:
+          "Masofani LCD ekranda santimetrda ko‘rsatuvchi va to‘siq yaqinlashganda signal chaluvchi tizim.",
+        requirements: ["Arduino Uno", "HC-SR04", "16x2 I2C LCD", "Buzzer va LEDlar"],
+        steps: [
+          "Ultratovush datchigi va I2C LCD ekranni Arduino ga ulang.",
+          "Masofani hisoblab LCD ning birinchi qatoriga chiqaring.",
+          "Masofa 15 sm dan kam bo‘lsa qizil LEDni yoqib buzzer bilan tez signal bering.",
+        ],
+        expectedResult: "Haqiqiy avtomobil parktronigi kabi aniq ogohlantiruvchi qurilma ishlaydi.",
+      },
     ],
     quizzes: [
       {
@@ -415,6 +517,46 @@ void loop() {
         answer: 0,
         explanation: "UART portdan kelayotgan baytlarni Serial.read() funksiyasi o‘qib oladi.",
       },
+      {
+        id: "rq8",
+        question: "Arduino Uno da I2C LCD ekranning SDA va SCL simlari qaysi pinlarga ulanadi?",
+        options: ["D2 va D3", "A4 va A5", "D12 va D13", "A0 va A1"],
+        answer: 1,
+        explanation: "Arduino Uno da SDA pini A4 ga, SCL pini esa A5 ga ulanadi.",
+      },
+      {
+        id: "rq9",
+        question: "Line Follower roboti qora chiziqni qaysi datchik yordamida taniydi?",
+        options: ["DHT11", "IR infraqizil datchik", "HC-05 Bluetooth", "Servoprivod"],
+        answer: 1,
+        explanation:
+          "IR datchik sirtdan qaytgan infraqizil nurni o‘lchab, qora chiziqni aniqlaydi.",
+      },
+      {
+        id: "rq10",
+        question:
+          "L298N motor drayverida motor tezligini pasaytirish uchun qaysi funksiya qo‘llaniladi?",
+        options: ["digitalRead()", "analogWrite()", "delayMicroseconds()", "tone()"],
+        answer: 1,
+        explanation:
+          "analogWrite(ENA, 0..255) PWM signali orqali motor aylanish tezligini rostlaydi.",
+      },
+      {
+        id: "rq11",
+        question:
+          "Ikkita alohida quvvat manbai ishlatilganda ularning qaysi simini birlashtirish shart?",
+        options: ["+5V simlarini", "GND (minus) simlarini", "Faqat RX/TX ni", "Hech birini"],
+        answer: 1,
+        explanation:
+          "Signallar to‘g‘ri o‘qilishi uchun umumiy nol nuqta (GND) birlashtirilishi shart.",
+      },
+      {
+        id: "rq12",
+        question: "Passiv buzzer da ma'lum chastotali ovoz chiqarish funksiyasi qaysi?",
+        options: ["sound()", "tone()", "beep()", "music()"],
+        answer: 1,
+        explanation: "Arduino da tone(pin, frequency) buyrug‘i tovush to‘lqinlarini hosil qiladi.",
+      },
     ],
     terms: [
       {
@@ -459,6 +601,30 @@ void loop() {
         term: "Serial Monitor",
         definition: "Arduino IDE da plata va kompyuter o‘rtasida matnli ma'lumot almashish oynasi.",
         example: "Datchikdan kelayotgan masofa qiymatini ekranda kuzatish.",
+      },
+      {
+        term: "I2C Protokoli",
+        definition:
+          "Ekran va datchiklarni faqat 2 ta ma'lumot simi (SDA, SCL) bilan ulash interfeysi.",
+        example: "16x2 LCD ekranni A4 va A5 pinlarga ulash.",
+      },
+      {
+        term: "PID Regulyator",
+        definition:
+          "Robot chiziqdan og‘ishini silliq va tezkor tuzatuvchi matematik boshqaruv algoritmi.",
+        example: "Musobaqa robotining burilishlarda tebranmasdan yurishi.",
+      },
+      {
+        term: "Multimetr",
+        definition:
+          "Zanjirdagi kuchlanish (V), tok kuchi (A) va qarshilikni (Om) o‘lchovchi asbob.",
+        example: "Batareya quvvati necha volt qolganini tekshirish.",
+      },
+      {
+        term: "UART (Serial aloqa)",
+        definition:
+          "Qurilmalar orasida RX (qabul) va TX (uzatish) pinlari orqali ma'lumot almashish.",
+        example: "HC-05 Bluetooth moduli bilan smartfondan signal olish.",
       },
     ],
   },
@@ -641,6 +807,67 @@ Har bir misoldan keyin natijasini jadvalda ko'rsat (Format)."`,
               "Ikki bosqichli autentifikatsiyani (2FA) barcha akkauntlaringizda yoqib qo‘ying.",
             ],
           },
+          {
+            title: "Kuchli parol va Phishing dan himoyalanish",
+            explanation:
+              "Xavfsiz parol kamida 12 ta belgidan (katta-kichik harf, raqam va maxsus belgi) iborat bo‘lishi kerak. Noma'lum havolalarga kirishdan oldin domen nomini diqqat bilan tekshiring.",
+            tips: ["Bir xil parolni turli saytlarda qayta ishlatmang."],
+          },
+        ],
+      },
+      {
+        id: "it-7",
+        title: "7-dars: Ma'lumotlar tuzilmasi va Qidiruv-Saralash algoritmlari",
+        duration: "35 daqiqa",
+        level: "Yuqori",
+        description:
+          "Massiv va lug‘atlar (Dictionary), ikkilik qidiruv (Binary Search) hamda saralash asoslari.",
+        topics: [
+          {
+            title: "Lug‘at (Dictionary / Object) va ma'lumotlarni saqlash",
+            explanation:
+              "Lug‘atlar ma'lumotlarni 'kalit: qiymat' juftligi ko‘rinishida juda tez qidirishga imkon beradi (masalan, o‘quvchi ismi va bali).",
+            codeSnippet: `ballar = {"Farangiz": 98, "Anvar": 92, "Madina": 95}
+eng_yuqori = max(ballar, key=ballar.get)
+print(f"Eng yuqori ball: {eng_yuqori} ({ballar[eng_yuqori]})")`,
+            tips: ["Lug‘atda kalit bo‘yicha qidirish ro‘yxatga qaraganda ancha tezkor (O(1))."],
+          },
+          {
+            title: "Ikkilik qidiruv (Binary Search) sirlari",
+            explanation:
+              "Tartiblangan ro‘yxatda sonni o‘rtasidan bo‘lib qidirish orqali 1 000 000 ta element ichidan keraklisini ko‘pi bilan 20 qadamda topish mumkin!",
+            tips: ["Binary Search faqat oldindan tartiblangan ma'lumotlarda ishlaydi."],
+          },
+        ],
+      },
+      {
+        id: "it-8",
+        title: "8-dars: Git, GitHub va Jamoada web-loyiha yaratish",
+        duration: "25 daqiqa",
+        level: "Amaliy",
+        description:
+          "Kod tarixini saqlash, buyruqlar satri bilan ishlash va tayyor saytni internetga joylash.",
+        topics: [
+          {
+            title: "Asosiy Git buyruqlari",
+            explanation:
+              "Git loyiha kodidagi har bir o‘zgarishni xavfsiz saqlaydi, xato qilganda oldingi ishlaydigan holatga qaytishga imkon beradi.",
+            codeSnippet: `git status
+git add .
+git commit -m "Yangi dars sahifasi qo'shildi"
+git push origin main`,
+            tips: [
+              "Har bir kichik tugallangan vazifadan keyin tushunarli xabar bilan commit qilib boring.",
+            ],
+          },
+          {
+            title: "API va JSON formati bilan tanishuv",
+            explanation:
+              'Zamonaviy saytlar server bilan JSON ({ "name": "IT Club", "level": "A1" }) formatida ma\'lumot almashadi.',
+            tips: [
+              "JavaScriptda fetch() funksiyasi serverdan JSON ma'lumot olish uchun ishlatiladi.",
+            ],
+          },
         ],
       },
     ],
@@ -706,6 +933,20 @@ Har bir misoldan keyin natijasini jadvalda ko'rsat (Format)."`,
         ],
         expectedResult: "Konsolda qiziqarli va mantiqiy mini-o‘yin ishga tushadi.",
       },
+      {
+        id: "it-p5",
+        title: "Loyiha 5: Maktab viktorinasi web-o‘yini (JS + JSON)",
+        level: "Yuqori",
+        description:
+          "Savollar massividan foydalanib, taymerli va ball hisoblovchi interaktiv viktorina sayti yaratish.",
+        requirements: ["HTML5", "CSS Flexbox/Grid", "JavaScript Massiv va Obyektlar"],
+        steps: [
+          "Savollar, variantlar va to‘g‘ri javob indekslarini JavaScript massiviga joylang.",
+          "Foydalanuvchi javob tanlaganda ballni oshiring va keyingi savolga o‘ting.",
+          "Oxirida foiz natijasi va 'Qayta o‘ynash' tugmasini chiqaring.",
+        ],
+        expectedResult: "Sinfdoshlar bilan bilimlarni sinash mumkin bo‘lgan tayyor web-viktorina.",
+      },
     ],
     quizzes: [
       {
@@ -765,6 +1006,47 @@ Har bir misoldan keyin natijasini jadvalda ko'rsat (Format)."`,
         explanation:
           "Phishing — soxta sayt va xabarlar orqali shaxsiy ma'lumotlarni qo‘lga kiritish usuli.",
       },
+      {
+        id: "itq8",
+        question:
+          "Ikkilik qidiruv (Binary Search) ishlashi uchun ma'lumotlar qanday bo‘lishi shart?",
+        options: ["Tasodifiy", "Tartiblangan (Sorted)", "Faqat matnli", "10 tadan kam"],
+        answer: 1,
+        explanation:
+          "Binary Search o‘rta elementni taqqoslagani uchun ro‘yxat tartiblangan bo‘lishi kerak.",
+      },
+      {
+        id: "itq9",
+        question: "Git da o‘zgarishlarni mahalliy tarixga saqlash buyrug‘i qaysi?",
+        options: ["git commit", "git delete", "git run", "git style"],
+        answer: 0,
+        explanation: "git commit -m '...' buyrug‘i fayllar holatini tarixda muhrlaydi.",
+      },
+      {
+        id: "itq10",
+        question:
+          "JavaScriptda brauzer xotirasida ma'lumotni sahifa yopilgandan keyin ham saqlaydigan obyekt qaysi?",
+        options: ["console", "localStorage", "Math", "window.alert"],
+        answer: 1,
+        explanation: "localStorage ma'lumotlarni brauzerda doimiy saqlash imkonini beradi.",
+      },
+      {
+        id: "itq11",
+        question: "Python da ro‘yxat (list) oxiriga yangi element qo‘shish metodi qaysi?",
+        options: ["add()", "push()", "append()", "insertLast()"],
+        answer: 2,
+        explanation:
+          "Python ro‘yxatlarida yangi element oxiriga .append() metodi bilan qo‘shiladi.",
+      },
+      {
+        id: "itq12",
+        question:
+          "Server va frontend o‘rtasida eng ko‘p ishlatiladigan yengil ma'lumot formati qaysi?",
+        options: ["DOCX", "JSON", "MP3", "PSD"],
+        answer: 1,
+        explanation:
+          "JSON (JavaScript Object Notation) API larda ma'lumot almashishning standart formatidir.",
+      },
     ],
     terms: [
       {
@@ -808,6 +1090,26 @@ Har bir misoldan keyin natijasini jadvalda ko'rsat (Format)."`,
         definition:
           "Sun’iy intellekt modellaridan eng aniq va foydali natija olish uchun so‘rov tuzish san’ati.",
         example: "Rol, vazifa va format ko‘rsatilgan tizimli so‘rov.",
+      },
+      {
+        term: "JSON",
+        definition: "Kalit-qiymat ko‘rinishidagi matnli ma'lumot almashish formati.",
+        example: '{ "club": "IT Club", "students": 30 }',
+      },
+      {
+        term: "Binary Search",
+        definition: "Tartiblangan ro‘yxatni ikkiga bo‘lib qidiruvchi tezkor algoritm.",
+        example: "Lug‘atdan kerakli so‘zni o‘rtasidan ochib tez topish.",
+      },
+      {
+        term: "2FA (Ikki bosqichli himoya)",
+        definition: "Paroldan tashqari qo‘shimcha SMS yoki ilova kodi orqali kirish himoyasi.",
+        example: "Akkauntga kirishda 6 xonali tasdiqlash kodini kiritish.",
+      },
+      {
+        term: "Debugging",
+        definition: "Dastur kodidagi xato (bug) larni aniqlash va tuzatish jarayoni.",
+        example: "Brauzer Console oynasida xato satrini topib tuzatish.",
       },
     ],
   },
@@ -954,6 +1256,60 @@ Har bir misoldan keyin natijasini jadvalda ko'rsat (Format)."`,
               "Qarshi yo‘nalishda harakatda tezliklar qo‘shiladi (v1 + v2), quvib yetishda esa ayriladi (v1 - v2).",
             ],
           },
+          {
+            title: "Ortidan hisoblash (Teskari yurish) strategiyasi",
+            explanation:
+              "Agar son 2 ga ko‘paytirilib, 4 qo‘shilganda 20 chiqqan bo‘lsa, oxiridan teskari amallarni bajaramiz: (20 - 4) : 2 = 8.",
+            tips: [
+              "Olimpiada masalalarida harakatni oxiridan boshlash tenglama tuzmasdan javob beradi.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "mat-7",
+        title: "7-dars: Foizlar, Nisbatlar va Moliya matematikasi",
+        duration: "25 daqiqa",
+        level: "A2 - B1",
+        description:
+          "Aralashma va qotishmalar, chegirmalar hamda ketma-ket foiz o‘zgarishi masalalari.",
+        topics: [
+          {
+            title: "Ketma-ket foiz o‘zgarishi qopqoni",
+            explanation:
+              "Mahsulot narxi avval 20% oshib, keyin 20% arzonlashsa, dastlabki narxga qaytmaydi! 100 -> 120 -> 120 * 0.8 = 96 (4% ga kamayadi).",
+            tips: ["Foizlarni doim joriy (oxirgi) qiymatdan hisoblang, dastlabkisidan emas."],
+          },
+          {
+            title: "Nisbat va qismlarga bo‘lish",
+            explanation:
+              "Agar 45 ta daftar 2 : 3 nisbatda bo‘linsa, jami 2 + 3 = 5 qism bor; 1 qism = 9, demak 18 ta va 27 ta bo‘ladi.",
+            tips: [
+              "Nisbat masalalarida noma'lum qismni x deb belgilab (2x + 3x = 45) yechish juda qulay.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "mat-8",
+        title: "8-dars: Graflar nazariyasi, Juft-toqlik va Mantiqiy o‘yinlar",
+        duration: "30 daqiqa",
+        level: "Yuqori",
+        description:
+          "Qo‘l siqishlar masalasi, Eyler yo‘llari, invariantlar va yutuqli o‘yin strategiyalari.",
+        topics: [
+          {
+            title: "Graflarda qirralar va qo‘l siqishlar lemmasi",
+            explanation:
+              "Agar n ta kishi bir-biri bilan bir martadan qo‘l berib ko‘rishsa, jami qo‘l siqishlar soni n * (n - 1) / 2 ga teng bo‘ladi.",
+            tips: ["Har qanday grafda toq darajali uchlar soni doimo juft bo‘ladi!"],
+          },
+          {
+            title: "Simmetrik yutuq strategiyasi",
+            explanation:
+              "O‘yinda raqib yurishini simmetrik takrorlash yoki oxirgi yutuvchi pozitsiyani (invariantni) egallash orqali g‘alabani kafolatlash mumkin.",
+            tips: ["O‘yinni yechishda eng kichik holatlardan (1, 2, 3 ta tosh) tahlil boshlang."],
+          },
         ],
       },
     ],
@@ -999,6 +1355,20 @@ Har bir misoldan keyin natijasini jadvalda ko'rsat (Format)."`,
           "Sinfdoshlaringiz bilan 20 daqiqalik mini-musobaqa o‘tkazing.",
         ],
         expectedResult: "Jamoaviy fikrlashni rivojlantiruvchi tayyor olimpiada to‘plami.",
+      },
+      {
+        id: "mat-p4",
+        title: "Loyiha 4: 'Shaxmat taxtasidan kesib olish' invariant tadqiqoti",
+        level: "Yuqori",
+        description:
+          "Qarama-qarshi ikki burchagi kesilgan 8x8 shaxmat taxtasini 1x2 dominolar bilan yopish mumkinmi? Isbotlash.",
+        requirements: ["Qog‘oz shaxmat taxtasi", "Qaychi", "Rangli karton"],
+        steps: [
+          "8x8 taxtadan bitta rangli (masalan, 2 ta oq) qarama-qarshi burchakni belgilang.",
+          "Qolgan oq va qora kataklar sonini sanang (30 oq, 32 qora).",
+          "Har bir domino 1 oq va 1 qora katakni yopishidan foydalanib, imkonsizligini isbotlang.",
+        ],
+        expectedResult: "Matematik invariant va juft-toqlik usuli bilan go‘zal isbot namoyishi.",
       },
     ],
     quizzes: [
@@ -1055,6 +1425,50 @@ Har bir misoldan keyin natijasini jadvalda ko'rsat (Format)."`,
         answer: 0,
         explanation: "2⁵ = 32, uning oxirgi raqami 2 ga teng.",
       },
+      {
+        id: "mq8",
+        question:
+          "6 ta do‘st uchrashib, har biri qolganlari bilan 1 martadan qo‘l berib ko‘rishsa, jami nechta qo‘l siqish bo‘ladi?",
+        options: ["12 ta", "15 ta", "18 ta", "30 ta"],
+        answer: 1,
+        explanation: "Formula: n*(n-1)/2 = 6*5/2 = 15 ta qo‘l siqish.",
+      },
+      {
+        id: "mq9",
+        question:
+          "Tovar narxi avval 10% oshdi, keyin 10% tushdi. Yakuniy narx dastlabkisidan qanday farq qiladi?",
+        options: ["O‘zgarmaydi", "1% ga kamayadi", "1% ga oshadi", "2% ga kamayadi"],
+        answer: 1,
+        explanation: "100 -> 110 -> 110 - 11 = 99 (ya'ni 1% ga kamaydi).",
+      },
+      {
+        id: "mq10",
+        question: "Sonning 9 ga qoldiqsiz bo‘linishi uchun qanday shart bajarilishi kerak?",
+        options: [
+          "Oxirgi raqami 9 bo‘lishi",
+          "Raqamlari yig‘indisi 9 ga bo‘linishi",
+          "Juft son bo‘lishi",
+          "Tub son bo‘lishi",
+        ],
+        answer: 1,
+        explanation:
+          "Agar son raqamlarining yig‘indisi 9 ga bo‘linsa, sonning o‘zi ham 9 ga bo‘linadi.",
+      },
+      {
+        id: "mq11",
+        question:
+          "Katetlari 6 sm va 8 sm bo‘lgan to‘g‘ri burchakli uchburchakning gipotenuzasi necha sm?",
+        options: ["9 sm", "10 sm", "12 sm", "14 sm"],
+        answer: 1,
+        explanation: "Pifagor teoremasi: 6² + 8² = 36 + 64 = 100 -> ildizi 10 sm.",
+      },
+      {
+        id: "mq12",
+        question: "1 dan 100 gacha sonlar orasida nechta tub son mavjud?",
+        options: ["20 ta", "25 ta", "30 ta", "35 ta"],
+        answer: 1,
+        explanation: "Eratosfen g‘alviri bo‘yicha 1 dan 100 gacha roppa-rosa 25 ta tub son bor.",
+      },
     ],
     terms: [
       {
@@ -1100,6 +1514,28 @@ Har bir misoldan keyin natijasini jadvalda ko'rsat (Format)."`,
         term: "Qoldiqli bo‘lish",
         definition: "Sonni bo‘lganda chiqadigan to‘liqsiz bo‘linma va qoldiq bilan ishlash usuli.",
         example: "17 : 5 = 3 (qoldiq 2).",
+      },
+      {
+        term: "Graf",
+        definition: "Uchlar (nuqtalar) va ularni bog‘lovchi qirralar (chiziqlar) dan iborat model.",
+        example: "Shaharlar va ular orasidagi yo‘llar sxemasi.",
+      },
+      {
+        term: "Invariant",
+        definition:
+          "Masaladagi barcha amallar davomida o‘zgarmay qoladigan kattalik yoki xususiyat.",
+        example: "Shaxmat kataklari ranglarining farqi.",
+      },
+      {
+        term: "Eratosfen g‘alviri",
+        definition: "Berilgan chegaragacha barcha tub sonlarni ketma-ket saralash algoritmi.",
+        example: "100 gacha 25 ta tub sonni ajratib olish.",
+      },
+      {
+        term: "Arifmetik progressiya",
+        definition:
+          "Har bir keyingi hadi oldingisiga bir xil d soni qo‘shilib hosil bo‘ladigan ketma-ketlik.",
+        example: "2, 5, 8, 11, 14... (ayirmasi d = 3).",
       },
     ],
   },
@@ -1241,6 +1677,58 @@ Har bir misoldan keyin natijasini jadvalda ko'rsat (Format)."`,
               "Kompyuter va telefondan har 40 daqiqada turib, 3 daqiqa ko‘z hamda yelka mashqini bajaring.",
             ],
           },
+          {
+            title: "Suv rejimi va to‘g‘ri nafas olish",
+            explanation:
+              "Yugurish va faol mashqlar paytida burun orqali chuqur nafas olib, og‘izdan sekin chiqarish yurak urishini me'yorda ushlaydi. Mashq davomida kichik qultumlarda toza suv ichish charchoqni kamaytiradi.",
+            tips: ["Og‘ir ovqatdan darhol keyin emas, kamida 1–1.5 soat o‘tgach mashq qiling."],
+          },
+        ],
+      },
+      {
+        id: "sp-7",
+        title: "7-dars: Yengil atletika — Tez yugurish va Estafeta texnikasi",
+        duration: "25 daqiqa",
+        level: "A2 - B1",
+        description:
+          "Qisqa masofaga start olish, qadam uzunligini boshqarish va estafeta tayoqchasini uzatish.",
+        topics: [
+          {
+            title: "Pastki start va finish tezlanishi",
+            explanation:
+              "60 va 100 metrga yugurishda tanani oldinga biroz egib, qo‘llarni 90° burchakda faol harakatlantirish maksimal tezlikka tez chiqishga yordam beradi.",
+            tips: ["Finish chizig‘idan oldin tezlikni tushirmang, oxirigacha intiling."],
+          },
+          {
+            title: "Jamoaviy estafetada tayoqcha uzatish",
+            explanation:
+              "Estafeta koridorida qabul qiluvchi o‘quvchi oldinga yugurishni boshlagan holda ortiga qaramasdan kaftini ochib tayoqchani oladi.",
+            tips: ["Uzunlikka yugurishda nafas ritmini qadamlarga moslash chidamlilikni oshiradi."],
+          },
+        ],
+      },
+      {
+        id: "sp-8",
+        title: "8-dars: Futbol asoslari, Sport odobi (Fair Play) va Musobaqa",
+        duration: "25 daqiqa",
+        level: "Barchaga",
+        description:
+          "Mini-futbolda aniq pas berish, himoya pozitsiyasi va halol o‘yin tamoyillari.",
+        topics: [
+          {
+            title: "Oyoq ichki tomoni bilan aniq pas va zarba",
+            explanation:
+              "Qisqa va o‘rta masofali uzatmalarda oyoqning ichki yuzasi eng yuqori aniqlikni beradi; tayanch oyoq esa to‘p yonida yo‘nalishga qaratib qo‘yiladi.",
+            tips: [
+              "Maydonda sheriklaringizni eshitish va bo‘sh zonaga ochilish g‘alaba kalitidir.",
+            ],
+          },
+          {
+            title: "Fair Play — Halol sport madaniyati",
+            explanation:
+              "Raqibga hurmat, hakam qarorini qabul qilish va yutqazganda ham tabriklay olish haqiqiy sportchining eng yuksak fazilatidir.",
+            tips: ["Jarohat olgan raqibga yordam ko‘rsatish jamoa obro‘sini oshiradi."],
+          },
         ],
       },
     ],
@@ -1286,6 +1774,20 @@ Har bir misoldan keyin natijasini jadvalda ko'rsat (Format)."`,
           "20 marta yengil cho‘zilish va nafas mashqi bilan yakunlang.",
         ],
         expectedResult: "Bel va bo‘yin charchog‘i yo‘qoladi, qad-qomat tiklanadi.",
+      },
+      {
+        id: "sp-p4",
+        title: "Loyiha 4: Sinf jamoalari o‘rtasida Mini-Olimpiada kundaligi",
+        level: "Jamoaviy",
+        description:
+          "Shaxmat, stol tennisi va estafeta musobaqalari jadvali hamda natijalar tahlilini tuzish.",
+        requirements: ["Turnir jadvali", "Sekundomer", "Hakamlar varaqasi"],
+        steps: [
+          "4 ta sinf jamoasi o‘rtasida aylana tizimidagi musobaqa jadvalini tuzing.",
+          "Har bir o‘yinda halol o‘yin (Fair Play) va natija ballarini qayd eting.",
+          "Yakuniy g‘oliblarni aniqlab, kichik tahliliy hisobot tayyorlang.",
+        ],
+        expectedResult: "Maktabda jamoaviylik, intizom va sog‘lom raqobat muhiti kuchayadi.",
       },
     ],
     quizzes: [
@@ -1350,6 +1852,44 @@ Har bir misoldan keyin natijasini jadvalda ko'rsat (Format)."`,
         explanation:
           "Razminka qon aylanishini tezlashtirib, pay va mushaklar shikastlanishining oldini oladi.",
       },
+      {
+        id: "sq8",
+        question:
+          "Basketbolda 3 ochkolik yoy tashqarisidan savatga aniq tushgan to‘p necha ochko beradi?",
+        options: ["1 ochko", "2 ochko", "3 ochko", "4 ochko"],
+        answer: 2,
+        explanation: "Yoy tashqarisidan kiritilgan aniq tashlash 3 ochko bilan baholanadi.",
+      },
+      {
+        id: "sq9",
+        question:
+          "Shaxmatda shohning yuradigan katagi bo‘lmasa, lekin unga shoh berilmagan bo‘lsa bu holat nima deyiladi?",
+        options: ["Mot", "Pat (Durang)", "Rokirovka", "Gambit"],
+        answer: 1,
+        explanation: "Pat holatida o‘yin durang bilan yakunlanadi.",
+      },
+      {
+        id: "sq10",
+        question: "Qisqa masofaga (60 m, 100 m) yugurishda qaysi start turidan foydalaniladi?",
+        options: ["Yuqori start", "Pastki start", "O‘tirgan start", "Aylanma start"],
+        answer: 1,
+        explanation: "Sprint masofalarida tezkor qo‘zg‘alish uchun pastki start qo‘llaniladi.",
+      },
+      {
+        id: "sq11",
+        question: "Voleybolda to‘pni o‘yinga kiritish qaysi zonadan amalga oshiriladi?",
+        options: ["1-zona", "3-zona", "4-zona", "6-zona"],
+        answer: 0,
+        explanation:
+          "O‘ng orqa burchakdagi 1-zona to‘pni o‘yinga kiritish (podacha) pozitsiyasidir.",
+      },
+      {
+        id: "sq12",
+        question: "Sportda raqibga hurmat va halol kurash tamoyili qanday ataladi?",
+        options: ["Fair Play", "Time Out", "Offside", "Penalty"],
+        answer: 0,
+        explanation: "Fair Play — halol o‘yin va sport odobi qoidalarini anglatadi.",
+      },
     ],
     terms: [
       {
@@ -1397,6 +1937,28 @@ Har bir misoldan keyin natijasini jadvalda ko'rsat (Format)."`,
         term: "Endshpil",
         definition: "Shaxmat partiyasining ko‘pchilik donalar almashinib ketgan yakuniy bosqichi.",
         example: "Shoh va piyoda bilan g‘alaba qozonish.",
+      },
+      {
+        term: "Pat",
+        definition:
+          "Shaxmatda shoh ostida bo‘lmagan o‘yinchining qonuniy yurishi qolmagan durang holat.",
+        example: "Oxirgi piyoda to‘silib, shoh chiqa olmay qolganda.",
+      },
+      {
+        term: "Fair Play",
+        definition: "Sportda halol raqobat, raqib va hakamlarga hurmat tamoyili.",
+        example: "Yiqilgan raqibga qo‘l cho‘zib yordam berish.",
+      },
+      {
+        term: "Estafeta",
+        definition: "Jamoa a'zolari masofani navbatma-navbat tayoqcha uzatib yuguradigan musobaqa.",
+        example: "4x100 metr maktablararo estafeta poygasi.",
+      },
+      {
+        term: "Stretching (Cho‘zilish)",
+        definition:
+          "Mashg‘ulotdan keyin mushaklarning egiluvchanligini tiklovchi tinchlantiruvchi mashqlar.",
+        example: "Yugurishdan keyingi 5 daqiqalik oyoq va bel cho‘zish mashqi.",
       },
     ],
   },
