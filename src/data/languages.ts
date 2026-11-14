@@ -46,6 +46,14 @@ export interface PracticeTask {
   explanation: string;
 }
 
+export interface GrammarRule {
+  title: string;
+  level: string;
+  formula: string;
+  explanation: string;
+  examples: string[];
+}
+
 export interface LanguageData {
   id: string;
   name: string;
@@ -71,6 +79,7 @@ export interface LanguageData {
   lessons: Lesson[];
   quiz: QuizQuestion[];
   tasks?: PracticeTask[];
+  grammarRules?: GrammarRule[];
   dialogue: DialogItem[];
   tips: string[];
 }
@@ -292,6 +301,134 @@ export const languagesData: Record<string, LanguageData> = {
         example: "Hard work leads to great success.",
         category: "Umumiy",
       },
+      {
+        id: "25",
+        word: "Yesterday",
+        translation: "Kecha",
+        pronunciation: "/ˈjes.tə.deɪ/",
+        example: "Yesterday we had an interesting English lesson.",
+        category: "Vaqt",
+      },
+      {
+        id: "26",
+        word: "Tomorrow",
+        translation: "Ertaga",
+        pronunciation: "/təˈmɒr.əʊ/",
+        example: "Tomorrow I will present my project.",
+        category: "Vaqt",
+      },
+      {
+        id: "27",
+        word: "Always",
+        translation: "Har doim",
+        pronunciation: "/ˈɔːl.weɪz/",
+        example: "She always arrives at school on time.",
+        category: "Ravishlar",
+      },
+      {
+        id: "28",
+        word: "Important",
+        translation: "Muhim",
+        pronunciation: "/ɪmˈpɔː.tənt/",
+        example: "Reading books is very important for students.",
+        category: "Sifatlar",
+      },
+      {
+        id: "29",
+        word: "Dictionary",
+        translation: "Lug‘at",
+        pronunciation: "/ˈdɪk.ʃən.ər.i/",
+        example: "Check the meaning in your dictionary.",
+        category: "O‘quv qurollari",
+      },
+      {
+        id: "30",
+        word: "Exercise",
+        translation: "Mashq",
+        pronunciation: "/ˈek.sə.saɪz/",
+        example: "Complete exercise five in your workbook.",
+        category: "Ta'lim",
+      },
+      {
+        id: "31",
+        word: "Sentence",
+        translation: "Gap / Jumla",
+        pronunciation: "/ˈsen.təns/",
+        example: "Make a full sentence with this verb.",
+        category: "Grammatika",
+      },
+      {
+        id: "32",
+        word: "Mistake",
+        translation: "Xato",
+        pronunciation: "/mɪˈsteɪk/",
+        example: "We learn from every mistake we correct.",
+        category: "Ta'lim",
+      },
+      {
+        id: "33",
+        word: "Improve",
+        translation: "Yaxshilamoq / Rivojlantirmoq",
+        pronunciation: "/ɪmˈpruːv/",
+        example: "Audio lessons help improve pronunciation.",
+        category: "Fe'llar",
+      },
+      {
+        id: "34",
+        word: "Understand",
+        translation: "Tushunmoq",
+        pronunciation: "/ˌʌn.dəˈstænd/",
+        example: "Do you understand this grammar rule?",
+        category: "Fe'llar",
+      },
+      {
+        id: "35",
+        word: "Remember",
+        translation: "Eslab qolmoq",
+        pronunciation: "/rɪˈmem.bər/",
+        example: "Try to remember ten words every day.",
+        category: "Fe'llar",
+      },
+      {
+        id: "36",
+        word: "Family",
+        translation: "Oila",
+        pronunciation: "/ˈfæm.əl.i/",
+        example: "My family supports my education.",
+        category: "Oila",
+      },
+      {
+        id: "37",
+        word: "Competition",
+        translation: "Musobaqa / Tanlov",
+        pronunciation: "/ˌkɒm.pəˈtɪʃ.ən/",
+        example: "Our school won first place in the competition.",
+        category: "Maktab",
+      },
+      {
+        id: "38",
+        word: "Schedule",
+        translation: "Dars jadvali",
+        pronunciation: "/ˈʃed.juːl/",
+        example: "Look at Monday's class schedule.",
+        category: "Maktab",
+      },
+      {
+        id: "39",
+        word: "Confident",
+        translation: "O‘ziga ishongan",
+        pronunciation: "/ˈkɒn.fɪ.dənt/",
+        example: "Speak clearly and feel confident!",
+        category: "Sifatlar",
+      },
+      {
+        id: "40",
+        word: "Achievement",
+        translation: "Yutuq",
+        pronunciation: "/əˈtʃiːv.mənt/",
+        example: "Getting a certificate is a proud achievement.",
+        category: "Umumiy",
+      },
     ],
     lessons: [
       {
@@ -430,6 +567,105 @@ export const languagesData: Record<string, LanguageData> = {
           },
         ],
       },
+      {
+        id: "en-7",
+        title: "7-dars: Past Simple (O‘tgan oddiy zamon)",
+        duration: "25 daqiqa",
+        level: "A2",
+        description:
+          "O‘tgan zamonda tugallangan voqealarni 'was/were', to‘g‘ri (-ed) va noto‘g‘ri fe'llar orqali ifodalash.",
+        topics: [
+          {
+            title: "Was / Were va to‘g‘ri fe'llar (-ed)",
+            explanation:
+              "'To be' fe'lining o‘tgan zamon shakli: I/He/She/It -> was; You/We/They -> were. To‘g‘ri fe'llarga esa -ed qo‘shiladi (work -> worked, play -> played).",
+            examples: ["Yesterday I was at the library.", "We finished our homework an hour ago."],
+          },
+          {
+            title: "Noto‘g‘ri fe'llar va Did / Didn't",
+            explanation:
+              "Noto‘g‘ri fe'llarning 2-shakli yodlanadi (go -> went, see -> saw, write -> wrote). So‘roq va inkor gaplarda 'did / didn't' + fe'lning asosiy shakli ishlatiladi.",
+            examples: [
+              "She went to the IT club yesterday.",
+              "Did you read the book? — Yes, I did.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "en-8",
+        title: "8-dars: Future Simple (Kelasi zamon — will / going to)",
+        duration: "20 daqiqa",
+        level: "A2 - B1",
+        description: "Kelajakdagi rejalar, maqsadlar va bashoratlar haqida gapirish.",
+        topics: [
+          {
+            title: "'Will' yordamida kelasi zamon",
+            explanation:
+              "Barcha shaxslar bilan 'will + V1' ishlatiladi. Inkor shakli 'will not (won't)', so‘roqda esa 'Will' ega oldiga chiqadi.",
+            examples: [
+              "I will learn twenty new English words this week.",
+              "Will you join the robotics club tomorrow?",
+            ],
+          },
+          {
+            title: "'Be going to' (rejalashtirilgan harakat)",
+            explanation:
+              "Oldindan rejalashtirilgan ishlar uchun 'am/is/are + going to + V1' qolipi qo‘llaniladi.",
+            examples: ["We are going to visit the science exhibition next Friday."],
+          },
+        ],
+      },
+      {
+        id: "en-9",
+        title: "9-dars: Sifat darajalari (Comparatives & Superlatives)",
+        duration: "22 daqiqa",
+        level: "A2 - B1",
+        description:
+          "Narsalar va hodisalarni taqqoslash: qiyosiy (-er / more) va orttirma (-est / the most) darajalar.",
+        topics: [
+          {
+            title: "Qisqa va uzun sifatlar qoidasi",
+            explanation:
+              "Qisqa sifatlarga -er / -est qo‘shiladi (fast -> faster -> the fastest). Ko‘p bo‘g‘inli sifatlar oldiga 'more / the most' qo‘yiladi (interesting -> more interesting -> the most interesting).",
+            examples: [
+              "English is easier when you practice daily.",
+              "This is the most useful dictionary in our class.",
+            ],
+          },
+          {
+            title: "Istisno sifatlar",
+            explanation:
+              "good -> better -> the best; bad -> worse -> the worst; many/much -> more -> the most.",
+            examples: ["Daily practice is the best way to speak fluently."],
+          },
+        ],
+      },
+      {
+        id: "en-10",
+        title: "10-dars: Predloglar (in, on, at) va Savol so‘zlari",
+        duration: "20 daqiqa",
+        level: "A2 - B1",
+        description:
+          "Vaqt va joy predloglarini to‘g‘ri tanlash hamda maxsus savollar (Wh-questions) tuzish.",
+        topics: [
+          {
+            title: "Vaqt va joyda in / on / at",
+            explanation:
+              "at — aniq soat va nuqta (at 8:00, at school); on — kunlar va yuza (on Monday, on the desk); in — oylar, yillar va ichki makon (in September, in the classroom).",
+            examples: [
+              "Our English class starts at nine o'clock on Monday.",
+              "Students read quietly in the library.",
+            ],
+          },
+          {
+            title: "Maxsus savol so‘zlari",
+            explanation:
+              "What (nima), Where (qayerda), When (qachon), Who (kim), Why (nima uchun), How (qanday).",
+            examples: ["Where do you practice speaking?", "How many words did you learn today?"],
+          },
+        ],
+      },
     ],
     quiz: [
       {
@@ -504,6 +740,48 @@ export const languagesData: Record<string, LanguageData> = {
         explanation:
           "'My friend' (He/She) 3-shaxs birlik bo‘lgani uchun inkorda 'does' ishlatiladi.",
       },
+      {
+        id: "q11",
+        question: "'Yesterday I ___ to the school library' (Past Simple) gapini to‘ldiring:",
+        options: ["go", "goes", "went", "going"],
+        answer: 2,
+        explanation: "'Go' noto‘g‘ri fe'l bo‘lib, Past Simple da 'went' shakliga o‘zgaradi.",
+      },
+      {
+        id: "q12",
+        question: "'Did you ___ the homework?' so‘roq gapida fe'l qanday shaklda keladi?",
+        options: ["finished", "finish", "finishes", "finishing"],
+        answer: 1,
+        explanation: "'Did' yordamchi fe'lidan keyin asosiy fe'l V1 (finish) shaklida bo‘ladi.",
+      },
+      {
+        id: "q13",
+        question: "'Our lessons start ___ 8:30 every morning' gapiga mos predlogni tanlang:",
+        options: ["in", "on", "at", "to"],
+        answer: 2,
+        explanation: "Aniq soat va vaqt oldidan doim 'at' predlogi ishlatiladi (at 8:30).",
+      },
+      {
+        id: "q14",
+        question: "'Good' sifatining orttirma (superlative) darajasi qaysi?",
+        options: ["goodest", "more good", "better", "the best"],
+        answer: 3,
+        explanation: "'Good -> better -> the best' istisno sifat hisoblanadi.",
+      },
+      {
+        id: "q15",
+        question: "'Tomorrow we ___ have an English quiz' (kelasi zamon) gapini to‘ldiring:",
+        options: ["did", "will", "was", "does"],
+        answer: 1,
+        explanation: "Kelajakdagi harakat ('Tomorrow') uchun 'will' ishlatiladi.",
+      },
+      {
+        id: "q16",
+        question: "'___ is your favorite subject?' savol gapiga qaysi so‘z mos?",
+        options: ["Who", "Where", "What", "When"],
+        answer: 2,
+        explanation: "Narsa yoki fanni so‘rashda 'What' (Nima / Qaysi) ishlatiladi.",
+      },
     ],
     tasks: [
       {
@@ -557,6 +835,120 @@ export const languagesData: Record<string, LanguageData> = {
         hint: "Oxiriga -s qo‘shing.",
         answer: "notebooks",
         explanation: "Ko‘plikda 'notebooks' bo‘ladi.",
+      },
+      {
+        id: "en-task-7",
+        type: "Past Simple topshirig‘i",
+        prompt: "Yesterday we ___ (write) ten new English words.",
+        hint: "'Write' noto‘g‘ri fe'lining 2-shaklini yozing.",
+        answer: "wrote",
+        explanation: "write -> wrote (o‘tgan zamon shakli).",
+      },
+      {
+        id: "en-task-8",
+        type: "Predlog qo‘ying",
+        prompt: "We have Computer Science ___ Tuesday. (in / on / at dan mosini yozing)",
+        hint: "Hafta kunlari oldidan qaysi predlog keladi?",
+        answer: "on",
+        explanation: "Hafta kunlari oldidan har doim 'on' ishlatiladi (on Tuesday).",
+      },
+      {
+        id: "en-task-9",
+        type: "Sifat darajasi",
+        prompt: "This book is ___ (interesting) than that one. (Qiyosiy daraja)",
+        hint: "Ko‘p bo‘g‘inli sifat oldidan 'more' qo‘yiladi.",
+        answer: "more interesting",
+        explanation: "Ko‘p bo‘g‘inli sifatlar qiyosiy darajada 'more + sifat' shaklida bo‘ladi.",
+      },
+      {
+        id: "en-task-10",
+        type: "Future Simple topshirig‘i",
+        prompt: "I ___ (help) you with the exercise tomorrow.",
+        hint: "Kelasi zamon yordamchi fe'li: will + ...",
+        answer: "will help",
+        acceptableAnswers: ["'ll help"],
+        explanation: "Kelajakdagi va'da va rejalar uchun 'will help' ishlatiladi.",
+      },
+      {
+        id: "en-task-11",
+        type: "Was / Were tanlang",
+        prompt: "They ___ very happy after winning the school competition.",
+        hint: "'They' ko‘plikda bo‘lgani uchun 'was' emas...",
+        answer: "were",
+        explanation: "Ko‘plikda (We/You/They) o‘tgan zamonda 'were' ishlatiladi.",
+      },
+      {
+        id: "en-task-12",
+        type: "Savol so‘zi qo‘ying",
+        prompt: "___ do you study English? — Because I want to travel and learn IT.",
+        hint: "Sababni so‘rash uchun 'Nima uchun?' so‘zini yozing.",
+        answer: "Why",
+        explanation: "'Why' — 'nima uchun' degan ma'noni beradi.",
+      },
+    ],
+    grammarRules: [
+      {
+        title: "To be fe'li (Hozirgi va O‘tgan zamon)",
+        level: "A1",
+        formula: "I am/was | He, She, It is/was | We, You, They are/were",
+        explanation:
+          "Holat, kasb, joy va sifatni bildirishda asosiy bog‘lovchi fe'l sifatida ishlatiladi.",
+        examples: ["I am a student. / I was at school.", "They are friends. / They were ready."],
+      },
+      {
+        title: "Present Simple (Hozirgi oddiy zamon)",
+        level: "A1 - A2",
+        formula: "I/You/We/They + V1 | He/She/It + V1 + s/es | Do / Does",
+        explanation:
+          "Doimiy takrorlanadigan harakatlar, odatlar va umumiy haqiqatlar uchun qo‘llaniladi.",
+        examples: ["She studies every day.", "Do you speak English? — Yes, I do."],
+      },
+      {
+        title: "Past Simple (O‘tgan oddiy zamon)",
+        level: "A2",
+        formula: "Subject + V2 (-ed / irregular) | Did + Subject + V1?",
+        explanation:
+          "O‘tgan vaqtda (yesterday, last week, ago) aniq sodir bo‘lib tugagan ishlar uchun.",
+        examples: ["We learned new words yesterday.", "Did he go to the library?"],
+      },
+      {
+        title: "Future Simple (Kelasi oddiy zamon)",
+        level: "A2 - B1",
+        formula: "Subject + will + V1 | Subject + am/is/are + going to + V1",
+        explanation: "Kelajakdagi rejalar, qarorlar va taxminlarni ifodalash uchun ishlatiladi.",
+        examples: ["I will practice speaking tomorrow.", "We are going to read a new story."],
+      },
+      {
+        title: "Artikllar (a, an, the)",
+        level: "A1 - A2",
+        formula: "a + undosh | an + unli tovush | the + aniq narsa",
+        explanation:
+          "Sanaladigan birlikdagi otlar oldidan 'a/an', suhbatdoshga ma'lum bo‘lgan otlar oldidan 'the' qo‘yiladi.",
+        examples: ["a computer, an exercise", "The book on the table is interesting."],
+      },
+      {
+        title: "Sifat darajalari (Comparatives & Superlatives)",
+        level: "A2 - B1",
+        formula: "-er / -est (qisqa) | more / the most (uzun)",
+        explanation:
+          "Ikki narsani qiyoslashda 'than' bilan qiyosiy daraja, eng ustunini aytishda 'the' bilan orttirma daraja ishlatiladi.",
+        examples: ["fast -> faster -> the fastest", "useful -> more useful -> the most useful"],
+      },
+      {
+        title: "Vaqt va joy predloglari (in, on, at)",
+        level: "A1 - A2",
+        formula: "at (soat/nuqta) | on (kun/yuza) | in (oy/yil/ichida)",
+        explanation:
+          "Aniq vaqtlarda 'at', hafta kunlari va sanalarda 'on', oylar, fasllar va yopiq joylarda 'in' ishlatiladi.",
+        examples: ["at 8:00, on Monday, in May", "in the classroom, on the desk, at school"],
+      },
+      {
+        title: "Modal fe'llar (Can / Must / Should)",
+        level: "A2 - B1",
+        formula: "Subject + can / must / should + V1 ('to' siz)",
+        explanation:
+          "Can — qobiliyat/ruxsat; Must — majburiyat; Should — maslahat va tavsiya berish uchun.",
+        examples: ["I can speak two languages.", "You should read every day."],
       },
     ],
     dialogue: [
@@ -830,6 +1222,134 @@ export const languagesData: Record<string, LanguageData> = {
         example: "Желаю вам больших успехов в учёбе!",
         category: "Umumiy",
       },
+      {
+        id: "25",
+        word: "Вчера",
+        translation: "Kecha",
+        pronunciation: "Vchera",
+        example: "Вчера мы писали интересное сочинение.",
+        category: "Vaqt",
+      },
+      {
+        id: "26",
+        word: "Завтра",
+        translation: "Ertaga",
+        pronunciation: "Zavtra",
+        example: "Завтра у нас будет олимпиада по русскому языку.",
+        category: "Vaqt",
+      },
+      {
+        id: "27",
+        word: "Всегда",
+        translation: "Har doim",
+        pronunciation: "Vsegda",
+        example: "Он всегда помогает своим одноклассникам.",
+        category: "Ravishlar",
+      },
+      {
+        id: "28",
+        word: "Словарь",
+        translation: "Lug‘at",
+        pronunciation: "Slovar",
+        example: "Посмотрите новое слово в словаре.",
+        category: "O‘quv qurollari",
+      },
+      {
+        id: "29",
+        word: "Упражнение",
+        translation: "Mashq",
+        pronunciation: "Uprazhneniye",
+        example: "Выполните пятое упражнение письменно.",
+        category: "Ta'lim",
+      },
+      {
+        id: "30",
+        word: "Предложение",
+        translation: "Gap / Jumla",
+        pronunciation: "Predlozheniye",
+        example: "Составьте красивое предложение с этим словом.",
+        category: "Grammatika",
+      },
+      {
+        id: "31",
+        word: "Ошибка",
+        translation: "Xato",
+        pronunciation: "Oshibka",
+        example: "Исправьте орфографическую ошибку.",
+        category: "Ta'lim",
+      },
+      {
+        id: "32",
+        word: "Понимать",
+        translation: "Tushunmoq",
+        pronunciation: "Ponimat",
+        example: "Я хорошо понимаю учителя.",
+        category: "Fe'llar",
+      },
+      {
+        id: "33",
+        word: "Повторять",
+        translation: "Takrorlamoq",
+        pronunciation: "Povtoryat",
+        example: "Нужно регулярно повторять правила.",
+        category: "Fe'llar",
+      },
+      {
+        id: "34",
+        word: "Расписание",
+        translation: "Dars jadvali",
+        pronunciation: "Raspisaniye",
+        example: "Посмотрите расписание на понедельник.",
+        category: "Maktab",
+      },
+      {
+        id: "35",
+        word: "Семья",
+        translation: "Oila",
+        pronunciation: "Semya",
+        example: "Моя семья гордится моими успехами.",
+        category: "Oila",
+      },
+      {
+        id: "36",
+        word: "Важный",
+        translation: "Muhim",
+        pronunciation: "Vazhniy",
+        example: "Это очень важный урок для нас.",
+        category: "Sifatlar",
+      },
+      {
+        id: "37",
+        word: "Интересный",
+        translation: "Qiziqarli",
+        pronunciation: "Interesniy",
+        example: "В библиотеке есть интересный рассказ.",
+        category: "Sifatlar",
+      },
+      {
+        id: "38",
+        word: "Перемена",
+        translation: "Tanaffus",
+        pronunciation: "Peremena",
+        example: "На перемене ученики отдыхают в коридоре.",
+        category: "Maktab",
+      },
+      {
+        id: "39",
+        word: "Предмет",
+        translation: "Fan (o‘quv fani)",
+        pronunciation: "Predmet",
+        example: "Информатика — мой любимый предмет.",
+        category: "Maktab",
+      },
+      {
+        id: "40",
+        word: "Достижение",
+        translation: "Yutuq",
+        pronunciation: "Dostizheniye",
+        example: "Получение сертификата — важное достижение.",
+        category: "Umumiy",
+      },
     ],
     lessons: [
       {
@@ -949,6 +1469,83 @@ export const languagesData: Record<string, LanguageData> = {
           },
         ],
       },
+      {
+        id: "ru-7",
+        title: "7-dars: Fe’llarning o‘tgan zamoni (Прошедшее время)",
+        duration: "22 daqiqa",
+        level: "A2",
+        description:
+          "O‘tgan zamon fe'llarini -л, -ла, -ло, -ли qo‘shimchalari orqali rod va songa moslashtirish.",
+        topics: [
+          {
+            title: "Rod bo‘yicha o‘zgarish qoidasi",
+            explanation:
+              "Erkak jinsi (он): -л (читал); Ayol jinsi (она): -ла (читала); O‘rta jins (оно): -ло (было); Ko‘plik (они/мы/вы): -ли (читали).",
+            examples: [
+              "Вчера Анвар читал книгу в библиотеке.",
+              "Мадина написала упражнение без ошибок.",
+              "Мы выучили новые русские слова.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "ru-8",
+        title: "8-dars: Fe’llarning kelasi zamoni (Будущее время)",
+        duration: "20 daqiqa",
+        level: "A2 - B1",
+        description:
+          "'Быть' fe'lining kelasi zamon shakli (буду, будешь, будет...) yordamida gap tuzish.",
+        topics: [
+          {
+            title: "Murakkab kelasi zamon formulasi",
+            explanation:
+              "Я буду, ты будешь, он/она будет, мы будем, вы будете, они будут + fe'lning noaniq shakli (инфинитив).",
+            examples: ["Завтра я буду учить новые слова.", "Мы будем готовиться к олимпиаде."],
+          },
+        ],
+      },
+      {
+        id: "ru-9",
+        title: "9-dars: Sifatlar (Прилагательные) va rodga moslashuv",
+        duration: "24 daqiqa",
+        level: "A2 - B1",
+        description: "Sifat qo‘shimchalarini otning rodi va ko‘pligiga qarab to‘g‘ri qo‘llash.",
+        topics: [
+          {
+            title: "Какой? Какая? Какое? Какие?",
+            explanation:
+              "Erkak jinsi: -ый/-ий (новый учебник); Ayol jinsi: -ая/-яя (интересная книга); O‘rta jins: -ое/-ее (большое здание); Ko‘plik: -ые/-ие (умные ученики).",
+            examples: [
+              "Это наш новый компьютерный класс.",
+              "Я читаю очень интересную книгу.",
+              "В нашей школе большие и светлые окна.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "ru-10",
+        title: "10-dars: Joy predloglari (в, на) va Где? / Куда? savollari",
+        duration: "22 daqiqa",
+        level: "A2 - B1",
+        description:
+          "Qayerda? (Где? — в школе, на уроке) va Qayerga? (Куда? — в школу, на урок) shakllarini farqlash.",
+        topics: [
+          {
+            title: "Где? (Предложный падеж: -е/-и)",
+            explanation:
+              "Harakat o‘rnini bildirganda ot oxiriga odatda -е qo‘shiladi: в школе, в классе, на уроке, в библиотеке.",
+            examples: ["Ученики находятся в классе.", "Мы занимаемся на уроке русского языка."],
+          },
+          {
+            title: "Куда? (Винительный падеж: -у/-ю)",
+            explanation:
+              "Yo‘nalishni bildirganda ayol jinsidagi -а/-я oxiri -у/-ю ga o‘zgaradi: идти в школу, идти в библиотеку.",
+            examples: ["Утром я иду в школу №8.", "После уроков мы идём в библиотеку."],
+          },
+        ],
+      },
     ],
     quiz: [
       {
@@ -1022,6 +1619,48 @@ export const languagesData: Record<string, LanguageData> = {
         answer: 2,
         explanation: "Rasmiy va hurmatli salomlashish 'Здравствуйте' hisoblanadi.",
       },
+      {
+        id: "q11",
+        question: "'Вчера Мадина ___ (писать) диктант' o‘tgan zamon fe'lini tanlang:",
+        options: ["писал", "писала", "писало", "писали"],
+        answer: 1,
+        explanation: "'Мадина' ayol jinsida bo‘lgani uchun o‘tgan zamonda -ла qo‘shiladi: писала.",
+      },
+      {
+        id: "q12",
+        question: "'Завтра мы ___ читать новый рассказ' kelasi zamon shaklini tanlang:",
+        options: ["буду", "будешь", "будем", "будут"],
+        answer: 2,
+        explanation: "'Мы' (biz) olmoshi bilan kelasi zamonda 'будем' ishlatiladi.",
+      },
+      {
+        id: "q13",
+        question: "'___ книга' (qiziqarli kitob) birikmasiga mos sifatni tanlang:",
+        options: ["интересный", "интересная", "интересное", "интересные"],
+        answer: 1,
+        explanation: "'Книга' ayol jinsida bo‘lgani uchun sifat ham -ая bilan tugaydi: интересная.",
+      },
+      {
+        id: "q14",
+        question: "'Где вы учитесь? — Я учусь в ___' (maktabda) to‘g‘ri shaklni tanlang:",
+        options: ["школа", "школу", "школе", "школы"],
+        answer: 2,
+        explanation: "'Где?' (qayerda?) savoliga javoban 'в школе' (Предложный падеж) ishlatiladi.",
+      },
+      {
+        id: "q15",
+        question: "'Куда ты идёшь? — Я иду в ___' (kutubxonaga) to‘g‘ri shaklni tanlang:",
+        options: ["библиотека", "библиотеку", "библиотеке", "библиотеки"],
+        answer: 1,
+        explanation: "'Куда?' (qayerga?) yo‘nalishida 'в библиотеку' shaklida -у qo‘shiladi.",
+      },
+      {
+        id: "q16",
+        question: "'___ учебники' (yangi darsliklar — ko‘plik) birikmasini to‘ldiring:",
+        options: ["новый", "новая", "новое", "новые"],
+        answer: 3,
+        explanation: "Ko‘plikdagi otlar bilan sifatga -ые/-ие qo‘shiladi: новые учебники.",
+      },
     ],
     tasks: [
       {
@@ -1071,6 +1710,118 @@ export const languagesData: Record<string, LanguageData> = {
         hint: "'Мы' bilan 2-tuslanishda -им qo‘shimchasi qo‘shiladi.",
         answer: "учим",
         explanation: "Мы учим новые русские слова (Biz yangi ruscha so‘zlarni o‘rganayapmiz).",
+      },
+      {
+        id: "ru-task-7",
+        type: "O‘tgan zamon (Прошедшее время)",
+        prompt: "Вчера они ___ (читать) стихи на уроке.",
+        hint: "Ko‘plik ('они') uchun o‘tgan zamonda -ли qo‘shiladi.",
+        answer: "читали",
+        explanation: "Они читали (ular o‘qishdi).",
+      },
+      {
+        id: "ru-task-8",
+        type: "Kelasi zamon (Будущее время)",
+        prompt: "Завтра я ___ (учить) грамматику. (2 so‘z: буду + fe'l)",
+        hint: "'Я' + буду + инфинитив.",
+        answer: "буду учить",
+        explanation: "Я буду учить грамматику (Men grammatikani o‘rganaman).",
+      },
+      {
+        id: "ru-task-9",
+        type: "Sifatni rodga moslang",
+        prompt: "У нас ___ (новый) библиотека. (Ayol jinsida yozing)",
+        hint: "'Библиотека' ayol jinsida bo‘lgani uchun -ая qo‘shimchasi kerak.",
+        answer: "новая",
+        explanation: "Новая библиотека (yangi kutubxona).",
+      },
+      {
+        id: "ru-task-10",
+        type: "Где? (Qayerda?)",
+        prompt: "Учитель объясняет тему в ___ (класс). (Предложный падеж)",
+        hint: "Oxiriga -е qo‘shing.",
+        answer: "классе",
+        explanation: "В классе (sinfda).",
+      },
+      {
+        id: "ru-task-11",
+        type: "Куда? (Qayerga?)",
+        prompt: "Утром ученики идут в ___ (школа). (Винительный падеж)",
+        hint: "-а harfi -у ga o‘zgaradi.",
+        answer: "школу",
+        explanation: "Идут в школу (maktabga borishadi).",
+      },
+      {
+        id: "ru-task-12",
+        type: "O‘rta jins sifat",
+        prompt: "Это ___ (большой) достижение. (O‘rta jinsda -ое qo‘shimchasi bilan yozing)",
+        hint: "'Достижение' o‘rta jinsda (-е).",
+        answer: "большое",
+        explanation: "Большое достижение (katta yutuq).",
+      },
+    ],
+    grammarRules: [
+      {
+        title: "Otlarning 3 ta rodi (Род существительных)",
+        level: "A1",
+        formula: "Мужской (undosh/-й) | Женский (-а/-я) | Средний (-о/-е)",
+        explanation:
+          "Rus tilida har bir ot uchta roddan biriga kiradi va bu sifat hamda olmoshlarning shaklini belgilaydi.",
+        examples: ["урок, учитель (он)", "школа, книга (она)", "окно, задание (оно)"],
+      },
+      {
+        title: "Otlarning ko‘plik shakli (Множественное число)",
+        level: "A1 - A2",
+        formula: "-ы / -и (он, она) | -а / -я (оно)",
+        explanation:
+          "г, к, х, ж, ч, ш, щ harflaridan keyin doim -и yoziladi (книга -> книги, ученик -> ученики).",
+        examples: ["стол -> столы", "книга -> книги", "окно -> окна"],
+      },
+      {
+        title: "Egalik olmoshlari (Притяжательные местоимения)",
+        level: "A1 - A2",
+        formula: "мой / твой / наш (он) | моя / твоя / наша (она) | моё (оно) | мои (они)",
+        explanation: "Egalik olmoshi o‘zidan keyin kelayotgan otning rodi va soniga moslashadi.",
+        examples: ["мой словарь", "моя тетрадь", "моё упражнение", "мои книги"],
+      },
+      {
+        title: "Fe’llarning hozirgi zamoni (1- va 2-tuslanish)",
+        level: "A2",
+        formula:
+          "1-tuslanish: -у/-ю, -ешь, -ет, -ем, -ете, -ут/-ют | 2-tuslanish: -у/-ю, -ишь, -ит, -им, -ите, -ат/-ят",
+        explanation:
+          "Читать (1-tuslanish) va говорить / учить (2-tuslanish) fe'llari shaxs va sonda tuslanadi.",
+        examples: ["Я читаю, мы читаем", "Ты говоришь, они говорят"],
+      },
+      {
+        title: "Fe’llarning o‘tgan zamoni (Прошедшее время)",
+        level: "A2",
+        formula: "Он: -л | Она: -ла | Оно: -ло | Они: -ли",
+        explanation:
+          "O‘tgan zamon fe'llari shaxsga emas, balki eganing rodi va ko‘plik-birligiga qarab o‘zgaradi.",
+        examples: ["Анвар писал", "Мадина писала", "Ученики писали"],
+      },
+      {
+        title: "Fe’llarning kelasi zamoni (Будущее время)",
+        level: "A2 - B1",
+        formula: "буду / будешь / будет / будем / будете / будут + инфинитив",
+        explanation: "Kelajakda bajariladigan davomiy yoki takroriy harakatlar uchun ishlatiladi.",
+        examples: ["Я буду читать", "Мы будем изучать русский язык"],
+      },
+      {
+        title: "Sifatlarning rod va sonda moslashuvi",
+        level: "A2 - B1",
+        formula: "-ый/-ий (он) | -ая/-яя (она) | -ое/-ее (оно) | -ые/-ие (они)",
+        explanation: "Sifat har doim o‘zi bog‘langan ot bilan bir xil rod va sonda keladi.",
+        examples: ["новый класс", "новая книга", "новое правило", "новые слова"],
+      },
+      {
+        title: "Joy va yo‘nalish: Где? vs Куда?",
+        level: "A2 - B1",
+        formula: "Где? -> в/на + Предложный (-е) | Куда? -> в/на + Винительный (-у/-ю)",
+        explanation:
+          "Joylashuvni aytishda 'в школе', harakat yo‘nalishini aytishda esa 'в школу' ishlatiladi.",
+        examples: ["Я учусь в школе №8 (Где?)", "Я иду в школу №8 (Куда?)"],
       },
     ],
     dialogue: [

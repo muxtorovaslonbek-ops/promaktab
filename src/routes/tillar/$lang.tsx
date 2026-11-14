@@ -14,6 +14,11 @@ import {
   Languages,
   PenLine,
   Lightbulb,
+  Shuffle,
+  ChevronLeft,
+  Layers,
+  List,
+  BookMarked,
 } from "lucide-react";
 import { languagesData, type LanguageData } from "@/data/languages";
 import logo from "@/assets/logo.png";
@@ -56,6 +61,10 @@ export function LanguageDetailPage() {
   const [taskHints, setTaskHints] = useState<Record<string, boolean>>({});
   const [speakingWordId, setSpeakingWordId] = useState<string | null>(null);
   const [vocabSearch, setVocabSearch] = useState("");
+  const [vocabMode, setVocabMode] = useState<"grid" | "flashcards">("grid");
+  const [flashcardIdx, setFlashcardIdx] = useState(0);
+  const [flashcardFlipped, setFlashcardFlipped] = useState(false);
+  const [shuffledOrder, setShuffledOrder] = useState<number[] | null>(null);
 
   useEffect(() => {
     setSelectedLessonIndex(0);
@@ -65,6 +74,9 @@ export function LanguageDetailPage() {
     setTaskChecked({});
     setTaskHints({});
     setVocabSearch("");
+    setFlashcardIdx(0);
+    setFlashcardFlipped(false);
+    setShuffledOrder(null);
   }, [lang.id]);
 
   const playSpeech = (text: string, locale: string, id?: string) => {
@@ -112,6 +124,28 @@ export function LanguageDetailPage() {
       v.word.toLowerCase().includes(vocabSearch.toLowerCase()) ||
       v.translation.toLowerCase().includes(vocabSearch.toLowerCase()),
   );
+
+  const flashcardDeck = shuffledOrder
+    ? shuffledOrder
+        .map((idx) => lang.vocabulary[idx])
+        .filter((v): v is NonNullable<typeof v> => !!v)
+    : lang.vocabulary;
+  const safeFlashcardIdx =
+    flashcardDeck.length > 0 ? Math.min(flashcardIdx, flashcardDeck.length - 1) : 0;
+  const currentFlashcard = flashcardDeck[safeFlashcardIdx];
+
+  const shuffleFlashcards = () => {
+    const indices = lang.vocabulary.map((_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = indices[i]!;
+      indices[i] = indices[j]!;
+      indices[j] = tmp;
+    }
+    setShuffledOrder(indices);
+    setFlashcardIdx(0);
+    setFlashcardFlipped(false);
+  };
 
   const allLangs = Object.values(languagesData);
 
@@ -286,7 +320,10 @@ export function LanguageDetailPage() {
             }`}
           >
             <Sparkles className="h-4 w-4" />
-            Alifbo va Qoidalar
+            Alifbo va Grammatika
+            {lang.grammarRules && lang.grammarRules.length > 0
+              ? ` (${lang.grammarRules.length})`
+              : ""}
           </button>
         </div>
       </section>
@@ -296,107 +333,331 @@ export function LanguageDetailPage() {
         {/* TAB 1: VOCABULARY & FLASHCARDS */}
         {activeTab === "vocab" && (
           <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <h2 className="text-xl font-extrabold text-foreground">Asosiy so‘z va iboralar</h2>
+                <h2 className="text-xl font-extrabold text-foreground">
+                  Asosiy so‘z, ibora va fleshcardlar
+                </h2>
                 <p className="text-xs text-muted-foreground">
-                  Har bir so‘zni audio talaffuzi bilan eshiting va o‘rganilgan sifatida belgilang.
+                  Har bir so‘zni audio talaffuzi bilan eshiting, fleshcardda sinang va o‘rganilgan
+                  sifatida belgilang.
                 </p>
               </div>
 
-              <div className="w-full sm:w-72">
-                <label htmlFor={searchInputId} className="sr-only">
-                  So‘z yoki tarjimani qidirish
-                </label>
-                <input
-                  id={searchInputId}
-                  type="text"
-                  value={vocabSearch}
-                  onChange={(e) => setVocabSearch(e.target.value)}
-                  placeholder="So‘z yoki tarjimani qidirish..."
-                  className="w-full rounded-xl border border-border bg-card px-3.5 py-2 text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
-                />
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                <div className="inline-flex rounded-xl border border-border bg-muted/60 p-1">
+                  <button
+                    type="button"
+                    onClick={() => setVocabMode("grid")}
+                    className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition cursor-pointer ${
+                      vocabMode === "grid"
+                        ? "bg-card text-indigo-600 shadow-xs"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <List className="h-3.5 w-3.5" />
+                    <span>Ro‘yxat ({filteredVocabulary.length})</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setVocabMode("flashcards")}
+                    className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition cursor-pointer ${
+                      vocabMode === "flashcards"
+                        ? "bg-card text-indigo-600 shadow-xs"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <Layers className="h-3.5 w-3.5" />
+                    <span>Fleshcardlar ({lang.vocabulary.length})</span>
+                  </button>
+                </div>
+
+                {vocabMode === "grid" && (
+                  <div className="w-full sm:w-64">
+                    <label htmlFor={searchInputId} className="sr-only">
+                      So‘z yoki tarjimani qidirish
+                    </label>
+                    <input
+                      id={searchInputId}
+                      type="text"
+                      value={vocabSearch}
+                      onChange={(e) => setVocabSearch(e.target.value)}
+                      placeholder="So‘z yoki tarjimani qidirish..."
+                      className="w-full rounded-xl border border-border bg-card px-3.5 py-2 text-xs font-medium outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredVocabulary.map((item) => {
-                const isLearned = !!learnedWords[item.id];
-                const isSpeaking = speakingWordId === item.id;
+            {vocabMode === "flashcards" && currentFlashcard ? (
+              <div className="max-w-2xl mx-auto space-y-5">
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-card px-4 py-3 shadow-xs">
+                  <div className="flex items-center gap-3 text-xs font-bold">
+                    <span className="rounded-lg bg-indigo-50 px-2.5 py-1 text-indigo-700">
+                      Karta {safeFlashcardIdx + 1} / {flashcardDeck.length}
+                    </span>
+                    <span className="text-muted-foreground">
+                      O‘rganildi: {Object.values(learnedWords).filter(Boolean).length}
+                    </span>
+                  </div>
 
-                return (
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={shuffleFlashcards}
+                      className="flex items-center gap-1.5 rounded-xl border border-border bg-muted/60 px-3 py-1.5 text-xs font-bold hover:bg-muted transition cursor-pointer"
+                    >
+                      <Shuffle className="h-3.5 w-3.5" />
+                      <span>Aralashtirish</span>
+                    </button>
+                    {shuffledOrder && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShuffledOrder(null);
+                          setFlashcardIdx(0);
+                          setFlashcardFlipped(false);
+                        }}
+                        className="flex items-center gap-1 rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition cursor-pointer"
+                      >
+                        <RotateCcw className="h-3.5 w-3.5" />
+                        <span>Tartiblash</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Progress bar */}
+                <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
                   <div
-                    key={item.id}
-                    className={`relative flex flex-col justify-between rounded-2xl border p-5 transition duration-200 shadow-sm ${
-                      isLearned
-                        ? "border-emerald-300 bg-emerald-50/40"
-                        : "border-border bg-card hover:border-indigo-300"
-                    }`}
-                  >
-                    <div>
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="rounded-md bg-muted px-2 py-0.5 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                          {item.category}
-                        </span>
+                    className="h-full bg-indigo-600 transition-all duration-300"
+                    style={{
+                      width: `${((safeFlashcardIdx + 1) / flashcardDeck.length) * 100}%`,
+                    }}
+                  />
+                </div>
 
+                {/* Interactive Flashcard */}
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setFlashcardFlipped((prev) => !prev)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setFlashcardFlipped((prev) => !prev);
+                    }
+                  }}
+                  className={`relative min-h-[300px] rounded-3xl border p-6 sm:p-8 shadow-md transition-all duration-300 flex flex-col justify-between cursor-pointer select-none ${
+                    flashcardFlipped
+                      ? "border-indigo-400 bg-gradient-to-br from-indigo-50/90 via-card to-sky-50/70"
+                      : "border-border bg-card hover:border-indigo-300"
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="rounded-full bg-muted px-3 py-1 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                      {currentFlashcard.category}
+                    </span>
+                    <span
+                      className={`rounded-full px-3 py-1 text-[11px] font-bold ${
+                        flashcardFlipped
+                          ? "bg-indigo-600 text-white"
+                          : "bg-indigo-50 text-indigo-700"
+                      }`}
+                    >
+                      {flashcardFlipped ? "Tarjima va misol" : "Old tomon"}
+                    </span>
+                  </div>
+
+                  {!flashcardFlipped ? (
+                    <div className="my-auto py-6 text-center space-y-3">
+                      <h3 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
+                        {currentFlashcard.word}
+                      </h3>
+                      <p className="font-mono text-sm font-semibold text-indigo-600">
+                        [{currentFlashcard.pronunciation}]
+                      </p>
+                      <div className="pt-2 flex justify-center">
                         <button
-                          onClick={() => toggleLearned(item.id)}
-                          className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold transition cursor-pointer ${
-                            isLearned
-                              ? "bg-emerald-600 text-white"
-                              : "bg-muted text-muted-foreground hover:bg-emerald-100 hover:text-emerald-700"
-                          }`}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            playSpeech(currentFlashcard.word, lang.locale, currentFlashcard.id);
+                          }}
+                          className="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-4 py-2 text-xs font-bold text-white shadow hover:bg-indigo-500 transition cursor-pointer"
                         >
-                          <CheckCircle className="h-3.5 w-3.5" />
-                          <span>{isLearned ? "O‘rganildi" : "Belgilash"}</span>
+                          <Volume2 className="h-4 w-4" />
+                          <span>Talaffuzni tinglash</span>
                         </button>
                       </div>
+                    </div>
+                  ) : (
+                    <div className="my-auto py-6 text-center space-y-4">
+                      <div className="text-xs font-semibold text-muted-foreground">
+                        {currentFlashcard.word} ({currentFlashcard.pronunciation})
+                      </div>
+                      <h3 className="text-2xl sm:text-3xl font-extrabold text-indigo-950">
+                        {currentFlashcard.translation}
+                      </h3>
+                      <div className="mx-auto max-w-md rounded-2xl border border-indigo-200/80 bg-white/80 p-3.5 text-sm text-foreground space-y-2">
+                        <p className="italic">"{currentFlashcard.example}"</p>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            playSpeech(currentFlashcard.example, lang.locale);
+                          }}
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-800 cursor-pointer"
+                        >
+                          <Volume2 className="h-3.5 w-3.5" />
+                          <span>Misolni eshitish</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
 
-                      <div className="mt-3">
-                        <div className="flex items-center gap-2">
-                          <h3 className="text-xl font-bold text-foreground tracking-tight">
-                            {item.word}
-                          </h3>
+                  <div className="flex items-center justify-between border-t border-border/60 pt-3 text-xs text-muted-foreground">
+                    <span>
+                      {flashcardFlipped
+                        ? "So‘zga qaytish uchun kartani bosing"
+                        : "Tarjimasini ko‘rish uchun kartani bosing"}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleLearned(currentFlashcard.id);
+                      }}
+                      className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold transition cursor-pointer ${
+                        learnedWords[currentFlashcard.id]
+                          ? "bg-emerald-600 text-white"
+                          : "bg-muted text-muted-foreground hover:bg-emerald-100 hover:text-emerald-700"
+                      }`}
+                    >
+                      <CheckCircle className="h-3.5 w-3.5" />
+                      <span>{learnedWords[currentFlashcard.id] ? "O‘rganildi" : "O‘rgandim"}</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Flashcard Controls */}
+                <div className="flex items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    disabled={safeFlashcardIdx === 0}
+                    onClick={() => {
+                      setFlashcardIdx((p) => Math.max(0, p - 1));
+                      setFlashcardFlipped(false);
+                    }}
+                    className="flex items-center gap-1.5 rounded-xl border border-border bg-card px-4 py-2.5 text-xs font-bold shadow-xs hover:bg-accent disabled:opacity-40 cursor-pointer"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    <span>Oldingi</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setFlashcardFlipped((p) => !p)}
+                    className="rounded-xl border border-indigo-200 bg-indigo-50 px-5 py-2.5 text-xs font-bold text-indigo-700 hover:bg-indigo-100 transition cursor-pointer"
+                  >
+                    {flashcardFlipped ? "So‘zni ko‘rsatish" : "Tarjimani ochish"}
+                  </button>
+
+                  <button
+                    type="button"
+                    disabled={safeFlashcardIdx >= flashcardDeck.length - 1}
+                    onClick={() => {
+                      setFlashcardIdx((p) => Math.min(flashcardDeck.length - 1, p + 1));
+                      setFlashcardFlipped(false);
+                    }}
+                    className="flex items-center gap-1.5 rounded-xl bg-indigo-600 px-4 py-2.5 text-xs font-bold text-white shadow hover:bg-indigo-500 disabled:opacity-40 cursor-pointer"
+                  >
+                    <span>Keyingi</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredVocabulary.map((item) => {
+                  const isLearned = !!learnedWords[item.id];
+                  const isSpeaking = speakingWordId === item.id;
+
+                  return (
+                    <div
+                      key={item.id}
+                      className={`relative flex flex-col justify-between rounded-2xl border p-5 transition duration-200 shadow-sm ${
+                        isLearned
+                          ? "border-emerald-300 bg-emerald-50/40"
+                          : "border-border bg-card hover:border-indigo-300"
+                      }`}
+                    >
+                      <div>
+                        <div className="flex items-start justify-between gap-2">
+                          <span className="rounded-md bg-muted px-2 py-0.5 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                            {item.category}
+                          </span>
+
                           <button
-                            onClick={() => playSpeech(item.word, lang.locale, item.id)}
-                            aria-label={`${item.word} talaffuzini tinglash`}
-                            className={`flex h-8 w-8 items-center justify-center rounded-full transition cursor-pointer ${
-                              isSpeaking
-                                ? "bg-indigo-600 text-white animate-pulse"
-                                : "bg-indigo-50 text-indigo-600 hover:bg-indigo-100"
+                            onClick={() => toggleLearned(item.id)}
+                            className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold transition cursor-pointer ${
+                              isLearned
+                                ? "bg-emerald-600 text-white"
+                                : "bg-muted text-muted-foreground hover:bg-emerald-100 hover:text-emerald-700"
                             }`}
-                            title="Talaffuzni tinglash"
                           >
-                            <Volume2 className="h-4 w-4" />
+                            <CheckCircle className="h-3.5 w-3.5" />
+                            <span>{isLearned ? "O‘rganildi" : "Belgilash"}</span>
                           </button>
                         </div>
 
-                        <p className="font-mono text-xs text-indigo-600 font-medium mt-0.5">
-                          {item.pronunciation}
-                        </p>
-                        <p className="mt-2 text-sm font-semibold text-foreground">
-                          {item.translation}
-                        </p>
-                      </div>
-                    </div>
+                        <div className="mt-3">
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-xl font-bold text-foreground tracking-tight">
+                              {item.word}
+                            </h3>
+                            <button
+                              onClick={() => playSpeech(item.word, lang.locale, item.id)}
+                              aria-label={`${item.word} talaffuzini tinglash`}
+                              className={`flex h-8 w-8 items-center justify-center rounded-full transition cursor-pointer ${
+                                isSpeaking
+                                  ? "bg-indigo-600 text-white animate-pulse"
+                                  : "bg-indigo-50 text-indigo-600 hover:bg-indigo-100"
+                              }`}
+                              title="Talaffuzni tinglash"
+                            >
+                              <Volume2 className="h-4 w-4" />
+                            </button>
+                          </div>
 
-                    <div className="mt-4 border-t border-border/60 pt-3">
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span className="italic truncate pr-2">"{item.example}"</span>
-                        <button
-                          onClick={() => playSpeech(item.example, lang.locale)}
-                          aria-label="Misol jumla talaffuzini tinglash"
-                          className="text-indigo-600 hover:text-indigo-800 text-[11px] font-bold flex items-center gap-1 shrink-0 cursor-pointer"
-                        >
-                          <Volume2 className="h-3 w-3" />
-                          Eshitish
-                        </button>
+                          <p className="font-mono text-xs text-indigo-600 font-medium mt-0.5">
+                            {item.pronunciation}
+                          </p>
+                          <p className="mt-2 text-sm font-semibold text-foreground">
+                            {item.translation}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 border-t border-border/60 pt-3">
+                        <div className="flex items-center justify-between text-xs text-muted-foreground">
+                          <span className="italic truncate pr-2">"{item.example}"</span>
+                          <button
+                            onClick={() => playSpeech(item.example, lang.locale)}
+                            aria-label="Misol jumla talaffuzini tinglash"
+                            className="text-indigo-600 hover:text-indigo-800 text-[11px] font-bold flex items-center gap-1 shrink-0 cursor-pointer"
+                          >
+                            <Volume2 className="h-3 w-3" />
+                            Eshitish
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
 
@@ -826,7 +1087,72 @@ export function LanguageDetailPage() {
               </button>
             </div>
 
-            <div className="space-y-3">
+            {lang.grammarRules && lang.grammarRules.length > 0 && (
+              <div className="space-y-4 border-t border-border pt-6">
+                <div>
+                  <h3 className="font-extrabold text-base sm:text-lg text-foreground flex items-center gap-2">
+                    <BookMarked className="h-5 w-5 text-indigo-600" />
+                    Asosiy grammatika qoidalari ({lang.grammarRules.length})
+                  </h3>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Har bir qoida formulasi, tushuntirishi va audio misollari bilan.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4">
+                  {lang.grammarRules.map((rule, rIdx) => (
+                    <div
+                      key={rIdx}
+                      className="rounded-2xl border border-border bg-muted/30 p-5 space-y-3"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <h4 className="text-sm sm:text-base font-extrabold text-foreground flex items-center gap-2">
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-white text-xs font-bold">
+                            {rIdx + 1}
+                          </span>
+                          {rule.title}
+                        </h4>
+                        <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 text-[11px] font-bold text-indigo-700">
+                          {rule.level}
+                        </span>
+                      </div>
+
+                      <div className="rounded-xl border border-indigo-200/80 bg-indigo-50/70 px-3.5 py-2 font-mono text-xs font-bold text-indigo-900">
+                        {rule.formula}
+                      </div>
+
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                        {rule.explanation}
+                      </p>
+
+                      <div className="rounded-xl bg-card border border-border p-3 space-y-1.5">
+                        <div className="text-[11px] font-bold text-indigo-600 uppercase tracking-wider">
+                          Misollar:
+                        </div>
+                        {rule.examples.map((ex, exIdx) => (
+                          <div
+                            key={exIdx}
+                            className="flex items-center justify-between gap-2 text-xs sm:text-sm font-medium text-foreground py-1 border-b border-border/40 last:border-0"
+                          >
+                            <span>{ex}</span>
+                            <button
+                              type="button"
+                              onClick={() => playSpeech(ex, lang.locale)}
+                              className="text-indigo-600 hover:text-indigo-800 text-xs font-semibold flex items-center gap-1 shrink-0 cursor-pointer"
+                            >
+                              <Volume2 className="h-3.5 w-3.5" />
+                              Tinglash
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="space-y-3 border-t border-border pt-6">
               <h3 className="font-extrabold text-base text-foreground">
                 Muvaffaqiyatli o‘rganish bo‘yicha tavsiyalar:
               </h3>

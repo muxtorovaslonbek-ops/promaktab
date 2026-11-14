@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ArrowLeft,
   ChevronRight,
@@ -109,6 +109,13 @@ export function ClubDetailPage() {
   const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
   const [copiedCodeIdx, setCopiedCodeIdx] = useState<number | null>(null);
   const [termsSearch, setTermsSearch] = useState("");
+
+  useEffect(() => {
+    setSelectedLessonIdx(0);
+    setQuizAnswers({});
+    setCopiedCodeIdx(null);
+    setTermsSearch("");
+  }, [club.id]);
 
   const theme = clubThemes[club.id] ?? clubThemes["robototexnika"]!;
   const Icon = clubIcons[club.id] ?? Users;
