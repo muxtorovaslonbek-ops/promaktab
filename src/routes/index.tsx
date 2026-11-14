@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  Search,
   Home,
   Globe,
   Bot,
@@ -32,6 +31,8 @@ import { Intro } from "@/components/Intro";
 import { BgSettings } from "@/components/BgSettings";
 import { AboutModal } from "@/components/AboutModal";
 import { MobileHome } from "@/components/MobileHome";
+import { FlagIcon } from "@/components/FlagIcon";
+import { HomeSearch } from "@/components/HomeSearch";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -89,10 +90,21 @@ function Index() {
   const [settings, setSettings] = useState(false);
   const [about, setAbout] = useState(false);
   useEffect(() => {
-    const f = () => setZoom(Math.min(window.innerWidth / 1280, 1.5));
-    f();
-    window.addEventListener("resize", f);
-    return () => window.removeEventListener("resize", f);
+    let rafId = 0;
+    const updateZoom = () => {
+      if (window.innerWidth < 768) return;
+      setZoom(Math.min(window.innerWidth / 1280, 1.5));
+    };
+    const onResize = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(updateZoom);
+    };
+    updateZoom();
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
   return (
     <>
@@ -121,6 +133,7 @@ function Index() {
               alt="Logo"
               width={816}
               height={816}
+              decoding="async"
               className="h-20 w-20 animate-floaty drop-shadow-[0_0_18px_oklch(0.7_0.2_240/.6)]"
             />
             <p className="mt-3 text-center text-lg font-semibold leading-tight">
@@ -177,13 +190,7 @@ function Index() {
           </aside>
 
           <main className="relative z-10 min-w-0 flex-1 space-y-3 p-5">
-            <div className="flex w-full max-w-[420px] animate-rise items-center gap-3 rounded-2xl glass-card transition focus-within:ring-2 focus-within:ring-brand px-4 py-2.5 shadow-soft">
-              <Search className="h-5 w-5" />
-              <input
-                placeholder="Til, dars yoki mavzuni qidirish..."
-                className="w-full bg-transparent text-sm outline-none placeholder:text-ink/70"
-              />
-            </div>
+            <HomeSearch />
 
             <section className="relative flex h-[200px] animate-rise items-center overflow-hidden rounded-2xl hero-anim px-8 text-primary-foreground shadow-soft">
               <div className="z-10">
@@ -228,7 +235,8 @@ function Index() {
                 alt="Ustoz"
                 width={1024}
                 height={1024}
-                className="absolute bottom-0 left-[52%] h-[210px] w-auto animate-rise [animation-delay:.3s]"
+                decoding="async"
+                className="absolute bottom-0 left-[52%] h-[210px] w-auto animate-rise [animation-delay:.15s]"
               />
               <span className="absolute left-[58%] top-4 text-3xl font-bold opacity-80 animate-floaty">
                 A
@@ -256,6 +264,7 @@ function Index() {
                   alt=""
                   width={816}
                   height={816}
+                  decoding="async"
                   className="absolute bottom-3 right-2 h-20 w-20 animate-floaty"
                 />
               </div>
@@ -281,12 +290,11 @@ function Index() {
                       to="/tillar/$lang"
                       params={{ lang: l.id }}
                       className={`${l.bg} group shine flex h-[88px] animate-rise flex-col justify-between rounded-xl border border-background p-3 text-left transition duration-300 hover:-translate-y-1 hover:shadow-soft cursor-pointer`}
-                      style={{ animationDelay: `${0.2 + i * 0.06}s` }}
+                      style={{ animationDelay: `${i * 0.025}s` }}
                     >
-                      <img
-                        src={`https://flagcdn.com/w80/${l.code}.png`}
-                        alt=""
-                        className="h-7 w-10 rounded-sm object-cover shadow transition group-hover:scale-110"
+                      <FlagIcon
+                        code={l.code}
+                        className="h-7 w-10 rounded-sm shadow transition group-hover:scale-110"
                       />
                       <span className="flex items-center justify-between text-sm font-semibold">
                         {l.name}

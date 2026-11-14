@@ -74,7 +74,7 @@ export function Intro({ onClose }: IntroProps) {
     const video = videoRef.current;
     if (!video) return;
     video.currentTime = 0;
-    video.play();
+    video.play().catch(() => {});
     setIsEnded(false);
   };
 
@@ -96,7 +96,7 @@ export function Intro({ onClose }: IntroProps) {
     const video = videoRef.current;
     if (!video || !video.duration) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const pos = (e.clientX - rect.left) / rect.width;
+    const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
     video.currentTime = pos * video.duration;
   };
 

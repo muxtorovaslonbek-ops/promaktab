@@ -13,6 +13,7 @@ import {
   Award,
 } from "lucide-react";
 import { languagesData } from "@/data/languages";
+import { FlagIcon } from "@/components/FlagIcon";
 import logo from "@/assets/logo.png";
 
 export const Route = createFileRoute("/tillar/")({
@@ -189,10 +190,10 @@ export function TillarIndex() {
                 {/* Header row with Flag and Badge */}
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <img
-                      src={`https://flagcdn.com/w80/${lang.code}.png`}
-                      alt={lang.name}
-                      className="h-10 w-14 rounded-lg object-cover shadow-sm border border-border transition-transform group-hover:scale-105"
+                    <FlagIcon
+                      code={lang.code}
+                      title={lang.name}
+                      className="h-10 w-14 rounded-lg shadow-sm border border-border transition-transform group-hover:scale-105"
                     />
                     <div>
                       <h3 className="text-xl font-extrabold text-foreground tracking-tight">

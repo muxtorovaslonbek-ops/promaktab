@@ -3,7 +3,22 @@ import react from "@vitejs/plugin-react";
 import path from "node:path";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      name: "virtual-pwa-register-stub",
+      resolveId(id) {
+        if (id === "virtual:pwa-register") return "\0virtual:pwa-register";
+        return undefined;
+      },
+      load(id) {
+        if (id === "\0virtual:pwa-register") {
+          return "export function registerSW() { return () => Promise.resolve(); }";
+        }
+        return undefined;
+      },
+    },
+  ],
   test: {
     environment: "jsdom",
     globals: true,

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   ArrowLeft,
   ChevronRight,
@@ -104,11 +104,28 @@ export function ClubDetailPage() {
 
   const [activeTab, setActiveTab] = useState<"lessons" | "projects" | "quiz" | "terms">("lessons");
   const [selectedLessonIdx, setSelectedLessonIdx] = useState(0);
-  const [completedLessons, setCompletedLessons] = useState<Record<string, boolean>>({});
-  const [completedProjects, setCompletedProjects] = useState<Record<string, boolean>>({});
+  const [completedLessons, setCompletedLessons] = useState<Record<string, boolean>>(() => {
+    if (typeof window === "undefined") return {};
+    try {
+      const raw = localStorage.getItem("club-lessons-v1");
+      return raw ? (JSON.parse(raw) as Record<string, boolean>) : {};
+    } catch {
+      return {};
+    }
+  });
+  const [completedProjects, setCompletedProjects] = useState<Record<string, boolean>>(() => {
+    if (typeof window === "undefined") return {};
+    try {
+      const raw = localStorage.getItem("club-projects-v1");
+      return raw ? (JSON.parse(raw) as Record<string, boolean>) : {};
+    } catch {
+      return {};
+    }
+  });
   const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
   const [copiedCodeIdx, setCopiedCodeIdx] = useState<number | null>(null);
   const [termsSearch, setTermsSearch] = useState("");
+  const copyTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     setSelectedLessonIdx(0);
@@ -117,23 +134,43 @@ export function ClubDetailPage() {
     setTermsSearch("");
   }, [club.id]);
 
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current !== null) {
+        window.clearTimeout(copyTimerRef.current);
+      }
+    };
+  }, []);
+
   const theme = clubThemes[club.id] ?? clubThemes["robototexnika"]!;
   const Icon = clubIcons[club.id] ?? Users;
 
-  const currentLesson: ClubLesson | undefined = club.lessons[selectedLessonIdx] ?? club.lessons[0];
+  const safeLessonIdx =
+    club.lessons.length > 0 ? Math.min(selectedLessonIdx, club.lessons.length - 1) : 0;
+  const currentLesson: ClubLesson | undefined = club.lessons[safeLessonIdx] ?? club.lessons[0];
 
   const toggleLessonComplete = (lessonId: string) => {
-    setCompletedLessons((prev) => ({
-      ...prev,
-      [lessonId]: !prev[lessonId],
-    }));
+    setCompletedLessons((prev) => {
+      const next = { ...prev, [lessonId]: !prev[lessonId] };
+      try {
+        localStorage.setItem("club-lessons-v1", JSON.stringify(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
   };
 
   const toggleProjectComplete = (projectId: string) => {
-    setCompletedProjects((prev) => ({
-      ...prev,
-      [projectId]: !prev[projectId],
-    }));
+    setCompletedProjects((prev) => {
+      const next = { ...prev, [projectId]: !prev[projectId] };
+      try {
+        localStorage.setItem("club-projects-v1", JSON.stringify(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
   };
 
   const handleSelectAnswer = (questionId: string, optionIdx: number) => {
@@ -149,11 +186,17 @@ export function ClubDetailPage() {
 
   const handleCopyCode = (code: string, idx: number) => {
     if (typeof navigator !== "undefined" && navigator.clipboard) {
-      navigator.clipboard.writeText(code);
+      void navigator.clipboard.writeText(code).catch(() => {});
       setCopiedCodeIdx(idx);
-      setTimeout(() => setCopiedCodeIdx(null), 2000);
+      if (copyTimerRef.current !== null) {
+        window.clearTimeout(copyTimerRef.current);
+      }
+      copyTimerRef.current = window.setTimeout(() => setCopiedCodeIdx(null), 2000);
     }
   };
+
+  const completedLessonsCount = club.lessons.filter((l) => completedLessons[l.id]).length;
+  const completedProjectsCount = club.projects.filter((p) => completedProjects[p.id]).length;
 
   const quizCorrectCount = club.quizzes.reduce((acc, q) => {
     return quizAnswers[q.id] === q.answer ? acc + 1 : acc;
@@ -290,7 +333,7 @@ export function ClubDetailPage() {
                   <div className="flex justify-between text-xs font-medium mb-1.5">
                     <span>O‘zlashtirish jarayoni</span>
                     <span className="font-bold">
-                      {Object.keys(completedLessons).length} / {club.lessons.length} dars
+                      {completedLessonsCount} / {club.lessons.length} dars
                     </span>
                   </div>
                   <div className="h-2 rounded-full bg-muted overflow-hidden">
@@ -299,7 +342,7 @@ export function ClubDetailPage() {
                       style={{
                         width: `${
                           club.lessons.length > 0
-                            ? (Object.keys(completedLessons).length / club.lessons.length) * 100
+                            ? (completedLessonsCount / club.lessons.length) * 100
                             : 0
                         }%`,
                       }}
@@ -555,7 +598,7 @@ export function ClubDetailPage() {
               <div className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold">
                 <Layers className="h-4 w-4 text-brand" />
                 <span>
-                  Bajarildi: {Object.keys(completedProjects).length} / {club.projects.length}
+                  Bajarildi: {completedProjectsCount} / {club.projects.length}
                 </span>
               </div>
             </div>

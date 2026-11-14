@@ -15,6 +15,7 @@ import {
   Check,
   ChevronDown,
 } from "lucide-react";
+import { FlagIcon } from "@/components/FlagIcon";
 import logo from "@/assets/logo.png";
 import teacher from "@/assets/teacher.png";
 
@@ -270,9 +271,12 @@ export function AIUstozPage() {
   const [selectedLangId, setSelectedLangId] = useState("ingliz");
   const [inputText, setInputText] = useState("");
   const [isListening, setIsListening] = useState(false);
+  const [micNotice, setMicNotice] = useState<string | null>(null);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [showTranslations, setShowTranslations] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const replyTimerRef = useRef<number | null>(null);
+  const recognitionRef = useRef<{ stop: () => void } | null>(null);
   const searchInputId = useId();
 
   const currentLang = supportedLangs.find((l) => l.id === selectedLangId) || supportedLangs[0]!;
@@ -292,8 +296,32 @@ export function AIUstozPage() {
     ];
   });
 
+  useEffect(() => {
+    return () => {
+      if (replyTimerRef.current !== null) {
+        window.clearTimeout(replyTimerRef.current);
+      }
+      recognitionRef.current?.stop();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
   // Switch greeting when language changes
   const handleLanguageChange = (langId: string) => {
+    if (replyTimerRef.current !== null) {
+      window.clearTimeout(replyTimerRef.current);
+      replyTimerRef.current = null;
+    }
+    recognitionRef.current?.stop();
+    setIsListening(false);
+    setMicNotice(null);
+    setSpeakingId(null);
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+
     setSelectedLangId(langId);
     const langObj = supportedLangs.find((l) => l.id === langId) || supportedLangs[0]!;
     const greeting = initialGreetings[langId] || initialGreetings["ingliz"]!;
@@ -365,15 +393,21 @@ export function AIUstozPage() {
     setInputText("");
 
     // Simulate AI response
-    setTimeout(() => {
-      const response = generateAIResponse(text, selectedLangId);
+    if (replyTimerRef.current !== null) {
+      window.clearTimeout(replyTimerRef.current);
+    }
+    const targetLangId = selectedLangId;
+    const targetLocale = currentLang.locale;
+    replyTimerRef.current = window.setTimeout(() => {
+      replyTimerRef.current = null;
+      const response = generateAIResponse(text, targetLangId);
       const aiMsg: ChatMessage = {
         id: `ai-${Date.now()}`,
         sender: "ai",
         text: response.text,
         translation: response.translation,
-        language: selectedLangId,
-        locale: currentLang.locale,
+        language: targetLangId,
+        locale: targetLocale,
         timestamp: new Date().toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
@@ -385,6 +419,7 @@ export function AIUstozPage() {
 
   const toggleMic = () => {
     if (typeof window === "undefined") return;
+    setMicNotice(null);
 
     interface SpeechRecognitionResultEvent {
       results: ArrayLike<ArrayLike<{ transcript: string }>>;
@@ -398,6 +433,7 @@ export function AIUstozPage() {
       onerror: (() => void) | null;
       onresult: ((event: SpeechRecognitionResultEvent) => void) | null;
       start: () => void;
+      stop: () => void;
     }
     type SpeechRecognitionConstructor = new () => SpeechRecognitionInstance;
 
@@ -408,24 +444,34 @@ export function AIUstozPage() {
     const SpeechRecognition = win.SpeechRecognition || win.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
-      alert("Sizning brauzeringiz ovozli kiritishni (Speech Recognition) qo‘llab-quvvatlamaydi.");
+      setMicNotice(
+        "Sizning brauzeringiz ovozli kiritishni qo‘llab-quvvatlamaydi. Matn orqali yozishingiz mumkin.",
+      );
       return;
     }
 
     if (isListening) {
+      recognitionRef.current?.stop();
       setIsListening(false);
       return;
     }
 
     try {
       const recognition = new SpeechRecognition();
+      recognitionRef.current = recognition;
       recognition.lang = currentLang.locale;
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
 
       recognition.onstart = () => setIsListening(true);
-      recognition.onend = () => setIsListening(false);
-      recognition.onerror = () => setIsListening(false);
+      recognition.onend = () => {
+        setIsListening(false);
+        recognitionRef.current = null;
+      };
+      recognition.onerror = () => {
+        setIsListening(false);
+        recognitionRef.current = null;
+      };
 
       recognition.onresult = (event: SpeechRecognitionResultEvent) => {
         const transcript = event.results[0]?.[0]?.transcript;
@@ -437,6 +483,7 @@ export function AIUstozPage() {
       recognition.start();
     } catch {
       setIsListening(false);
+      recognitionRef.current = null;
     }
   };
 
@@ -447,7 +494,7 @@ export function AIUstozPage() {
   const quickPrompts = topicPrompts[selectedLangId] || topicPrompts["ingliz"]!;
 
   return (
-    <div className="flex h-screen flex-col bg-app font-sans text-ink">
+    <div className="flex h-[100dvh] flex-col bg-app font-sans text-ink">
       {/* Top Header */}
       <header className="sticky top-0 z-30 shrink-0 border-b border-border bg-background/90 backdrop-blur-md px-4 sm:px-8 py-3">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
@@ -534,11 +581,7 @@ export function AIUstozPage() {
                   : "bg-card hover:bg-accent text-foreground border border-border/80"
               }`}
             >
-              <img
-                src={`https://flagcdn.com/w40/${item.code}.png`}
-                alt=""
-                className="h-3.5 w-5 rounded-xs object-cover"
-              />
+              <FlagIcon code={item.code} className="h-3.5 w-5 rounded-xs" />
               <span>{item.name}</span>
             </button>
           ))}
@@ -667,6 +710,18 @@ export function AIUstozPage() {
 
       {/* Bottom Message Input Bar */}
       <footer className="shrink-0 border-t border-border bg-background p-3 sm:p-4">
+        {micNotice && (
+          <div className="mx-auto mb-2 flex max-w-4xl items-center justify-between gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs text-amber-800">
+            <span>{micNotice}</span>
+            <button
+              type="button"
+              onClick={() => setMicNotice(null)}
+              className="font-bold hover:underline cursor-pointer"
+            >
+              Yopish
+            </button>
+          </div>
+        )}
         <div className="mx-auto flex max-w-4xl items-center gap-2">
           <button
             onClick={toggleMic}

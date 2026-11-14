@@ -251,17 +251,17 @@
   animation: floaty 4s ease-in-out infinite;
 }
 @utility animate-rise {
-  animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: rise 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 @utility animate-grow {
-  animation: grow 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: grow 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 @utility animate-pulse-glow {
   animation: pulse-glow 2.2s infinite;
 }
 @utility glass-card {
-  background: linear-gradient(145deg, oklch(1 0 0 / 0.75), oklch(1 0 0 / 0.45));
-  backdrop-filter: blur(16px);
+  background: linear-gradient(145deg, oklch(1 0 0 / 0.82), oklch(1 0 0 / 0.56));
+  backdrop-filter: blur(8px);
   border: 1px solid oklch(1 0 0 / 0.8);
   box-shadow: var(--shadow-soft);
 }
@@ -299,37 +299,67 @@
     oklch(0.4 0.18 280)
   );
   background-size: 300% 300%;
-  animation: hueflow 10s ease infinite;
+  animation: hueflow 12s ease infinite;
 }
 @keyframes blob {
   0%,
   100% {
-    transform: translate(0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
   33% {
-    transform: translate(40px, -30px) scale(1.15);
+    transform: translate3d(40px, -30px, 0) scale(1.12);
   }
   66% {
-    transform: translate(-30px, 20px) scale(0.9);
+    transform: translate3d(-30px, 20px, 0) scale(0.92);
   }
 }
 .bg-blob {
   position: fixed;
   border-radius: 9999px;
-  filter: blur(70px);
+  filter: blur(48px);
   opacity: 0.35;
   pointer-events: none;
-  animation: blob 14s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  animation: blob 16s ease-in-out infinite;
   z-index: 0;
 }
 .glass-card {
   transition:
-    transform 0.35s,
-    box-shadow 0.35s;
+    transform 0.25s,
+    box-shadow 0.25s;
 }
 .glass-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 18px 40px -18px oklch(0.5 0.2 262 / 0.45);
+}
+
+/* Mobil qurilmalarda va kuchsiz GPU larda scroll qotishini oldini olish */
+@media (max-width: 767px) {
+  .bg-blob {
+    animation: none;
+    filter: blur(36px);
+    opacity: 0.25;
+  }
+  .hero-anim {
+    animation: none;
+    background-size: 100% 100%;
+  }
+  .glass-card {
+    backdrop-filter: none;
+    background: oklch(1 0 0 / 0.85);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-blob,
+  .hero-anim,
+  .animate-floaty,
+  .animate-pulse-glow,
+  .animate-rise,
+  .animate-grow {
+    animation: none !important;
+  }
 }
 
 /* Intro video ochiq paytda sayt animatsiyalarini to'xtatish */

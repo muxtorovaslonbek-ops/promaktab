@@ -37,7 +37,7 @@ function BookReaderPage() {
   }
 
   return (
-    <div className="flex h-screen flex-col bg-app font-sans text-ink">
+    <div className="flex h-[100dvh] flex-col bg-app font-sans text-ink">
       <header className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-border bg-background/90 px-4 py-3 backdrop-blur-md sm:px-8">
         <div className="flex min-w-0 items-center gap-3">
           <Link

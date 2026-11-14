@@ -21,6 +21,7 @@ import {
   BookMarked,
 } from "lucide-react";
 import { languagesData, type LanguageData } from "@/data/languages";
+import { FlagIcon } from "@/components/FlagIcon";
 import logo from "@/assets/logo.png";
 
 export const Route = createFileRoute("/tillar/$lang")({
@@ -53,7 +54,15 @@ export function LanguageDetailPage() {
     "vocab" | "lessons" | "quiz" | "dialogue" | "alphabet"
   >("vocab");
   const [selectedLessonIndex, setSelectedLessonIndex] = useState(0);
-  const [learnedWords, setLearnedWords] = useState<Record<string, boolean>>({});
+  const [learnedWords, setLearnedWords] = useState<Record<string, boolean>>(() => {
+    if (typeof window === "undefined") return {};
+    try {
+      const raw = localStorage.getItem("learned-words-v1");
+      return raw ? (JSON.parse(raw) as Record<string, boolean>) : {};
+    } catch {
+      return {};
+    }
+  });
   const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [taskInputs, setTaskInputs] = useState<Record<string, string>>({});
@@ -77,7 +86,19 @@ export function LanguageDetailPage() {
     setFlashcardIdx(0);
     setFlashcardFlipped(false);
     setShuffledOrder(null);
+    setSpeakingWordId(null);
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
   }, [lang.id]);
+
+  useEffect(() => {
+    return () => {
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
 
   const playSpeech = (text: string, locale: string, id?: string) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -102,7 +123,15 @@ export function LanguageDetailPage() {
   };
 
   const toggleLearned = (id: string) => {
-    setLearnedWords((prev) => ({ ...prev, [id]: !prev[id] }));
+    setLearnedWords((prev) => {
+      const next = { ...prev, [id]: !prev[id] };
+      try {
+        localStorage.setItem("learned-words-v1", JSON.stringify(next));
+      } catch {
+        /* ignore storage errors */
+      }
+      return next;
+    });
   };
 
   const selectQuizAnswer = (qId: string, optionIdx: number) => {
@@ -147,6 +176,13 @@ export function LanguageDetailPage() {
     setFlashcardFlipped(false);
   };
 
+  const learnedCount = lang.vocabulary.filter((v) => learnedWords[v.id]).length;
+  const learnedPercent =
+    lang.vocabulary.length > 0 ? Math.round((learnedCount / lang.vocabulary.length) * 100) : 0;
+  const safeLessonIndex =
+    lang.lessons.length > 0 ? Math.min(selectedLessonIndex, lang.lessons.length - 1) : 0;
+  const currentLesson = lang.lessons[safeLessonIndex];
+
   const allLangs = Object.values(languagesData);
 
   return (
@@ -173,10 +209,10 @@ export function LanguageDetailPage() {
             <div className="h-4 w-px bg-border mx-1 hidden sm:block" />
 
             <div className="flex items-center gap-2">
-              <img
-                src={`https://flagcdn.com/w80/${lang.code}.png`}
-                alt={lang.name}
-                className="h-6 w-9 rounded object-cover shadow-sm border border-border"
+              <FlagIcon
+                code={lang.code}
+                title={lang.name}
+                className="h-6 w-9 rounded shadow-sm border border-border"
               />
               <span className="font-extrabold text-sm sm:text-base text-foreground">
                 {lang.name}
@@ -244,16 +280,16 @@ export function LanguageDetailPage() {
                 className="h-12 w-12 drop-shadow-[0_0_12px_rgba(99,102,241,0.8)]"
               />
               <span className="mt-2 text-xs font-bold text-white">O‘zlashtirish darajasi</span>
-              <div className="mt-2 h-2.5 w-full rounded-full bg-white/20">
+              <div className="mt-2 h-2.5 w-full rounded-full bg-white/20 overflow-hidden">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-indigo-400 to-sky-300 transition-all duration-500"
                   style={{
-                    width: `${Math.min(100, Object.keys(learnedWords).length * 15 + 25)}%`,
+                    width: `${learnedPercent}%`,
                   }}
                 />
               </div>
               <span className="mt-1.5 text-[11px] text-indigo-200 font-semibold">
-                {Object.keys(learnedWords).length} / {lang.vocabulary.length} so‘z o‘zlashtirildi
+                {learnedCount} / {lang.vocabulary.length} so‘z o‘zlashtirildi
               </span>
             </div>
           </div>
@@ -397,9 +433,7 @@ export function LanguageDetailPage() {
                     <span className="rounded-lg bg-indigo-50 px-2.5 py-1 text-indigo-700">
                       Karta {safeFlashcardIdx + 1} / {flashcardDeck.length}
                     </span>
-                    <span className="text-muted-foreground">
-                      O‘rganildi: {Object.values(learnedWords).filter(Boolean).length}
-                    </span>
+                    <span className="text-muted-foreground">O‘rganildi: {learnedCount}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -697,28 +731,26 @@ export function LanguageDetailPage() {
             </div>
 
             {/* Selected Lesson Reader */}
-            {lang.lessons[selectedLessonIndex] && (
+            {currentLesson && (
               <div className="rounded-3xl border border-border bg-card p-6 sm:p-8 shadow-sm space-y-6">
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="rounded-full bg-indigo-100 text-indigo-700 px-3 py-0.5 text-xs font-bold">
-                      {lang.lessons[selectedLessonIndex].level}
+                      {currentLesson.level}
                     </span>
                     <span className="text-xs text-muted-foreground font-semibold">
-                      Davomiyligi: {lang.lessons[selectedLessonIndex].duration}
+                      Davomiyligi: {currentLesson.duration}
                     </span>
                   </div>
 
                   <h2 className="mt-3 text-2xl font-extrabold text-foreground">
-                    {lang.lessons[selectedLessonIndex].title}
+                    {currentLesson.title}
                   </h2>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {lang.lessons[selectedLessonIndex].description}
-                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">{currentLesson.description}</p>
                 </div>
 
                 <div className="space-y-6 border-t border-border pt-6">
-                  {lang.lessons[selectedLessonIndex].topics.map((topic, i) => (
+                  {currentLesson.topics.map((topic, i) => (
                     <div
                       key={i}
                       className="rounded-2xl bg-muted/40 border border-border/80 p-5 space-y-3"
@@ -760,16 +792,18 @@ export function LanguageDetailPage() {
 
                 <div className="flex items-center justify-between pt-4 border-t border-border">
                   <button
-                    disabled={selectedLessonIndex === 0}
-                    onClick={() => setSelectedLessonIndex((p) => p - 1)}
+                    disabled={safeLessonIndex === 0}
+                    onClick={() => setSelectedLessonIndex((p) => Math.max(0, p - 1))}
                     className="flex items-center gap-2 rounded-xl border border-border px-4 py-2 text-xs font-bold disabled:opacity-40 cursor-pointer"
                   >
                     <ArrowLeft className="h-4 w-4" /> Oldingi dars
                   </button>
 
                   <button
-                    disabled={selectedLessonIndex === lang.lessons.length - 1}
-                    onClick={() => setSelectedLessonIndex((p) => p + 1)}
+                    disabled={safeLessonIndex >= lang.lessons.length - 1}
+                    onClick={() =>
+                      setSelectedLessonIndex((p) => Math.min(lang.lessons.length - 1, p + 1))
+                    }
                     className="flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2 text-xs font-bold text-white shadow hover:bg-indigo-500 disabled:opacity-40 cursor-pointer"
                   >
                     Keyingi dars <ChevronRight className="h-4 w-4" />

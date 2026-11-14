@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import {
-  Search,
   Home,
   Globe,
   Bot,
@@ -26,6 +25,8 @@ import books from "@/assets/books.png";
 import chat from "@/assets/chat.png";
 import gift from "@/assets/gift.png";
 import logo from "@/assets/logo.png";
+import { FlagIcon } from "@/components/FlagIcon";
+import { HomeSearch } from "@/components/HomeSearch";
 
 /**
  * Telefon (< 768px) uchun bosh sahifa.
@@ -73,7 +74,14 @@ export function MobileHome({
     <div className="relative z-10 min-h-[100dvh] w-full max-w-full overflow-x-hidden bg-app font-sans text-ink">
       {/* Yuqori panel */}
       <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background/85 px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] backdrop-blur-md">
-        <img src={logo} alt="Logo" width={816} height={816} className="h-10 w-10 shrink-0" />
+        <img
+          src={logo}
+          alt="Logo"
+          width={816}
+          height={816}
+          decoding="async"
+          className="h-10 w-10 shrink-0"
+        />
         <p className="min-w-0 flex-1 text-sm font-extrabold leading-tight">
           Navoiy shahar
           <br />
@@ -105,13 +113,7 @@ export function MobileHome({
 
       <main className="space-y-4 px-4 pb-[calc(env(safe-area-inset-bottom)+6rem)] pt-4">
         {/* Qidiruv */}
-        <div className="flex w-full items-center gap-3 rounded-2xl glass-card px-4 py-3 shadow-soft focus-within:ring-2 focus-within:ring-brand">
-          <Search className="h-5 w-5 shrink-0" />
-          <input
-            placeholder="Til, dars yoki mavzuni qidirish..."
-            className="w-full min-w-0 bg-transparent text-base outline-none placeholder:text-ink/70"
-          />
-        </div>
+        <HomeSearch mobile />
 
         {/* Salomlashuv */}
         <section className="relative overflow-hidden rounded-2xl hero-anim p-5 text-primary-foreground shadow-soft">
@@ -128,6 +130,7 @@ export function MobileHome({
               alt="Ustoz"
               width={1024}
               height={1024}
+              decoding="async"
               className="-mb-5 -mr-2 h-28 w-auto shrink-0"
             />
           </div>
@@ -174,6 +177,7 @@ export function MobileHome({
               alt=""
               width={816}
               height={816}
+              decoding="async"
               className="absolute bottom-1 right-2 h-16 w-16 animate-floaty"
             />
           </div>
@@ -200,12 +204,7 @@ export function MobileHome({
                 params={{ lang: l.id }}
                 className={`${l.bg} flex min-h-[84px] flex-col items-center justify-center gap-2 rounded-xl border border-background p-2 text-center text-xs font-semibold transition active:scale-95`}
               >
-                <img
-                  src={`https://flagcdn.com/w80/${l.code}.png`}
-                  alt=""
-                  loading="lazy"
-                  className="h-7 w-10 rounded-sm object-cover shadow"
-                />
+                <FlagIcon code={l.code} className="h-7 w-10 rounded-sm shadow" />
                 {l.name}
               </Link>
             ))}
