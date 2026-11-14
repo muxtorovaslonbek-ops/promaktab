@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useId } from "react";
+import { useState, useId, useEffect } from "react";
 import {
   ArrowLeft,
   Volume2,
@@ -12,6 +12,8 @@ import {
   ChevronRight,
   RotateCcw,
   Languages,
+  PenLine,
+  Lightbulb,
 } from "lucide-react";
 import { languagesData, type LanguageData } from "@/data/languages";
 import logo from "@/assets/logo.png";
@@ -49,8 +51,21 @@ export function LanguageDetailPage() {
   const [learnedWords, setLearnedWords] = useState<Record<string, boolean>>({});
   const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
+  const [taskInputs, setTaskInputs] = useState<Record<string, string>>({});
+  const [taskChecked, setTaskChecked] = useState<Record<string, boolean>>({});
+  const [taskHints, setTaskHints] = useState<Record<string, boolean>>({});
   const [speakingWordId, setSpeakingWordId] = useState<string | null>(null);
   const [vocabSearch, setVocabSearch] = useState("");
+
+  useEffect(() => {
+    setSelectedLessonIndex(0);
+    setQuizAnswers({});
+    setQuizSubmitted(false);
+    setTaskInputs({});
+    setTaskChecked({});
+    setTaskHints({});
+    setVocabSearch("");
+  }, [lang.id]);
 
   const playSpeech = (text: string, locale: string, id?: string) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -247,7 +262,7 @@ export function LanguageDetailPage() {
             }`}
           >
             <HelpCircle className="h-4 w-4" />
-            Test va Mashqlar
+            Test va Mashqlar ({lang.quiz.length + (lang.tasks?.length ?? 0)})
           </button>
 
           <button
@@ -612,6 +627,126 @@ export function LanguageDetailPage() {
                     ? "A'lo darajada! Siz barcha savollarga to‘g‘ri javob berdingiz."
                     : "Yaxshi natija! Xatolaringizni ko‘rib chiqib, qayta topshirishingiz mumkin."}
                 </p>
+              </div>
+            )}
+
+            {lang.tasks && lang.tasks.length > 0 && (
+              <div className="mt-8 border-t border-border pt-6 space-y-5">
+                <div className="flex items-center justify-between gap-2">
+                  <div>
+                    <h3 className="text-lg font-extrabold text-foreground flex items-center gap-2">
+                      <PenLine className="h-5 w-5 text-indigo-600" />
+                      Amaliy topshiriqlar ({lang.tasks.length})
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Bo‘sh o‘rinlarni to‘ldiring, jumlalarni tarjima qiling va javobingizni
+                      tekshiring.
+                    </p>
+                  </div>
+                  {Object.keys(taskChecked).length > 0 && (
+                    <button
+                      onClick={() => {
+                        setTaskInputs({});
+                        setTaskChecked({});
+                        setTaskHints({});
+                      }}
+                      className="flex items-center gap-1.5 rounded-xl border border-border bg-muted px-3 py-1.5 text-xs font-bold hover:bg-muted/80 cursor-pointer"
+                    >
+                      <RotateCcw className="h-3.5 w-3.5" /> Tozalash
+                    </button>
+                  )}
+                </div>
+
+                <div className="space-y-4">
+                  {lang.tasks.map((task, idx) => {
+                    const userVal = taskInputs[task.id] ?? "";
+                    const isChecked = !!taskChecked[task.id];
+                    const normalizedUser = userVal.trim().toLowerCase().replace(/[’']/g, "'");
+                    const validAnswers = [task.answer, ...(task.acceptableAnswers ?? [])].map((a) =>
+                      a.trim().toLowerCase().replace(/[’']/g, "'"),
+                    );
+                    const isCorrect = isChecked && validAnswers.includes(normalizedUser);
+                    const showHint = !!taskHints[task.id];
+
+                    return (
+                      <div
+                        key={task.id}
+                        className="rounded-2xl border border-border bg-muted/40 p-5 space-y-3"
+                      >
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 text-[11px] font-bold text-indigo-700">
+                            {idx + 1}-topshiriq · {task.type}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setTaskHints((prev) => ({ ...prev, [task.id]: !prev[task.id] }))
+                            }
+                            className="flex items-center gap-1 text-xs font-semibold text-amber-700 hover:underline cursor-pointer"
+                          >
+                            <Lightbulb className="h-3.5 w-3.5" />
+                            {showHint ? "Maslahatni yashirish" : "Maslahat"}
+                          </button>
+                        </div>
+
+                        <p className="text-sm sm:text-base font-bold text-foreground">
+                          {task.prompt}
+                        </p>
+
+                        {showHint && (
+                          <p className="rounded-xl bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-900">
+                            💡 {task.hint}
+                          </p>
+                        )}
+
+                        <div className="flex flex-col sm:flex-row gap-2">
+                          <input
+                            type="text"
+                            value={userVal}
+                            onChange={(e) => {
+                              setTaskInputs((prev) => ({ ...prev, [task.id]: e.target.value }));
+                              if (isChecked) {
+                                setTaskChecked((prev) => ({ ...prev, [task.id]: false }));
+                              }
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" && userVal.trim()) {
+                                setTaskChecked((prev) => ({ ...prev, [task.id]: true }));
+                              }
+                            }}
+                            placeholder="Javobingizni yozing..."
+                            className="flex-1 rounded-xl border border-border bg-card px-3.5 py-2 text-sm font-medium outline-none focus:ring-2 focus:ring-indigo-500"
+                          />
+                          <button
+                            type="button"
+                            disabled={!userVal.trim()}
+                            onClick={() => setTaskChecked((prev) => ({ ...prev, [task.id]: true }))}
+                            className="rounded-xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-indigo-500 disabled:opacity-40 cursor-pointer"
+                          >
+                            Tekshirish
+                          </button>
+                        </div>
+
+                        {isChecked && (
+                          <div
+                            className={`rounded-xl p-3 text-xs leading-relaxed ${
+                              isCorrect
+                                ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                                : "bg-red-50 text-red-800 border border-red-200"
+                            }`}
+                          >
+                            <span className="font-bold">
+                              {isCorrect
+                                ? "To‘g‘ri! Barakalla! "
+                                : `To‘g‘ri javob: "${task.answer}". `}
+                            </span>
+                            {task.explanation}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>

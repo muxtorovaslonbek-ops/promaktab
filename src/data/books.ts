@@ -104,4 +104,22 @@ export const audioBooks: AudioBook[] = [
     youtubeId: "_V2Ep23rbe8",
     accent: "from-emerald-600 to-teal-800",
   },
+  {
+    id: "nur-borki-soya-bor-audio",
+    title: "Nur borki, soya bor",
+    author: "O‘tkir Hoshimov",
+    description: "O‘tkir Hoshimovning mashhur romani — audio kitob shaklida.",
+    category: "Audio kitob",
+    youtubeId: "V6OHeLWO-dA",
+    accent: "from-amber-500 to-orange-700",
+  },
+  {
+    id: "dahshat-audio",
+    title: "Dahshat",
+    author: "Abdulla Qahhor",
+    description: "Abdulla Qahhorning mashhur asari — audio kitob shaklida.",
+    category: "Audio kitob",
+    youtubeId: "udCDzp7tSMA",
+    accent: "from-rose-600 to-red-800",
+  },
 ];

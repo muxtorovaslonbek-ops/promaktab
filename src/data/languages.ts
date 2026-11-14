@@ -36,6 +36,16 @@ export interface DialogItem {
   translation: string;
 }
 
+export interface PracticeTask {
+  id: string;
+  type: string;
+  prompt: string;
+  hint: string;
+  answer: string;
+  acceptableAnswers?: string[];
+  explanation: string;
+}
+
 export interface LanguageData {
   id: string;
   name: string;
@@ -60,6 +70,7 @@ export interface LanguageData {
   vocabulary: VocabWord[];
   lessons: Lesson[];
   quiz: QuizQuestion[];
+  tasks?: PracticeTask[];
   dialogue: DialogItem[];
   tips: string[];
 }
@@ -185,6 +196,102 @@ export const languagesData: Record<string, LanguageData> = {
         example: "Goodbye, see you tomorrow!",
         category: "Xayrlashuv",
       },
+      {
+        id: "13",
+        word: "Homework",
+        translation: "Uy vazifasi",
+        pronunciation: "/ˈhəʊm.wɜːk/",
+        example: "I always do my homework on time.",
+        category: "Maktab",
+      },
+      {
+        id: "14",
+        word: "Library",
+        translation: "Kutubxona",
+        pronunciation: "/ˈlaɪ.brər.i/",
+        example: "We read interesting books in the library.",
+        category: "Maktab",
+      },
+      {
+        id: "15",
+        word: "Classroom",
+        translation: "Sinf xonasi",
+        pronunciation: "/ˈklɑːs.ruːm/",
+        example: "Our classroom is bright and clean.",
+        category: "Maktab",
+      },
+      {
+        id: "16",
+        word: "Notebook",
+        translation: "Daftar",
+        pronunciation: "/ˈnəʊt.bʊk/",
+        example: "Write the new words in your notebook.",
+        category: "O‘quv qurollari",
+      },
+      {
+        id: "17",
+        word: "Computer",
+        translation: "Kompyuter",
+        pronunciation: "/kəmˈpjuː.tər/",
+        example: "We learn coding on the computer.",
+        category: "Texnologiya",
+      },
+      {
+        id: "18",
+        word: "Question",
+        translation: "Savol",
+        pronunciation: "/ˈkwes.tʃən/",
+        example: "May I ask a question, please?",
+        category: "Muloqot",
+      },
+      {
+        id: "19",
+        word: "Answer",
+        translation: "Javob",
+        pronunciation: "/ˈɑːn.sər/",
+        example: "Your answer is completely correct.",
+        category: "Muloqot",
+      },
+      {
+        id: "20",
+        word: "Practice",
+        translation: "Amaliyot / Mashq qilish",
+        pronunciation: "/ˈpræk.tɪs/",
+        example: "Daily practice improves speaking skills.",
+        category: "Ta'lim",
+      },
+      {
+        id: "21",
+        word: "Dream",
+        translation: "Orzu",
+        pronunciation: "/driːm/",
+        example: "My dream is to become a software engineer.",
+        category: "Umumiy",
+      },
+      {
+        id: "22",
+        word: "Science",
+        translation: "Fan / Ilm-fan",
+        pronunciation: "/ˈsaɪ.əns/",
+        example: "Science helps us understand the world.",
+        category: "Ta'lim",
+      },
+      {
+        id: "23",
+        word: "Excuse me",
+        translation: "Kechirasiz / Uzr",
+        pronunciation: "/ɪkˈskjuːz miː/",
+        example: "Excuse me, where is the library?",
+        category: "Xushmuomalalik",
+      },
+      {
+        id: "24",
+        word: "Success",
+        translation: "Muvaffaqiyat",
+        pronunciation: "/səkˈses/",
+        example: "Hard work leads to great success.",
+        category: "Umumiy",
+      },
     ],
     lessons: [
       {
@@ -239,6 +346,88 @@ export const languagesData: Record<string, LanguageData> = {
             explanation: "One, two, three... ten, twenty, thirty, one hundred.",
             examples: ["I have five lessons today.", "There are thirty pupils in our classroom."],
           },
+          {
+            title: "Soat va vaqtni aytish",
+            explanation:
+              "Aniq soat uchun 'o'clock', daqiqalar uchun 'past' (o‘tgan) va 'to' (qolgan) so‘zlari ishlatiladi.",
+            examples: ["School starts at eight o'clock.", "It is half past nine."],
+          },
+        ],
+      },
+      {
+        id: "en-4",
+        title: "4-dars: Present Simple (Hozirgi oddiy zamon)",
+        duration: "25 daqiqa",
+        level: "A1 - A2",
+        description:
+          "Har kuni takrorlanadigan ish-harakatlar, odatlar va maktab jadvali haqida gapirish.",
+        topics: [
+          {
+            title: "Darak gaplar va -s/-es qo‘shimchasi",
+            explanation:
+              "I, You, We, They bilan fe'lning asosiy shakli ishlatiladi. He, She, It bilan esa fe'lga -s yoki -es qo‘shiladi.",
+            examples: [
+              "I go to school every morning.",
+              "She reads English books in the library.",
+              "He studies informatics at School No. 8.",
+            ],
+          },
+          {
+            title: "Do / Does yordamchi fe'llari",
+            explanation:
+              "So‘roq va inkor gaplarda I/You/We/They uchun 'do / don't', He/She/It uchun 'does / doesn't' ishlatiladi.",
+            examples: [
+              "Do you like English? - Yes, I do.",
+              "Does he play chess? - Yes, he does.",
+              "We don't skip our lessons.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "en-5",
+        title: "5-dars: Artikl (a, an, the) va ko‘plik shakllari",
+        duration: "20 daqiqa",
+        level: "A1 - A2",
+        description: "Otlardan oldin artikl qo‘yish va birlikdan ko‘plik yasash qoidalari.",
+        topics: [
+          {
+            title: "Noaniq va aniq artikllar",
+            explanation:
+              "Undosh tovush bilan boshlanuvchi birlikdagi otlar oldidan 'a', unli tovush bilan boshlanuvchilar oldidan 'an', ma'lum va aniq narsalar oldidan 'the' ishlatiladi.",
+            examples: ["a book, a school, an apple, an hour", "The book on the desk is mine."],
+          },
+          {
+            title: "Otlarning ko‘plik shakli",
+            explanation:
+              "Odatda -s/-es qo‘shiladi (book -> books, class -> classes), ba'zi otlar esa istisno tarzda o‘zgaradi (child -> children, man -> men).",
+            examples: [
+              "There are twenty computers in the IT room.",
+              "The children are learning new words.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "en-6",
+        title: "6-dars: Maktab hayoti va sevimli mashg‘ulotlar",
+        duration: "22 daqiqa",
+        level: "A2 - B1",
+        description:
+          "'Like / Love / Enjoy + V-ing' va 'Can' modal fe'li yordamida qobiliyat hamda qiziqishlarni ifodalash.",
+        topics: [
+          {
+            title: "Qiziqishlarni bildirish",
+            explanation:
+              "Yoqtirgan mashg‘ulotingizni aytish uchun 'I like + fe'l-ing' yoki 'My favorite subject is...' iboralaridan foydalaning.",
+            examples: ["I enjoy reading audio books.", "My favorite subject is Computer Science."],
+          },
+          {
+            title: "'Can' modal fe'li (qila olmoq)",
+            explanation:
+              "Barcha shaxslar uchun bir xil 'can' ishlatiladi va undan keyin fe'l 'to' siz keladi.",
+            examples: ["I can speak English and Russian.", "Can you solve this math problem?"],
+          },
         ],
       },
     ],
@@ -264,6 +453,111 @@ export const languagesData: Record<string, LanguageData> = {
         answer: 1,
         explanation: "'School' so'zi maktab ma'nosini bildiradi.",
       },
+      {
+        id: "q4",
+        question: "'We ___ students at Navoiy School No. 8' gapini to‘ldiring:",
+        options: ["is", "am", "are", "was"],
+        answer: 2,
+        explanation: "Ko‘plikdagi 'We' olmoshi bilan doim 'are' ishlatiladi.",
+      },
+      {
+        id: "q5",
+        question: "'He ___ English every day' gapiga to‘g‘ri shaklni tanlang:",
+        options: ["study", "studies", "studying", "studied"],
+        answer: 1,
+        explanation:
+          "Present Simple zamonida 'He' bilan fe'lga -es qo‘shiladi (y -> ies: studies).",
+      },
+      {
+        id: "q6",
+        question: "Qaysi gapda artikl to‘g‘ri ishlatilgan?",
+        options: ["a apple", "an book", "an orange", "a hour"],
+        answer: 2,
+        explanation: "'Orange' unli tovush bilan boshlangani uchun 'an' artikli ishlatiladi.",
+      },
+      {
+        id: "q7",
+        question: "'___ you help me with my homework?' so‘roq gapiga qaysi so‘z mos keladi?",
+        options: ["Are", "Can", "Is", "Has"],
+        answer: 1,
+        explanation: "Iltimos yoki qobiliyatni so‘rashda 'Can you...?' ishlatiladi.",
+      },
+      {
+        id: "q8",
+        question: "'Library' so‘zining tarjimasi qaysi?",
+        options: ["Oshxona", "Kutubxona", "Sport zali", "Xona"],
+        answer: 1,
+        explanation: "'Library' — kutubxona degan ma'noni anglatadi.",
+      },
+      {
+        id: "q9",
+        question: "'Child' (bola) so‘zining ko‘plik shakli qaysi?",
+        options: ["childs", "childes", "children", "childrens"],
+        answer: 2,
+        explanation: "'Child' noto‘g‘ri ko‘plik yasovchi ot bo‘lib, ko‘plikda 'children' bo‘ladi.",
+      },
+      {
+        id: "q10",
+        question: "'My friend ___ not like being late for school' gapini to‘ldiring:",
+        options: ["do", "does", "is", "are"],
+        answer: 1,
+        explanation:
+          "'My friend' (He/She) 3-shaxs birlik bo‘lgani uchun inkorda 'does' ishlatiladi.",
+      },
+    ],
+    tasks: [
+      {
+        id: "en-task-1",
+        type: "Bo‘sh o‘rinni to‘ldiring",
+        prompt: "I ___ a student at School No. 8. ('to be' fe'lining mos shaklini yozing)",
+        hint: "'I' olmoshi bilan hozirgi zamonda qaysi shakl ishlatiladi?",
+        answer: "am",
+        explanation: "'I' bilan har doim 'am' ishlatiladi: I am a student.",
+      },
+      {
+        id: "en-task-2",
+        type: "Present Simple topshirig‘i",
+        prompt:
+          "She ___ (read) a book in the library every afternoon. (Fe'lni to‘g‘ri shaklda yozing)",
+        hint: "3-shaxs birlik (She) uchun fe'l oxiriga -s qo‘shiladi.",
+        answer: "reads",
+        explanation: "Present Simple da 'She reads' shaklida -s qo‘shimchasi qo‘shiladi.",
+      },
+      {
+        id: "en-task-3",
+        type: "Tarjima topshirig‘i",
+        prompt: "'Maktab kutubxonasi' iborasini ingliz tiliga tarjima qiling:",
+        hint: "school + ...",
+        answer: "school library",
+        acceptableAnswers: ["the school library"],
+        explanation: "'Maktab' — school, 'kutubxona' — library -> school library.",
+      },
+      {
+        id: "en-task-4",
+        type: "Artikl topshirig‘i",
+        prompt: "Give me ___ interesting book, please. ('a' yoki 'an' yozing)",
+        hint: "'interesting' so‘zi unli tovush bilan boshlanadi.",
+        answer: "an",
+        explanation: "Unli tovush bilan boshlangan sifat/ot oldidan 'an' qo‘yiladi.",
+      },
+      {
+        id: "en-task-5",
+        type: "Inkor gap tuzing",
+        prompt:
+          "They ___ (not / go) to school on Sunday. (Qisqartma yoki to‘liq shakl: do not / don't)",
+        hint: "'They' bilan inkorda 'do not' yoki 'don't' ishlatiladi.",
+        answer: "don't go",
+        acceptableAnswers: ["do not go"],
+        explanation: "They don't go / They do not go to school on Sunday.",
+      },
+      {
+        id: "en-task-6",
+        type: "Ko‘plik shakli",
+        prompt: "'One notebook, five ___' (notebook so‘zining ko‘plik shaklini yozing)",
+        hint: "Oxiriga -s qo‘shing.",
+        answer: "notebooks",
+        explanation: "Ko‘plikda 'notebooks' bo‘ladi.",
+      },
     ],
     dialogue: [
       {
@@ -286,11 +580,36 @@ export const languagesData: Record<string, LanguageData> = {
         text: "I want to speak fluent English for my future.",
         translation: "Kelajagim uchun ingliz tilida ravon gapirishni xohlayman.",
       },
+      {
+        speaker: "Ustoz (John)",
+        text: "That is a wonderful goal! Do you practice reading in our school library?",
+        translation: "Bu ajoyib maqsad! Maktabimiz kutubxonasida o‘qishni mashq qilasizmi?",
+      },
+      {
+        speaker: "O‘quvchi (Malika)",
+        text: "Yes, I read English stories and listen to audiobooks every evening.",
+        translation:
+          "Ha, har kuni kechqurun inglizcha hikoyalar o‘qiyman va audio kitoblar tinglayman.",
+      },
+      {
+        speaker: "Ustoz (John)",
+        text: "Excellent! Keep practicing new words and ask questions whenever you need help.",
+        translation:
+          "A’lo! Yangi so‘zlarni mashq qilishda davom eting va yordam kerak bo‘lsa savol bering.",
+      },
+      {
+        speaker: "O‘quvchi (Malika)",
+        text: "Thank you very much, teacher! I will do all the exercises today.",
+        translation: "Katta rahmat, ustoz! Bugun barcha mashqlarni bajaraman.",
+      },
     ],
     tips: [
       "Har kuni kamida 5 ta yangi so‘z yod oling va ularni gapda ishlating.",
       "So‘zlarning to‘g‘ri talaffuzini tinglash uchun audio tugmachasidan foydalaning.",
       "Kichik inglizcha ertak va matnlarni ovoz chiqarib o‘qish talaffuzni tez o‘stiradi.",
+      "Present Simple va 'To be' fe'llari bo‘yicha amaliy topshiriqlarni har kuni takrorlab turing.",
+      "Kuniga 10 daqiqa AI Ustoz bo‘limida ingliz tilida qisqa suhbat qilib ko‘ring.",
+      "Yangi so‘zlarni daftarga mavzular bo‘yicha (maktab, texnologiya, muloqot) ajratib yozing.",
     ],
   },
 
@@ -415,6 +734,102 @@ export const languagesData: Record<string, LanguageData> = {
         example: "До свидания, до завтра!",
         category: "Xayrlashuv",
       },
+      {
+        id: "13",
+        word: "Тетрадь",
+        translation: "Daftar",
+        pronunciation: "Tetrad",
+        example: "Откройте свои тетради.",
+        category: "O‘quv qurollari",
+      },
+      {
+        id: "14",
+        word: "Библиотека",
+        translation: "Kutubxona",
+        pronunciation: "Biblioteka",
+        example: "В нашей библиотеке много книг.",
+        category: "Maktab",
+      },
+      {
+        id: "15",
+        word: "Класс",
+        translation: "Sinf",
+        pronunciation: "Klass",
+        example: "Наш класс дружный и активный.",
+        category: "Maktab",
+      },
+      {
+        id: "16",
+        word: "Домашнее задание",
+        translation: "Uy vazifasi",
+        pronunciation: "Domashneye zadaniye",
+        example: "Я выполнил домашнее задание.",
+        category: "Ta'lim",
+      },
+      {
+        id: "17",
+        word: "Вопрос",
+        translation: "Savol",
+        pronunciation: "Vopros",
+        example: "У меня есть важный вопрос.",
+        category: "Muloqot",
+      },
+      {
+        id: "18",
+        word: "Ответ",
+        translation: "Javob",
+        pronunciation: "Otvet",
+        example: "Ваш ответ совершенно верный.",
+        category: "Muloqot",
+      },
+      {
+        id: "19",
+        word: "Доброе утро",
+        translation: "Xayrli tong",
+        pronunciation: "Dobroye utro",
+        example: "Доброе утро, дорогие ученики!",
+        category: "Salomlashish",
+      },
+      {
+        id: "20",
+        word: "Извините",
+        translation: "Kechirasiz",
+        pronunciation: "Izvinite",
+        example: "Извините, можно войти?",
+        category: "Xushmuomalalik",
+      },
+      {
+        id: "21",
+        word: "Компьютер",
+        translation: "Kompyuter",
+        pronunciation: "Kompyuter",
+        example: "На уроке информатики мы работаем на компьютере.",
+        category: "Texnologiya",
+      },
+      {
+        id: "22",
+        word: "Чтение",
+        translation: "O‘qish / Mutolaa",
+        pronunciation: "Chteniye",
+        example: "Чтение развивает мышление.",
+        category: "Ta'lim",
+      },
+      {
+        id: "23",
+        word: "Будущее",
+        translation: "Kelajak",
+        pronunciation: "Budushcheye",
+        example: "Мы строим светлое будущее.",
+        category: "Umumiy",
+      },
+      {
+        id: "24",
+        word: "Успех",
+        translation: "Muvaffaqiyat",
+        pronunciation: "Uspekh",
+        example: "Желаю вам больших успехов в учёбе!",
+        category: "Umumiy",
+      },
     ],
     lessons: [
       {
@@ -428,6 +843,12 @@ export const languagesData: Record<string, LanguageData> = {
             title: "Salomlashish shakllari",
             explanation: "Kattalarga 'Здравствуйте', tengdoshlarga 'Привет' deyiladi.",
             examples: ["Здравствуйте, Анна Ивановна!", "Привет, Рустам!"],
+          },
+          {
+            title: "Kunning vaqtiga qarab salomlashish",
+            explanation:
+              "Ertalab 'Доброе утро!', kunduzi 'Добрый день!', kechqurun 'Добрый вечер!' iboralari qo‘llaniladi.",
+            examples: ["Доброе утро, класс!", "Добрый день, уважаемый учитель!"],
           },
         ],
       },
@@ -443,6 +864,88 @@ export const languagesData: Record<string, LanguageData> = {
             explanation:
               "Erkak jinsi (Мужской): qattiq undoshga tugaydi (стол, урок). Ayol jinsi (Женский): -а, -я ga tugaydi (книга, школа). O'rta jins (Средний): -о, -е ga tugaydi (окно, море).",
             examples: ["Это мой класс (он).", "Это моя школа (она).", "Это наше знание (оно)."],
+          },
+        ],
+      },
+      {
+        id: "ru-3",
+        title: "3-dars: Otlarning ko‘plik shakli (Множественное число)",
+        duration: "20 daqiqa",
+        level: "A1 - A2",
+        description: "Birlikdagi otlardan ko‘plik shaklini to‘g‘ri yasash qoidalari.",
+        topics: [
+          {
+            title: "-ы va -и qo‘shimchalari",
+            explanation:
+              "Ko‘pchilik erkak va ayol jinsidagi otlarga -ы (стол -> столы, школа -> школы), г, к, х, ж, ч, ш, щ harflaridan keyin esa -и qo‘shiladi (книга -> книги, ученик -> ученики).",
+            examples: ["урок — уроки", "книга — книги", "тетрадь — тетради"],
+          },
+          {
+            title: "O‘rta jins ko‘plik shakli",
+            explanation:
+              "O‘rta jinsda -о harfi -а ga, -е harfi esa -я ga almashadi (окно -> окна, задание -> задания).",
+            examples: ["Домашние задания готовы.", "В классе светлые окна."],
+          },
+        ],
+      },
+      {
+        id: "ru-4",
+        title: "4-dars: Kishilik va egalik olmoshlari",
+        duration: "22 daqiqa",
+        level: "A1 - A2",
+        description:
+          "Я, ты, он, она, мы, вы, они hamda мой, моя, моё, мои olmoshlarining qo‘llanishi.",
+        topics: [
+          {
+            title: "Egalik olmoshlarini rodga moslash",
+            explanation:
+              "Erkak jinsida 'мой / твой / наш', ayol jinsida 'моя / твоя / наша', o‘rta jinsda 'моё / твоё / наше', ko‘plikda 'мои / твои / наши' ishlatiladi.",
+            examples: [
+              "мой учебник (мужской род)",
+              "моя тетрадь (женский род)",
+              "моё задание (средний род)",
+              "мои друзья (множественное число)",
+            ],
+          },
+        ],
+      },
+      {
+        id: "ru-5",
+        title: "5-dars: Fe’llarning hozirgi zamonda tuslanishi",
+        duration: "25 daqiqa",
+        level: "A2",
+        description:
+          "1- va 2-tuslanish fe'llari (читать, писать, учить, говорить) bilan gap tuzish.",
+        topics: [
+          {
+            title: "1-tuslanish (читать — o‘qimoq)",
+            explanation: "Я читаю, ты читаешь, он/она читает, мы читаем, вы читаете, они читают.",
+            examples: ["Я читаю книгу каждый день.", "Мы изучаем русский язык в 8-й школе."],
+          },
+          {
+            title: "2-tuslanish (говорить — gapirmoq, учить — o‘rganmoq)",
+            explanation:
+              "Я говорю, ты говоришь, он/она говорит, мы говорим, вы говорите, они говорят.",
+            examples: ["Она хорошо говорит по-русски.", "Ученики учат новые слова."],
+          },
+        ],
+      },
+      {
+        id: "ru-6",
+        title: "6-dars: Maktab, kutubxona va to‘garaklar mavzusida suhbat",
+        duration: "20 daqiqa",
+        level: "A2 - B1",
+        description:
+          "Maktabdagi sevimli fanlar, to‘garaklar va kitobxonlik haqida erkin gaplashish.",
+        topics: [
+          {
+            title: "Foydali nutq qoliplari",
+            explanation:
+              "Yoqtirgan mashg‘ulotni bildirish uchun 'Мне нравится...', 'Я люблю...', 'Я увлекаюсь...' iboralari ishlatiladi.",
+            examples: [
+              "Мне нравится заниматься в кружке информатики.",
+              "Я люблю читать классическую литературу.",
+            ],
           },
         ],
       },
@@ -462,6 +965,113 @@ export const languagesData: Record<string, LanguageData> = {
         answer: 2,
         explanation: "'Спасибо' minnatdorchilik, ya'ni rahmat degani.",
       },
+      {
+        id: "q3",
+        question: "'___ книга' (mening kitobim) birikmasida qaysi egalik olmoshi to‘g‘ri?",
+        options: ["Мой", "Моя", "Моё", "Мои"],
+        answer: 1,
+        explanation: "'Книга' ayol jinsida (-а) bo‘lgani uchun 'моя книга' deyiladi.",
+      },
+      {
+        id: "q4",
+        question: "'Окно' (deraza) so‘zi qaysi rodga kiradi?",
+        options: ["Мужской род", "Женский род", "Средний род", "Ko‘plik"],
+        answer: 2,
+        explanation: "-о harfiga tugagan otlar o‘rta jins (средний род) hisoblanadi.",
+      },
+      {
+        id: "q5",
+        question: "'Я ___ новую книгу' (o‘qiyapman) gapiga to‘g‘ri fe'l shaklini tanlang:",
+        options: ["читаешь", "читает", "читаю", "читаем"],
+        answer: 2,
+        explanation: "Birinchi shaxs birlik ('Я') bilan 'читаю' shakli ishlatiladi.",
+      },
+      {
+        id: "q6",
+        question: "'Книга' so‘zining ko‘plik shakli qaysi?",
+        options: ["книгы", "книги", "книг", "книгу"],
+        answer: 1,
+        explanation: "'г' harfidan keyin rus tilida 'ы' emas, 'и' yoziladi -> книги.",
+      },
+      {
+        id: "q7",
+        question: "'Библиотека' so‘zining o‘zbekcha tarjimasi nima?",
+        options: ["Sinf", "Kutubxona", "Maktab", "Oshxona"],
+        answer: 1,
+        explanation: "'Библиотека' — kutubxona degan ma'noni anglatadi.",
+      },
+      {
+        id: "q8",
+        question: "'Мы ___ по-русски' gapini to‘ldiring:",
+        options: ["говорю", "говоришь", "говорим", "говорят"],
+        answer: 2,
+        explanation: "'Мы' (biz) olmoshi bilan 'говорим' shakli mos keladi.",
+      },
+      {
+        id: "q9",
+        question: "'___ задание' (mening vazifam) birikmasiga mos olmoshni tanlang:",
+        options: ["Мой", "Моя", "Моё", "Мои"],
+        answer: 2,
+        explanation:
+          "'Задание' -е bilan tugagan o‘rta jins so‘zi bo‘lgani uchun 'моё' ishlatiladi.",
+      },
+      {
+        id: "q10",
+        question: "Kattalarga va ustozlarga hurmat bilan qanday salom beriladi?",
+        options: ["Привет", "Пока", "Здравствуйте", "Спасибо"],
+        answer: 2,
+        explanation: "Rasmiy va hurmatli salomlashish 'Здравствуйте' hisoblanadi.",
+      },
+    ],
+    tasks: [
+      {
+        id: "ru-task-1",
+        type: "Rodga mos olmosh qo‘ying",
+        prompt: "___ школа (mening maktabim — мой / моя / моё dan mosini yozing)",
+        hint: "'Школа' -а harfiga tugaydi (женский род).",
+        answer: "моя",
+        explanation: "'Школа' ayol jinsida bo‘lgani uchun 'моя школа' deb yoziladi.",
+      },
+      {
+        id: "ru-task-2",
+        type: "Fe'lni tuslang",
+        prompt: "Она ___ (читать) интересную книгу. (Fe'lning to‘g‘ri shaklini yozing)",
+        hint: "Он / Она bilan 1-tuslanish fe'li -ет bilan tugaydi.",
+        answer: "читает",
+        explanation: "Она читает (u o‘qiyapti).",
+      },
+      {
+        id: "ru-task-3",
+        type: "Ko‘plik shaklini yozing",
+        prompt: "'ученик' (o‘quvchi) so‘zining ko‘plik shaklini yozing:",
+        hint: "'к' harfidan keyin -и qo‘shiladi.",
+        answer: "ученики",
+        explanation: "Учебный класс: один ученик — много учеников / ученики.",
+      },
+      {
+        id: "ru-task-4",
+        type: "Tarjima topshirig‘i",
+        prompt: "'Xayrli tong' iborasini rus tilida yozing:",
+        hint: "Доброе ...",
+        answer: "Доброе утро",
+        explanation: "Ertalabki salomlashish — 'Доброе утро'.",
+      },
+      {
+        id: "ru-task-5",
+        type: "Egalik olmoshi",
+        prompt: "___ урок (bizning darsimiz — наш / наша / наше dan mosini yozing)",
+        hint: "'Урок' undoshga tugaydi (мужской род).",
+        answer: "наш",
+        explanation: "'Урок' erkak jinsida bo‘lgani uchun 'наш урок' bo‘ladi.",
+      },
+      {
+        id: "ru-task-6",
+        type: "Fe'lni tuslang",
+        prompt: "Мы ___ (учить) новые русские слова.",
+        hint: "'Мы' bilan 2-tuslanishda -им qo‘shimchasi qo‘shiladi.",
+        answer: "учим",
+        explanation: "Мы учим новые русские слова (Biz yangi ruscha so‘zlarni o‘rganayapmiz).",
+      },
     ],
     dialogue: [
       {
@@ -479,10 +1089,39 @@ export const languagesData: Record<string, LanguageData> = {
         text: "Сегодня мы изучаем новые правила речи.",
         translation: "Bugun biz nutqning yangi qoidalarini o‘rganamiz.",
       },
+      {
+        speaker: "Ученик",
+        text: "Отлично! А какое будет домашнее задание?",
+        translation: "Ajoyib! Uy vazifasi qanday bo‘ladi?",
+      },
+      {
+        speaker: "Учитель",
+        text: "Прочитайте короткий рассказ в библиотеке и выпишите пять новых слов.",
+        translation: "Kutubxonada qisqa hikoyani o‘qing va beshta yangi so‘zni ko‘chirib yozing.",
+      },
+      {
+        speaker: "Ученик",
+        text: "Можно ли также послушать аудиокнигу на нашей платформе?",
+        translation: "Platformamizdagi audio kitobni ham tinglasak bo‘ladimi?",
+      },
+      {
+        speaker: "Учитель",
+        text: "Конечно! Аудиокниги очень помогают правильному произношению.",
+        translation: "Albatta! Audio kitoblar to‘g‘ri talaffuzga juda katta yordam beradi.",
+      },
+      {
+        speaker: "Ученик",
+        text: "Большое спасибо, учитель! Мы обязательно выполним все задания.",
+        translation: "Katta rahmat, ustoz! Albatta barcha topshiriqlarni bajaramiz.",
+      },
     ],
     tips: [
       "Urg'uga (ударение) doim e'tibor bering, chunki 'о' harfi urg'usiz 'а' kabi aytiladi.",
       "Har kuni qisqa ruscha dialoglarni takrorlang.",
+      "Har bir yangi otni uning rodi (мой, моя, моё) bilan birga yodlang — bu grammatikani osonlashtiradi.",
+      "Kutubxonadagi audio kitoblar va lug‘atdagi ovozli talaffuzni muntazam tinglang.",
+      "1- va 2-tuslanish fe'llarini kundalik gaplarda qo‘llab, amaliy topshiriqlarni bajaring.",
+      "AI Ustoz bilan rus tilida qisqa savol-javoblar o‘tkazib, nutq ravonligini oshiring.",
     ],
   },
 
