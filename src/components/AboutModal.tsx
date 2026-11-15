@@ -7,6 +7,7 @@ import {
   Bot,
   Users,
   BookOpen,
+  BookMarked,
   Award,
   Sparkles,
   CheckCircle2,
@@ -33,6 +34,12 @@ const features = [
     color: "text-orange-600 bg-orange-50",
     title: "Maktab to‘garaklari",
     desc: "Robototexnika, IT Club, Matematika va Sport to‘garaklari bo‘yicha darslar, topshiriqlar va amaliy mashg‘ulotlar.",
+  },
+  {
+    icon: BookMarked,
+    color: "text-cyan-600 bg-cyan-50",
+    title: "Asosiy maktab darslari",
+    desc: "Matematika, Kimyo (118 elementli Davriy jadval bilan), Fizika, Biologiya va Tarix fanlaridan nazariy darslar, formulalar, interaktiv laboratoriyalar, fleshkartalar, yechimli mashqlar va testlar orqali bilimlarni mustahkamlash.",
   },
   {
     icon: BookOpen,
