@@ -180,8 +180,8 @@ export function AboutModal({ onClose }: { onClose: () => void }) {
           </ul>
         </section>
 
-        {/* Loyiha asoschisi va Informatika o'qituvchisi */}
-        <section className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        {/* Loyiha asoschisi, Informatika o'qituvchisi va Jamoa a'zosi */}
+        <section className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           <div className="rounded-3xl border border-indigo-200 bg-gradient-to-br from-indigo-50/90 to-white p-6 shadow-soft sm:p-7">
             <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wide text-indigo-700 sm:text-sm">
               <GraduationCap className="h-5 w-5" />
@@ -209,6 +209,19 @@ export function AboutModal({ onClose }: { onClose: () => void }) {
             </p>
             <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
               Navoiy viloyati, Navoiy shahri, 8-maktab informatika o‘qituvchisi
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-emerald-200 bg-gradient-to-br from-emerald-50/90 to-white p-6 shadow-soft sm:p-7">
+            <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wide text-emerald-700 sm:text-sm">
+              <Users className="h-5 w-5" />
+              Jamoa a’zosi
+            </div>
+            <p className="mt-3 text-xl font-extrabold text-ink sm:text-2xl">
+              Urinboyeva Ziyoda Maqsudovna
+            </p>
+            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+              Navoiy viloyati, Navoiy shahri, 8-maktab o‘quvchisi
             </p>
           </div>
         </section>
