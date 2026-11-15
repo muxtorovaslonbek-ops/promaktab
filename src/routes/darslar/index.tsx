@@ -109,7 +109,7 @@ export function DarslarIndex() {
   const totalLessons = subjectsList.reduce((acc, s) => acc + s.lessons.length, 0);
   const totalRefs = subjectsList.reduce((acc, s) => acc + s.references.length, 0);
   const totalQuizzes = subjectsList.reduce((acc, s) => acc + s.quizzes.length, 0);
-  const totalExercises = subjectsList.reduce((acc, s) => acc + s.exercises.length, 0);
+  const totalFlashcards = subjectsList.reduce((acc, s) => acc + s.flashcards.length, 0);
 
   return (
     <div className="min-h-screen bg-app font-sans text-ink pb-16">
@@ -177,9 +177,9 @@ export function DarslarIndex() {
               Maktab Darslari — Chuqur Bilim va Mustahkam Tayyorgarlik!
             </h2>
             <p className="max-w-2xl text-sm sm:text-base text-muted-foreground leading-relaxed">
-              Matematika, Kimyo, Fizika, Biologiya va Tarix fanlaridan tizimli mavzular, asosiy
-              formulalar va qonunlar, yechimli amaliy mashqlar, test sinovlari hamda atamalar
-              lug‘ati bir joyda jamlangan.
+              Matematika, Kimyo, Fizika, Biologiya va Tarix fanlaridan tizimli mavzular, interaktiv
+              laboratoriyalar, tezkor fleshkartalar, formulalar, yechimli amaliy mashqlar hamda
+              sinov testlari bir joyda jamlangan.
             </p>
 
             {/* Stats Row */}
@@ -214,10 +214,12 @@ export function DarslarIndex() {
               <div className="rounded-2xl border border-border bg-background/60 p-3 shadow-xs">
                 <div className="flex items-center gap-2 text-amber-600 text-xs font-semibold">
                   <Clock className="h-4 w-4" />
-                  <span>Mashqlar</span>
+                  <span>Fleshkarta &amp; Lab</span>
                 </div>
-                <div className="mt-1 text-xl font-bold">{totalExercises} ta masala</div>
-                <div className="text-[11px] text-muted-foreground">Yechim va maslahatlar</div>
+                <div className="mt-1 text-xl font-bold">{totalFlashcards} ta karta</div>
+                <div className="text-[11px] text-muted-foreground">
+                  5 ta interaktiv laboratoriya
+                </div>
               </div>
             </div>
           </div>
@@ -314,8 +316,8 @@ export function DarslarIndex() {
                         <div className="text-[10px] text-muted-foreground">Dars</div>
                       </div>
                       <div className="text-center p-2 rounded-lg bg-background/60">
-                        <div className="text-xs font-extrabold">{subject.stats.references} ta</div>
-                        <div className="text-[10px] text-muted-foreground">Qoida</div>
+                        <div className="text-xs font-extrabold">{subject.flashcards.length} ta</div>
+                        <div className="text-[10px] text-muted-foreground">Karta</div>
                       </div>
                       <div className="text-center p-2 rounded-lg bg-background/60">
                         <div className="text-xs font-extrabold">{subject.stats.quizzes} ta</div>
@@ -327,6 +329,17 @@ export function DarslarIndex() {
                         </div>
                         <div className="text-[10px] text-muted-foreground">O‘zlashtirildi</div>
                       </div>
+                    </div>
+
+                    <div className="rounded-xl border border-border/70 bg-background/50 px-3 py-2 text-[11px] font-semibold text-muted-foreground flex items-center justify-between">
+                      <span>
+                        {subject.id === "kimyo"
+                          ? "118 elementli Davriy jadval birinchi ochiladi"
+                          : "Interaktiv amaliy laboratoriya va mashqlar"}
+                      </span>
+                      <span className={`font-bold ${style.text}`}>
+                        {subject.stats.references} qoida
+                      </span>
                     </div>
                   </div>
 

@@ -24,10 +24,16 @@ import {
   Search,
   AlertCircle,
   Table2,
+  Layers,
+  SlidersHorizontal,
+  StickyNote,
+  Trash2,
 } from "lucide-react";
 import { subjectsData, subjectsOrder, type SubjectData, type SubjectLesson } from "@/data/subjects";
 import { SubjectLogo } from "@/components/SubjectLogo";
 import { PeriodicTable } from "@/components/PeriodicTable";
+import { SubjectFlashcards } from "@/components/SubjectFlashcards";
+import { SubjectInteractiveLab } from "@/components/SubjectInteractiveLab";
 import logo from "@/assets/logo.png";
 
 export const Route = createFileRoute("/darslar/$subject")({
@@ -117,15 +123,19 @@ export function SubjectDetailPage() {
   const subject: SubjectData = subjectsData[subjectParam] ?? subjectsData["matematika"]!;
 
   const [activeTab, setActiveTab] = useState<
-    "lessons" | "periodic" | "references" | "exercises" | "quiz" | "glossary"
-  >("lessons");
+    "periodic" | "lessons" | "flashcards" | "lab" | "references" | "exercises" | "quiz" | "glossary"
+  >(() => (subject.id === "kimyo" ? "periodic" : "lessons"));
   const [selectedLessonIdx, setSelectedLessonIdx] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<Record<string, boolean>>({});
   const [completedExercises, setCompletedExercises] = useState<Record<string, boolean>>({});
+  const [lessonNotes, setLessonNotes] = useState<Record<string, string>>({});
   const [revealedHints, setRevealedHints] = useState<Record<string, boolean>>({});
   const [revealedSolutions, setRevealedSolutions] = useState<Record<string, boolean>>({});
   const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
+  const [quizFilter, setQuizFilter] = useState<"all" | "wrong">("all");
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [lessonSearch, setLessonSearch] = useState("");
+  const [lessonLevel, setLessonLevel] = useState<"all" | SubjectLesson["level"]>("all");
   const [refSearch, setRefSearch] = useState("");
   const [glossarySearch, setGlossarySearch] = useState("");
   const copyTimerRef = useRef<number | null>(null);
@@ -136,6 +146,8 @@ export function SubjectDetailPage() {
       if (rawLessons) setCompletedLessons(JSON.parse(rawLessons) as Record<string, boolean>);
       const rawExercises = localStorage.getItem("subject-exercises-v1");
       if (rawExercises) setCompletedExercises(JSON.parse(rawExercises) as Record<string, boolean>);
+      const rawNotes = localStorage.getItem("subject-notes-v1");
+      if (rawNotes) setLessonNotes(JSON.parse(rawNotes) as Record<string, string>);
     } catch {
       /* ignore */
     }
@@ -144,12 +156,15 @@ export function SubjectDetailPage() {
   useEffect(() => {
     setSelectedLessonIdx(0);
     setQuizAnswers({});
+    setQuizFilter("all");
     setCopiedId(null);
+    setLessonSearch("");
+    setLessonLevel("all");
     setRefSearch("");
     setGlossarySearch("");
     setRevealedHints({});
     setRevealedSolutions({});
-    setActiveTab((prev) => (prev === "periodic" && subject.id !== "kimyo" ? "lessons" : prev));
+    setActiveTab(subject.id === "kimyo" ? "periodic" : "lessons");
   }, [subject.id]);
 
   useEffect(() => {
@@ -203,12 +218,43 @@ export function SubjectDetailPage() {
     }
   };
 
+  const updateLessonNote = (lessonId: string, value: string) => {
+    setLessonNotes((prev) => {
+      const next = { ...prev, [lessonId]: value };
+      try {
+        localStorage.setItem("subject-notes-v1", JSON.stringify(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  };
+
   const completedLessonsCount = subject.lessons.filter((l) => completedLessons[l.id]).length;
   const completedExercisesCount = subject.exercises.filter((e) => completedExercises[e.id]).length;
+  const quizAnsweredCount = Object.keys(quizAnswers).length;
   const quizCorrectCount = subject.quizzes.reduce(
     (acc, q) => (quizAnswers[q.id] === q.answer ? acc + 1 : acc),
     0,
   );
+  const quizWrongCount = subject.quizzes.reduce(
+    (acc, q) => (quizAnswers[q.id] !== undefined && quizAnswers[q.id] !== q.answer ? acc + 1 : acc),
+    0,
+  );
+  const quizPercent =
+    subject.quizzes.length > 0 ? Math.round((quizCorrectCount / subject.quizzes.length) * 100) : 0;
+
+  const filteredLessons = subject.lessons.filter((lesson) => {
+    const q = lessonSearch.trim().toLowerCase();
+    const matchesQuery =
+      !q ||
+      lesson.title.toLowerCase().includes(q) ||
+      lesson.summary.toLowerCase().includes(q) ||
+      lesson.grade.toLowerCase().includes(q);
+    if (!matchesQuery) return false;
+    if (lessonLevel === "all") return true;
+    return lesson.level === lessonLevel;
+  });
 
   const filteredRefs = subject.references.filter((r) => {
     const q = refSearch.trim().toLowerCase();
@@ -229,6 +275,13 @@ export function SubjectDetailPage() {
       g.example.toLowerCase().includes(q)
     );
   });
+
+  const visibleQuizzes =
+    quizFilter === "wrong"
+      ? subject.quizzes.filter(
+          (q) => quizAnswers[q.id] !== undefined && quizAnswers[q.id] !== q.answer,
+        )
+      : subject.quizzes;
 
   return (
     <div className="min-h-screen bg-app font-sans text-ink pb-20">
@@ -262,7 +315,6 @@ export function SubjectDetailPage() {
               const item = subjectsData[id];
               if (!item) return null;
               const isCurrent = item.id === subject.id;
-              const SIcon = subjectIcons[item.id] ?? BookOpen;
               return (
                 <Link
                   key={item.id}
@@ -352,6 +404,11 @@ export function SubjectDetailPage() {
                   </div>
                 </div>
 
+                <div className="flex items-center justify-between text-[11px] font-semibold text-muted-foreground rounded-xl bg-background/80 border border-border/60 px-3 py-2">
+                  <span>Fleshkartalar: {subject.flashcards.length} ta</span>
+                  <span>+ Interaktiv laboratoriya</span>
+                </div>
+
                 <div className="pt-1">
                   <div className="flex justify-between text-xs font-medium mb-1.5">
                     <span>O‘zlashtirish jarayoni</span>
@@ -379,18 +436,6 @@ export function SubjectDetailPage() {
 
         {/* Navigation Tabs */}
         <div className="flex border-b border-border gap-2 overflow-x-auto pb-1">
-          <button
-            onClick={() => setActiveTab("lessons")}
-            className={`flex items-center gap-2 border-b-2 px-4 py-2.5 text-xs sm:text-sm font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
-              activeTab === "lessons"
-                ? `border-current ${theme.badgeText}`
-                : "border-transparent text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <BookOpen className="h-4 w-4" />
-            <span>Darslar ({subject.lessons.length})</span>
-          </button>
-
           {subject.id === "kimyo" && (
             <button
               onClick={() => setActiveTab("periodic")}
@@ -404,6 +449,42 @@ export function SubjectDetailPage() {
               <span>Davriy jadval (118)</span>
             </button>
           )}
+
+          <button
+            onClick={() => setActiveTab("lessons")}
+            className={`flex items-center gap-2 border-b-2 px-4 py-2.5 text-xs sm:text-sm font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
+              activeTab === "lessons"
+                ? `border-current ${theme.badgeText}`
+                : "border-transparent text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <BookOpen className="h-4 w-4" />
+            <span>Darslar ({subject.lessons.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("flashcards")}
+            className={`flex items-center gap-2 border-b-2 px-4 py-2.5 text-xs sm:text-sm font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
+              activeTab === "flashcards"
+                ? `border-current ${theme.badgeText}`
+                : "border-transparent text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Layers className="h-4 w-4" />
+            <span>Fleshkartalar ({subject.flashcards.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("lab")}
+            className={`flex items-center gap-2 border-b-2 px-4 py-2.5 text-xs sm:text-sm font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
+              activeTab === "lab"
+                ? `border-current ${theme.badgeText}`
+                : "border-transparent text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <SlidersHorizontal className="h-4 w-4" />
+            <span>Amaliy Laboratoriya</span>
+          </button>
 
           <button
             onClick={() => setActiveTab("references")}
@@ -461,48 +542,87 @@ export function SubjectDetailPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             {/* Left Lesson Selector */}
             <div className="lg:col-span-4 space-y-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                Mavzular ro‘yxati
-              </h3>
-              <div className="space-y-2">
-                {subject.lessons.map((lesson, idx) => {
-                  const isSelected = safeLessonIdx === idx;
-                  const isDone = completedLessons[lesson.id];
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  Mavzular ro‘yxati ({filteredLessons.length}/{subject.lessons.length})
+                </h3>
+              </div>
 
-                  return (
+              <div className="space-y-2">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+                  <input
+                    type="text"
+                    value={lessonSearch}
+                    onChange={(e) => setLessonSearch(e.target.value)}
+                    placeholder="Dars mavzusini qidirish..."
+                    className="w-full rounded-xl border border-border bg-card pl-8.5 pr-3 py-2 text-xs outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition"
+                  />
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {(["all", "Asosiy", "O‘rta", "Chuqurlashtirilgan"] as const).map((lvl) => (
                     <button
-                      key={lesson.id}
-                      onClick={() => setSelectedLessonIdx(idx)}
-                      className={`w-full text-left rounded-2xl border p-4 transition-all duration-200 cursor-pointer flex items-start justify-between gap-3 ${
-                        isSelected
-                          ? `${theme.border} bg-card shadow-md ring-1 ring-current ${theme.badgeText}`
-                          : "border-border bg-card/60 hover:bg-card hover:border-border/80"
+                      key={lvl}
+                      type="button"
+                      onClick={() => setLessonLevel(lvl)}
+                      className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition cursor-pointer ${
+                        lessonLevel === lvl
+                          ? theme.primaryBg
+                          : "border border-border bg-card text-muted-foreground hover:bg-accent"
                       }`}
                     >
-                      <div className="space-y-1 min-w-0">
-                        <div className="flex items-center gap-1.5 text-[11px] font-semibold text-muted-foreground">
-                          <span>{idx + 1}-dars</span>
-                          <span aria-hidden="true">·</span>
-                          <span>{lesson.grade}</span>
-                          <span aria-hidden="true">·</span>
-                          <span>{lesson.duration}</span>
-                        </div>
-                        <h4 className="text-sm font-bold line-clamp-1">{lesson.title}</h4>
-                        <p className="text-xs text-muted-foreground line-clamp-1">
-                          {lesson.summary}
-                        </p>
-                      </div>
-
-                      <div className="pt-1 shrink-0">
-                        {isDone ? (
-                          <CheckCircle2 className="h-5 w-5 text-emerald-500" />
-                        ) : (
-                          <div className="h-5 w-5 rounded-full border-2 border-muted-foreground/30" />
-                        )}
-                      </div>
+                      {lvl === "all" ? "Barchasi" : lvl}
                     </button>
-                  );
-                })}
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2 max-h-[760px] overflow-y-auto pr-1">
+                {filteredLessons.length > 0 ? (
+                  filteredLessons.map((lesson) => {
+                    const realIdx = subject.lessons.findIndex((l) => l.id === lesson.id);
+                    const isSelected = safeLessonIdx === realIdx;
+                    const isDone = completedLessons[lesson.id];
+
+                    return (
+                      <button
+                        key={lesson.id}
+                        onClick={() => setSelectedLessonIdx(realIdx >= 0 ? realIdx : 0)}
+                        className={`w-full text-left rounded-2xl border p-4 transition-all duration-200 cursor-pointer flex items-start justify-between gap-3 ${
+                          isSelected
+                            ? `${theme.border} bg-card shadow-md ring-1 ring-current ${theme.badgeText}`
+                            : "border-border bg-card/60 hover:bg-card hover:border-border/80"
+                        }`}
+                      >
+                        <div className="space-y-1 min-w-0">
+                          <div className="flex items-center gap-1.5 text-[11px] font-semibold text-muted-foreground">
+                            <span>{realIdx + 1}-dars</span>
+                            <span aria-hidden="true">·</span>
+                            <span>{lesson.grade}</span>
+                            <span aria-hidden="true">·</span>
+                            <span>{lesson.duration}</span>
+                          </div>
+                          <h4 className="text-sm font-bold line-clamp-1">{lesson.title}</h4>
+                          <p className="text-xs text-muted-foreground line-clamp-1">
+                            {lesson.summary}
+                          </p>
+                        </div>
+
+                        <div className="pt-1 shrink-0">
+                          {isDone ? (
+                            <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                          ) : (
+                            <div className="h-5 w-5 rounded-full border-2 border-muted-foreground/30" />
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })
+                ) : (
+                  <div className="rounded-2xl border border-border bg-card p-5 text-center text-xs text-muted-foreground">
+                    Mos keladigan dars topilmadi. Qidiruv yoki daraja filtrini o‘zgartiring.
+                  </div>
+                )}
               </div>
             </div>
 
@@ -608,6 +728,33 @@ export function SubjectDetailPage() {
                     ))}
                   </div>
 
+                  {/* Personal Study Notes */}
+                  <div className="rounded-2xl border border-border bg-background/60 p-4 space-y-2.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5 text-xs font-bold">
+                        <StickyNote className="h-4 w-4 text-amber-500" />
+                        <span>Shaxsiy qaydlar (Mening daftarim)</span>
+                      </div>
+                      {(lessonNotes[currentLesson.id] ?? "").trim().length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => updateLessonNote(currentLesson.id, "")}
+                          className="flex items-center gap-1 rounded-lg border border-border bg-card px-2 py-1 text-[11px] font-semibold text-muted-foreground hover:text-foreground cursor-pointer"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                          <span>Tozalash</span>
+                        </button>
+                      )}
+                    </div>
+                    <textarea
+                      rows={3}
+                      value={lessonNotes[currentLesson.id] ?? ""}
+                      onChange={(e) => updateLessonNote(currentLesson.id, e.target.value)}
+                      placeholder="Ushbu dars bo‘yicha muhim eslatmalar, formula yoki savollaringizni yozib qoldiring (qurilmada saqlanadi)..."
+                      className="w-full rounded-xl border border-border bg-card px-3 py-2 text-xs leading-relaxed outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition resize-y"
+                    />
+                  </div>
+
                   {/* Prev / Next Lesson */}
                   <div className="flex items-center justify-between border-t border-border pt-4">
                     <button
@@ -638,6 +785,19 @@ export function SubjectDetailPage() {
 
         {/* Tab: Periodic Table (Kimyo) */}
         {activeTab === "periodic" && subject.id === "kimyo" && <PeriodicTable />}
+
+        {/* Tab: Flashcards */}
+        {activeTab === "flashcards" && (
+          <SubjectFlashcards
+            subjectId={subject.id}
+            subjectTitle={subject.title}
+            cards={subject.flashcards}
+            accentBgClass={theme.primaryBg}
+          />
+        )}
+
+        {/* Tab: Interactive Subject Lab */}
+        {activeTab === "lab" && <SubjectInteractiveLab subjectId={subject.id} />}
 
         {/* Tab 2: References (Formulas / Laws / Dates) */}
         {activeTab === "references" && (
@@ -828,14 +988,39 @@ export function SubjectDetailPage() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-3 tabular-nums">
+              <div className="flex flex-wrap items-center gap-2.5 tabular-nums">
                 <div className="rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold">
                   Natija:{" "}
                   <span className="text-emerald-600 font-extrabold">{quizCorrectCount}</span> /{" "}
-                  {subject.quizzes.length}
+                  {subject.quizzes.length} ({quizPercent}%)
                 </div>
+                {quizAnsweredCount > 0 && (
+                  <div className="flex rounded-xl border border-border bg-card p-0.5 text-xs font-bold">
+                    <button
+                      type="button"
+                      onClick={() => setQuizFilter("all")}
+                      className={`rounded-lg px-2.5 py-1 transition cursor-pointer ${
+                        quizFilter === "all" ? theme.primaryBg : "text-muted-foreground"
+                      }`}
+                    >
+                      Barchasi
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setQuizFilter("wrong")}
+                      className={`rounded-lg px-2.5 py-1 transition cursor-pointer ${
+                        quizFilter === "wrong" ? theme.primaryBg : "text-muted-foreground"
+                      }`}
+                    >
+                      Xatolar ({quizWrongCount})
+                    </button>
+                  </div>
+                )}
                 <button
-                  onClick={() => setQuizAnswers({})}
+                  onClick={() => {
+                    setQuizAnswers({});
+                    setQuizFilter("all");
+                  }}
                   className="flex items-center gap-1.5 rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold hover:bg-accent transition cursor-pointer"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
@@ -844,8 +1029,24 @@ export function SubjectDetailPage() {
               </div>
             </div>
 
+            {visibleQuizzes.length === 0 ? (
+              <div className="rounded-3xl border border-emerald-200 bg-emerald-50/50 dark:bg-emerald-950/20 p-6 text-center space-y-2">
+                <p className="text-sm font-bold text-emerald-700 dark:text-emerald-300">
+                  Hozircha noto‘g‘ri javob berilgan savol yo‘q!
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setQuizFilter("all")}
+                  className="rounded-xl bg-emerald-600 px-3.5 py-1.5 text-xs font-bold text-white cursor-pointer"
+                >
+                  Barcha savollarga qaytish
+                </button>
+              </div>
+            ) : null}
+
             <div className="space-y-5">
-              {subject.quizzes.map((quiz, qIdx) => {
+              {visibleQuizzes.map((quiz) => {
+                const qIdx = subject.quizzes.findIndex((item) => item.id === quiz.id);
                 const userSelected = quizAnswers[quiz.id];
                 const hasAnswered = userSelected !== undefined;
                 const isCorrect = userSelected === quiz.answer;

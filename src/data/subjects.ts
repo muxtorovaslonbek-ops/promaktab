@@ -47,6 +47,13 @@ export interface SubjectGlossaryItem {
   example: string;
 }
 
+export interface SubjectFlashcard {
+  id: string;
+  front: string;
+  back: string;
+  hint?: string;
+}
+
 export interface SubjectData {
   id: string;
   title: string;
@@ -68,6 +75,7 @@ export interface SubjectData {
   exercises: SubjectExercise[];
   quizzes: SubjectQuizQuestion[];
   glossary: SubjectGlossaryItem[];
+  flashcards: SubjectFlashcard[];
 }
 
 export const subjectsOrder = ["matematika", "kimyo", "fizika", "biologiya", "tarix"] as const;
@@ -91,10 +99,10 @@ export const subjectsData: Record<string, SubjectData> = {
       "Matnli masalalar, foizlar, progressiyalar va kombinatorika masalalarini ishlash",
     ],
     stats: {
-      lessons: 10,
-      references: 15,
-      quizzes: 12,
-      hours: "64 soat",
+      lessons: 14,
+      references: 20,
+      quizzes: 16,
+      hours: "86 soat",
     },
     lessons: [
       {
@@ -451,6 +459,146 @@ export const subjectsData: Record<string, SubjectData> = {
           },
         ],
       },
+      {
+        id: "mat-11",
+        title: "Irratsional ifodalar va tenglamalar",
+        grade: "9–10-sinf",
+        duration: "40 daqiqa",
+        level: "O‘rta",
+        summary:
+          "Kvadrat ildiz va n-darajali ildiz xossalari, kasr maxrajini irratsionallikdan qutqarish va irratsional tenglamalarni yechish.",
+        sections: [
+          {
+            heading: "n-darajali ildiz xossalari",
+            content:
+              "Juft darajali ildiz √(2k)(a) faqat a ≥ 0 bo‘lganda aniqlanadi va qiymati manfiy bo‘lmaydi. Toq darajali ildiz esa barcha haqiqiy sonlar uchun mavjud.",
+            formulaOrRule: "√(ab) = √a · √b;   √(a²) = |a|;   (ⁿ√a)ⁿ = a",
+            example:
+              "Maxrajni irratsionallikdan qutqarish: 6 / √3 = (6√3) / 3 = 2√3. Yoki 2 / (√5 − 1) = 2(√5 + 1) / (5 − 1) = (√5 + 1)/2.",
+            keyTakeaways: [
+              "Ildiz ichidan musbat sonni chiqarishda modul belgisini unutmang: √(x²) = |x|.",
+              "Qo‘shma ifoda (a − √b)(a + √b) = a² − b yordamida maxraj ratsionallashtiriladi.",
+            ],
+          },
+          {
+            heading: "Irratsional tenglamalarni tekshirish",
+            content:
+              "√f(x) = g(x) ko‘rinishidagi tenglamani ikki tomonini kvadratga ko‘targanda chet ildizlar paydo bo‘lishi mumkin; shuning uchun g(x) ≥ 0 shartini qo‘yish yoki javobni o‘rniga qo‘yib tekshirish shart.",
+            formulaOrRule: "√f(x) = g(x)  ⇔  { f(x) = (g(x))²,  g(x) ≥ 0 }",
+            example:
+              "√(x + 6) = x ⇒ x + 6 = x² (x ≥ 0 sharti bilan). x² − x − 6 = 0 ⇒ x = 3 va x = −2. x ≥ 0 bo‘lgani uchun yagona javob x = 3.",
+            keyTakeaways: [
+              "Arifmetik kvadrat ildiz qiymati hech qachon manfiy bo‘lmaydi.",
+              "Kvadratga ko‘targandan so‘ng olingan barcha ildizlarni asl tenglamada tekshiring.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "mat-12",
+        title: "Vektorlar va koordinatalar usuli",
+        grade: "8–10-sinf",
+        duration: "40 daqiqa",
+        level: "O‘rta",
+        summary:
+          "Vektor koordinatalari, uzunligi, vektorlarni qo‘shish, skalyar ko‘paytma va vektorlar orasidagi burchakni topish.",
+        sections: [
+          {
+            heading: "Vektor koordinatalari va uzunligi",
+            content:
+              "A(x₁; y₁) va B(x₂; y₂) nuqtalar berilgan bo‘lsa, AB vektorining koordinatalari oxiridan boshini ayirish bilan topiladi: (x₂ − x₁; y₂ − y₁). Kesma o‘rtasi esa koordinatalar o‘rta arifmetigidir.",
+            formulaOrRule: "|ā| = √(x² + y²);    ā + b̄ = (x₁ + x₂; y₁ + y₂)",
+            example:
+              "A(1; 2) va B(4; 6) nuqtalar orasidagi masofa: AB̄ = (3; 4), uzunligi |AB̄| = √(3² + 4²) = 5.",
+            keyTakeaways: [
+              "Ikki vektor kollinear (parallel) bo‘lsa, ularning mos koordinatalari proporsional: x₁/x₂ = y₁/y₂.",
+              "Nol vektorning uzunligi 0 ga teng, yo‘nalishi ixtiyoriy.",
+            ],
+          },
+          {
+            heading: "Skalyar ko‘paytma va perpendikulyarlik",
+            content:
+              "Ikki vektorning skalyar ko‘paytmasi ularning uzunliklari va orasidagi burchak kosinusi ko‘paytmasiga teng. Koordinatalarda esa mos koordinatalar ko‘paytmalarining yig‘indisi bo‘ladi.",
+            formulaOrRule: "ā · b̄ = |ā|·|b̄|·cosα = x₁x₂ + y₁y₂;   ā ⊥ b̄ ⇔ x₁x₂ + y₁y₂ = 0",
+            example:
+              "ā = (2; −3) va b̄ = (6; 4) vektorlar perpendikulyarmi? Skalyar ko‘paytma: 2·6 + (−3)·4 = 12 − 12 = 0 ⇒ Ha, perpendikulyar!",
+            keyTakeaways: [
+              "Skalyar ko‘paytma natijasi vektor emas, balki oddiy haqiqiy sondir.",
+              "cosα = (ā · b̄) / (|ā| · |b̄|) orqali vektorlar orasidagi burchak topiladi.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "mat-13",
+        title: "Boshlang‘ich funksiya va aniq integral",
+        grade: "11-sinf",
+        duration: "45 daqiqa",
+        level: "Chuqurlashtirilgan",
+        summary:
+          "Boshlang‘ich funksiya tushunchasi, integrallash jadvali, Nyuton-Leybnits formulasi va egri chiziqli trapetsiya yuzi.",
+        sections: [
+          {
+            heading: "Boshlang‘ich funksiya va aniqmas integral",
+            content:
+              "Agar F'(x) = f(x) bo‘lsa, F(x) funksiya f(x) ning boshlang‘ich funksiyasi deyiladi. Integrallash differensiallashga (hosila olishga) teskari amaldir.",
+            formulaOrRule: "∫xⁿ dx = xⁿ⁺¹ / (n + 1) + C  (n ≠ −1);   ∫cos x dx = sin x + C",
+            example:
+              "f(x) = 3x² − 4x funksiyaning umumiy boshlang‘ich funksiyasi: F(x) = x³ − 2x² + C.",
+            keyTakeaways: [
+              "Bitta funksiyaning boshlang‘ich funksiyalari o‘zaro o‘zgarmas son C ga farq qiladi.",
+              "∫(1/x) dx = ln|x| + C; ∫eˣ dx = eˣ + C.",
+            ],
+          },
+          {
+            heading: "Egri chiziqli trapetsiya yuzini topish",
+            content:
+              "y = f(x) ≥ 0 grafigi, Ox o‘qi hamda x = a va x = b to‘g‘ri chiziqlar bilan chegaralangan shakl yuzi aniq integral yordamida Nyuton-Leybnits formulasi orqali hisoblanadi.",
+            formulaOrRule: "S = ∫ₐᵇ f(x) dx = F(b) − F(a)",
+            example:
+              "y = x² parabolasi, y = 0 va x = 0, x = 3 chiziqlar bilan chegaralangan yuz: S = ∫₀³ x² dx = [x³/3]₀³ = 27/3 − 0 = 9 kv. birlik.",
+            keyTakeaways: [
+              "Fizikada tezlikning vaqt bo‘yicha aniq integrali bosib o‘tilgan yo‘lni beradi.",
+              "Integrallash chegaralari almashtirilsa, integral ishorasi qarama-qarshisiga o‘zgaradi.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "mat-14",
+        title: "Matnli harakat, ish va aralashma masalalari",
+        grade: "6–9-sinf",
+        duration: "35 daqiqa",
+        level: "Asosiy",
+        summary:
+          "Oqim bo‘ylab va oqimga qarshi harakat, birgalikda bajariladigan ish hamda eritma/qotishma konsentratsiyasiga doir matnli masalalar.",
+        sections: [
+          {
+            heading: "Harakat va birgalikda ish masalalari",
+            content:
+              "Daryoda kater oqim bo‘ylab harakatlanganda tezligi v(kater) + v(oqim), oqimga qarshi esa v(kater) − v(oqim) bo‘ladi. Ish masalalarida butun ish «1» deb olinib, ish unumlari qo‘shiladi.",
+            formulaOrRule: "1 / t(umumiy) = 1 / t₁ + 1 / t₂;    v(nisbiy) = v₁ ± v₂",
+            example:
+              "Birinchi quvur hovuzni 6 soatda, ikkinchisi 3 soatda to‘ldiradi. Ikkalasi birga: 1/6 + 1/3 = 3/6 = 1/2 ⇒ 2 soatda to‘ldiradi.",
+            keyTakeaways: [
+              "Qarama-qarshi harakatda yaqinlashish tezligi v₁ + v₂ ga teng.",
+              "Bir tomonga harakatda quvib yetish tezligi v₁ − v₂ ga teng.",
+            ],
+          },
+          {
+            heading: "Aralashma va qotishma masalalari",
+            content:
+              "Ikki eritma aralashtirilganda erigan sof moddalar massalari yig‘indisi saqlanadi. Umumiy formula bilan istalgan konsentratsiyani topish mumkin.",
+            formulaOrRule: "m₁·w₁ + m₂·w₂ = (m₁ + m₂)·w(aralashma)",
+            example:
+              "200 g 10% li tuz eritmasiga 300 g 20% li eritma qo‘shilsa: sof tuz = 20 + 60 = 80 g; umumiy massa 500 g; w = 80/500 · 100% = 16%.",
+            keyTakeaways: [
+              "Sof suv qo‘shilganda moddaning ulushi 0%, sof tuz qo‘shilganda 100% deb olinadi.",
+              "Bug‘latilganda faqat erituvchi (suv) massasi kamayadi, tuz massasi o‘zgarmaydi.",
+            ],
+          },
+        ],
+      },
     ],
     references: [
       {
@@ -560,6 +708,41 @@ export const subjectsData: Record<string, SubjectData> = {
         explanation: "Egri chiziqli trapetsiya yuzini boshlang‘ich funksiya F(x) orqali topish.",
         usage: "Oliy matematika, maydon va ish hisoblarida.",
       },
+      {
+        id: "mref-16",
+        title: "Skalyar ko‘paytma (Vektorlar)",
+        expression: "ā · b̄ = x₁x₂ + y₁y₂ = |ā|·|b̄|·cosα",
+        explanation: "Ikki vektor orasidagi burchak va perpendikulyarlik shartini aniqlash.",
+        usage: "Analitik geometriya va fizika masalalarida.",
+      },
+      {
+        id: "mref-17",
+        title: "Ikki nuqta orasidagi masofa",
+        expression: "d = √((x₂ − x₁)² + (y₂ − y₁)²)",
+        explanation: "Koordinata tekisligida A(x₁; y₁) va B(x₂; y₂) nuqtalar orasidagi masofa.",
+        usage: "Koordinatalar usuli va kesma uzunligida.",
+      },
+      {
+        id: "mref-18",
+        title: "Uchburchak yuzi (Geron formulasi)",
+        expression: "S = √(p(p − a)(p − b)(p − c)),   p = (a + b + c)/2",
+        explanation: "Uchta tomoni ma’lum bo‘lgan uchburchakning yuzini topish.",
+        usage: "Planimetriya masalalarida balandlik noma’lum bo‘lganda.",
+      },
+      {
+        id: "mref-19",
+        title: "Sinuslar teoremasi",
+        expression: "a / sinα = b / sinβ = c / sinγ = 2R",
+        explanation: "Uchburchak tomonlari qarshisidagi burchaklar sinusiga proporsional.",
+        usage: "Tashqi chizilgan aylana radiusi R ni topishda.",
+      },
+      {
+        id: "mref-20",
+        title: "Ko‘pburchak ichki burchaklar yig‘indisi",
+        expression: "Σ = 180° · (n − 2)",
+        explanation: "n tomonli qavariq ko‘pburchakning barcha ichki burchaklari yig‘indisi.",
+        usage: "Muntazam ko‘pburchak burchagini topishda.",
+      },
     ],
     exercises: [
       {
@@ -620,6 +803,40 @@ export const subjectsData: Record<string, SubjectData> = {
         hint: "Qulay natijalarni sanang: juft sonlar {2, 4, 6}, 5 dan katta son {6}.",
         solution:
           "Umumiy natijalar n = 6. Qulay natijalar to‘plami {2, 4, 6} bo‘lib, m = 3 ta. P = 3 / 6 = 0.5.",
+      },
+      {
+        id: "mex-7",
+        title: "Irratsional tenglama",
+        level: "O‘rta",
+        question: "√(3x + 1) = 4 tenglamaning ildizini toping.",
+        hint: "Har ikki tomonni kvadratga ko‘taring va tekshiring.",
+        solution: "3x + 1 = 16 ⇒ 3x = 15 ⇒ x = 5. Tekshirish: √(15 + 1) = √16 = 4. Javob: 5.",
+      },
+      {
+        id: "mex-8",
+        title: "Vektorlar perpendikulyarligi",
+        level: "O‘rta",
+        question:
+          "m ning qanday qiymatida ā = (4; m) va b̄ = (3; −2) vektorlar perpendikulyar bo‘ladi?",
+        hint: "Perpendikulyar vektorlar skalyar ko‘paytmasi 0 ga teng: x₁x₂ + y₁y₂ = 0.",
+        solution: "4·3 + m·(−2) = 0 ⇒ 12 − 2m = 0 ⇒ m = 6.",
+      },
+      {
+        id: "mex-9",
+        title: "Aniq integral hisobi",
+        level: "Chuqurlashtirilgan",
+        question: "∫₁³ (2x + 1) dx aniq integralning qiymatini hisoblang.",
+        hint: "Boshlang‘ich funksiya F(x) = x² + x dan foydalaning.",
+        solution: "F(3) − F(1) = (3² + 3) − (1² + 1) = 12 − 2 = 10.",
+      },
+      {
+        id: "mex-10",
+        title: "Birgalikda bajariladigan ish",
+        level: "Asosiy",
+        question:
+          "Usta bir ishni 12 soatda, shogirdi esa 24 soatda bajaradi. Ular birgalikda ishlasa, shu ishni necha soatda tugatishadi?",
+        hint: "1/t = 1/12 + 1/24.",
+        solution: "1/t = 2/24 + 1/24 = 3/24 = 1/8 ⇒ t = 8 soat.",
       },
     ],
     quizzes: [
@@ -709,6 +926,34 @@ export const subjectsData: Record<string, SubjectData> = {
         answer: 2,
         explanation: "sin(30°) = 0.5 va cos(60°) = 0.5, yig‘indisi 0.5 + 0.5 = 1.",
       },
+      {
+        id: "mq-13",
+        question: "A(2; −1) va B(5; 3) nuqtalar orasidagi masofa nechaga teng?",
+        options: ["3", "4", "5", "7"],
+        answer: 2,
+        explanation: "d = √((5 − 2)² + (3 − (−1))²) = √(9 + 16) = √25 = 5.",
+      },
+      {
+        id: "mq-14",
+        question: "Muntazam oltiburchakning bitta ichki burchagi necha gradusga teng?",
+        options: ["90°", "108°", "120°", "135°"],
+        answer: 2,
+        explanation: "180° · (6 − 2) / 6 = 720° / 6 = 120°.",
+      },
+      {
+        id: "mq-15",
+        question: "Tomonlari 13, 14, 15 bo‘lgan uchburchakning yarim perimetri p nechaga teng?",
+        options: ["21", "42", "20", "14"],
+        answer: 0,
+        explanation: "p = (13 + 14 + 15) / 2 = 42 / 2 = 21.",
+      },
+      {
+        id: "mq-16",
+        question: "∫₀² 3x² dx aniq integralning qiymati nechaga teng?",
+        options: ["4", "6", "8", "12"],
+        answer: 2,
+        explanation: "Boshlang‘ich funksiya F(x) = x³. F(2) − F(0) = 2³ − 0 = 8.",
+      },
     ],
     glossary: [
       {
@@ -787,6 +1032,96 @@ export const subjectsData: Record<string, SubjectData> = {
           "Egri chiziq ostidagi yuzani berilgan [a; b] kesmada hisoblovchi matematik amal.",
         example: "∫₀² x dx = [x²/2]₀² = 2.",
       },
+      {
+        term: "Irratsional son",
+        definition:
+          "Cheksiz davriy bo‘lmagan o‘nli kasr ko‘rinishida yoziladigan, m/n kasr shakliga keltirib bo‘lmaydigan son.",
+        example: "√2, √3, π va e sonlari irratsional sonlardir.",
+      },
+      {
+        term: "Skalyar ko‘paytma",
+        definition:
+          "Ikki vektor uzunliklari va ular orasidagi burchak kosinusi ko‘paytmasiga teng son.",
+        example: "Vektorlar perpendikulyar bo‘lganda skalyar ko‘paytma 0 ga teng.",
+      },
+      {
+        term: "Boshlang‘ich funksiya",
+        definition: "Hosilasi berilgan f(x) funksiyaga teng bo‘lgan F(x) funksiya.",
+        example: "f(x) = cos x uchun F(x) = sin x + C boshlang‘ich funksiyadir.",
+      },
+      {
+        term: "Proporsiya",
+        definition: "Ikki nisbatning tengligi (a : b = c : d).",
+        example: "Chet hadlari ko‘paytmasi o‘rta hadlari ko‘paytmasiga teng: a·d = b·c.",
+      },
+      {
+        term: "Tangens",
+        definition:
+          "To‘g‘ri burchakli uchburchakda o‘tkir burchak qarshisidagi katetning yopishgan katetga nisbati.",
+        example: "tg(45°) = 1, tgα = sinα / cosα.",
+      },
+      {
+        term: "Kollinear vektorlar",
+        definition: "Bitta to‘g‘ri chiziqda yoki parallel to‘g‘ri chiziqlarda yotuvchi vektorlar.",
+        example: "ā = (2; 4) va b̄ = (1; 2) vektorlar kollineardir.",
+      },
+    ],
+    flashcards: [
+      { id: "mfc-1", front: "Kvadratlar ayirmasi formulasi?", back: "a² − b² = (a − b)(a + b)" },
+      {
+        id: "mfc-2",
+        front: "Kvadrat tenglama diskriminanti D = ?",
+        back: "D = b² − 4ac; x₁,₂ = (−b ± √D) / (2a)",
+      },
+      {
+        id: "mfc-3",
+        front: "Viyet teoremasi (ax² + bx + c = 0)?",
+        back: "x₁ + x₂ = −b/a va x₁ · x₂ = c/a",
+      },
+      {
+        id: "mfc-4",
+        front: "Pifagor teoremasi?",
+        back: "a² + b² = c² (katetlar kvadratlari yig‘indisi gipotenuza kvadratiga teng)",
+      },
+      {
+        id: "mfc-5",
+        front: "Asosiy trigonometrik ayniyat?",
+        back: "sin²α + cos²α = 1",
+        hint: "Birlik aylanadan kelib chiqadi",
+      },
+      {
+        id: "mfc-6",
+        front: "Arifmetik progressiya n-hadi va yig‘indisi?",
+        back: "aₙ = a₁ + (n−1)d;  Sₙ = ((a₁ + aₙ)/2) · n",
+      },
+      {
+        id: "mfc-7",
+        front: "logₐ(1) va logₐ(a) qiymatlari?",
+        back: "logₐ(1) = 0;  logₐ(a) = 1 (a > 0, a ≠ 1)",
+      },
+      { id: "mfc-8", front: "Shar (sfera) hajmi va sirt yuzi?", back: "V = ⁴⁄₃πR³;  S = 4πR²" },
+      { id: "mfc-9", front: "Piramida va konus hajmi?", back: "V = ⅓ · S(asos) · H" },
+      {
+        id: "mfc-10",
+        front: "Guruhlash (Kombinatsiya) Cₙᵏ formulasi?",
+        back: "Cₙᵏ = n! / (k! · (n − k)!)",
+      },
+      {
+        id: "mfc-11",
+        front: "sin(x) va cos(x) ning hosilalari?",
+        back: "(sin x)' = cos x;  (cos x)' = −sin x",
+      },
+      {
+        id: "mfc-12",
+        front: "Ikki vektorning perpendikulyarlik sharti?",
+        back: "Skalyar ko‘paytmasi 0 ga teng: x₁x₂ + y₁y₂ = 0",
+      },
+      {
+        id: "mfc-13",
+        front: "Geron formulasi (uchburchak yuzi)?",
+        back: "S = √(p(p−a)(p−b)(p−c)), bu yerda p = (a+b+c)/2",
+      },
+      { id: "mfc-14", front: "Nyuton-Leybnits formulasi?", back: "∫ₐᵇ f(x)dx = F(b) − F(a)" },
     ],
   },
 
@@ -808,10 +1143,10 @@ export const subjectsData: Record<string, SubjectData> = {
       "Uglevodorodlar va kislorodli organik birikmalarning sinflarini farqlash",
     ],
     stats: {
-      lessons: 10,
-      references: 15,
-      quizzes: 12,
-      hours: "60 soat",
+      lessons: 14,
+      references: 20,
+      quizzes: 16,
+      hours: "82 soat",
     },
     lessons: [
       {
@@ -1130,6 +1465,149 @@ export const subjectsData: Record<string, SubjectData> = {
           },
         ],
       },
+      {
+        id: "kim-11",
+        title: "Metallmaslar: Vodorod, kislorod va galogenlar",
+        grade: "8–9-sinf",
+        duration: "40 daqiqa",
+        level: "O‘rta",
+        summary:
+          "Vodorod va kislorodning olinishi, ozon allotropiyasi, galogenlar (F₂, Cl₂, Br₂, I₂) faolligi va xlorid kislota xossalari.",
+        sections: [
+          {
+            heading: "Vodorod, kislorod va ozon",
+            content:
+              "Vodorod (H₂) — eng yengil gaz, ekologik toza yoqilg‘i bo‘lib, metall oksidlaridan toza metallarni qaytarib olishda ishlatiladi. Kislorod ikkita allotropik shaklga ega: kislorod (O₂) va ozon (O₃).",
+            formulaOrRule: "2KMnO₄ —(t°)→ K₂MnO₄ + MnO₂ + O₂↑;   3O₂ ⇌ 2O₃",
+            example:
+              "Ozon qatlami stratosferada Quyoshning zararli ultrabinafsha nurlarini ushlab qolib, Yerdagi hayotni himoya qiladi.",
+            keyTakeaways: [
+              "Vodorod va kislorodning 2:1 hajmiy nisbatdagi aralashmasi «qaldiroq gaz» deyiladi.",
+              "Kislorod havodan og‘ir (M = 32 g/mol, havo = 29 g/mol), vodorod esa havodan 14.5 marta yengil.",
+            ],
+          },
+          {
+            heading: "Galogenlar guruhi (VII-A)",
+            content:
+              "Ftor, xlor, brom va yod kuchli oksidlovchilardir. Guruhda yuqoridan pastga qarab galogenlarning metallmaslik faolligi kamayadi: har bir yuqori galogen o‘zidan pastdagi galogenni tuz eritmasidan siqib chiqaradi.",
+            formulaOrRule: "Cl₂ + 2KBr → 2KCl + Br₂;   Ag⁺ + Cl⁻ → AgCl↓ (oq cho‘kma)",
+            example:
+              "Kumush nitrat (AgNO₃) eritmasi xlorid ionlarining sifat reaktivi bo‘lib, kislotada erimaydigan oq AgCl cho‘kma beradi.",
+            keyTakeaways: [
+              "Oddiy sharoitda F₂ va Cl₂ gaz, Br₂ suyuq, I₂ esa qattiq kristall moddadir.",
+              "Ftor suvdagi kislorodni ham siqib chiqaradigan eng faol metallmasdir.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "kim-12",
+        title: "Azot, fosfor, uglerod va mineral o‘g‘itlar",
+        grade: "9-sinf",
+        duration: "40 daqiqa",
+        level: "O‘rta",
+        summary:
+          "Azot va ammiak sintezi, nitrat kislotaning o‘ziga xos xossalari, fosfor allotropiyasi, uglerod oksidlari va NPK mineral o‘g‘itlari.",
+        sections: [
+          {
+            heading: "Azot, ammiak va nitrat kislota",
+            content:
+              "Azot molekulasi (N≡N) mustahkam uch bog‘ga ega bo‘lgani uchun oddiy sharoitda juda inert. Sanoatda Gaber usulida ammiak (NH₃) olinadi. Nitrat kislota (HNO₃) metallar bilan reaksiyada deyarli hech qachon vodorod ajratmaydi, balki NO₂, NO yoki N₂O chiqaradi.",
+            formulaOrRule: "N₂ + 3H₂ ⇌ 2NH₃;   NH₃ + HCl → NH₄Cl (tutun)",
+            example:
+              "Navoiyazot korxonasida tabiiy gaz va havo azotidan ammiak hamda azotli mineral o‘g‘itlar (karbamid, selitra) ishlab chiqariladi.",
+            keyTakeaways: [
+              "Ammoniy ionini (NH₄⁺) aniqlash uchun ishqor qo‘shib qizdiriladi — o‘tkir hidli NH₃ chiqadi.",
+              "Kremniy (Si) yarimo‘tkazgich texnikasi va quyosh panellarining asosiy materialidir.",
+            ],
+          },
+          {
+            heading: "Mineral o‘g‘itlar (N, P, K)",
+            content:
+              "O‘simliklarning o‘sishi uchun uchta asosiy oziq elementi zarur: Azot (barg va poya o‘sishi), Fosfor (ildiz va meva pishishi), Kaliy (sovuqqa va kasalliklarga chidamlilik).",
+            formulaOrRule:
+              "Karbamid: CO(NH₂)₂;   Ammofos: NH₄H₂PO₄ + (NH₄)₂HPO₄;   Silvinit: KCl·NaCl",
+            example:
+              "Karbamid (mochevina) tarkibida 46.7% azot bo‘lib, eng konsentrlangan qattiq azotli o‘g‘it hisoblanadi.",
+            keyTakeaways: [
+              "Oq fosfor qorong‘ida nurlanadi va zaharli, qizil fosfor esa gugurt qutisi yonida ishlatiladi.",
+              "O‘zbekistonda Qizilqum fosforitlari va Dehqonobod kaliy o‘g‘itlari zavodi mavjud.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "kim-13",
+        title: "Oltingugurt va sulfat kislota ishlab chiqarish",
+        grade: "9–10-sinf",
+        duration: "35 daqiqa",
+        level: "O‘rta",
+        summary:
+          "Oltingugurt birikmalari (H₂S, SO₂, SO₃), kontakt usulida sulfat kislota ishlab chiqarishning 3 bosqichi va sulfat ioniga sifat reaksiyasi.",
+        sections: [
+          {
+            heading: "Sulfat kislota olishning kontakt usuli",
+            content:
+              "«Kimyo sanoatining noni» deb ataluvchi sulfat kislota (H₂SO₄) pirit (FeS₂) yoki oltingugurtdan uch bosqichda olinadi. Ikkinchi bosqichda V₂O₅ (vanadiy (V) oksid) katalizatori qo‘llaniladi.",
+            formulaOrRule: "1) S + O₂ → SO₂;   2) 2SO₂ + O₂ ⇌(V₂O₅) 2SO₃;   3) SO₃ + H₂O → H₂SO₄",
+            example:
+              "Sulfat kislota va sulfatlar (SO₄²⁻) borligini tekshirish uchun BaCl₂ eritmasi tomiziladi — kislotada erimaydigan oq BaSO₄ cho‘kma tushadi.",
+            keyTakeaways: [
+              "Konsentrlangan H₂SO₄ kuchli suv tortuvchi modda bo‘lib, organik moddalarni ko‘mirlashtiradi.",
+              "Kislotani suyultirishda doimo kislota suvga oz-ozdan quyiladi (aksincha emas!).",
+            ],
+          },
+          {
+            heading: "Konsentrlangan sulfat kislotaning o‘ziga xosligi",
+            content:
+              "Suyultirilgan H₂SO₄ metallar bilan H₂ ajratadi, konsentrlangan issiq H₂SO₄ esa metallarni (hatto misni ham) oksidlab SO₂ gazi ajratadi.",
+            formulaOrRule: "Cu + 2H₂SO₄(kons, t°) → CuSO₄ + SO₂↑ + 2H₂O",
+            example:
+              "Kumush yoki mis kabi passiv metallar ham issiq konsentrlangan sulfat kislotada eriydi.",
+            keyTakeaways: [
+              "Vodorod sulfid (H₂S) palag‘da tuxum hidli zaharli gazdir.",
+              "Gips (CaSO₄·2H₂O) qizdirilib qurilish alebastri olinadi.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "kim-14",
+        title: "Polimerlar, tolalar va yashil kimyo",
+        grade: "10–11-sinf",
+        duration: "40 daqiqa",
+        level: "Chuqurlashtirilgan",
+        summary:
+          "Polimerlanish va polikondensatlanish reaksiyalari, plastmassalar, tabiiy va sintetik tolalar hamda ekologik toza kimyo tamoyillari.",
+        sections: [
+          {
+            heading: "Polimer olish usullari va plastmassalar",
+            content:
+              "Polimerlanishda monomerlar qo‘sh bog‘ uzilishi hisobiga qo‘shimcha modda ajratmasdan birikadi (polietilen, polipropilen, PVX). Polikondensatlanishda esa polimer bilan birga kichik molekula (masalan, H₂O) ajralib chiqadi.",
+            formulaOrRule:
+              "n CH₂=CH₂ → (−CH₂−CH₂−)ₙ  (polietilen);   n CH₂=CH−Cl → (−CH₂−CHCl−)ₙ (PVX)",
+            example:
+              "O‘zbekistondagi Sho‘rtan va Ustyurt gaz-kimyo majmualarida tabiiy gazdan yuqori sifatli polietilen va polipropilen granulalari ishlab chiqariladi.",
+            keyTakeaways: [
+              "Polimer tarkibida takrorlanuvchi qism struktura bo‘g‘ini, n esa polimerlanish darajasi deyiladi.",
+              "Tabiiy kauchuk izopren (2-metilbutadiyen-1,3) polimeridir.",
+            ],
+          },
+          {
+            heading: "Tolalar tasnifi va yashil kimyo",
+            content:
+              "Tabiiy tolalarga paxta, zig‘ir (sellyuloza) hamda jun, ipak (oqsil) kiradi. Sun’iy tolalar tabiiy polimerdan (viskoza, atsetat), sintetik tolalar esa neft-gaz mahsulotlaridan (kapron, lavsan) olinadi.",
+            formulaOrRule:
+              "Paxta va viskoza → Sellyuloza tolalari;   Ipak, jun, kapron → Poliamid zanjirlari",
+            example:
+              "Chiqindisiz texnologiyalar, plastmassalarni qayta ishlash va biologik parchalanadigan polimerlar yaratish yashil kimyoning bosh maqsadidir.",
+            keyTakeaways: [
+              "Kauchukni oltingugurt bilan qizdirib rezina olish jarayoni vulkanizatsiya deyiladi.",
+              "Yashil kimyo atrof-muhitga zararli erituvchilar va zaharli chiqindilarni kamaytirishga qaratilgan.",
+            ],
+          },
+        ],
+      },
     ],
     references: [
       {
@@ -1238,6 +1716,41 @@ export const subjectsData: Record<string, SubjectData> = {
         explanation: "Murakkab uglevodlarning gidrolizi natijasida glyukoza (C₆H₁₂O₆) olinadi.",
         usage: "Biokimyo va oziq-ovqat sanoatida.",
       },
+      {
+        id: "kref-16",
+        title: "Xlorid va sulfat ionlariga sifat reaksiyasi",
+        expression: "Cl⁻ + Ag⁺ → AgCl↓ (oq);    SO₄²⁻ + Ba²⁺ → BaSO₄↓ (oq)",
+        explanation: "Nitrat kislotada erimaydigan oq cho‘kmalar hosil bo‘lishi.",
+        usage: "Anorganik moddalarni sifat tahlilida aniqlashda.",
+      },
+      {
+        id: "kref-17",
+        title: "Karbonat ioniga sifat reaksiyasi",
+        expression: "CO₃²⁻ + 2H⁺ → CO₂↑ + H₂O  (ohakli suvni loyqalatadi)",
+        explanation: "Kislota ta’sirida rangsiz karbonat angidrid gazi ajralishi.",
+        usage: "Ohaktosh, soda va bo‘rni aniqlashda.",
+      },
+      {
+        id: "kref-18",
+        title: "Nitrat kislotaning metallar bilan reaksiyasi",
+        expression: "Cu + 4HNO₃(kons) → Cu(NO₃)₂ + 2NO₂↑ + 2H₂O",
+        explanation: "Nitrat kislota kuchli oksidlovchi sifatida azot oksidlari hosil qiladi.",
+        usage: "OQR va metallarni eritish jarayonlarida.",
+      },
+      {
+        id: "kref-19",
+        title: "Avogadro qonuni va molyar hajm",
+        expression: "Vₘ = 22.4 L/mol (n.sh. da, T = 273 K, P = 101.3 kPa)",
+        explanation: "Normal sharoitda har qanday ideal gazning 1 moli 22.4 litr hajm egallaydi.",
+        usage: "Gaz ishtirokidagi barcha hisob-kitoblarda.",
+      },
+      {
+        id: "kref-20",
+        title: "Vodorod ko‘rsatkichi (pH) shkalasi",
+        expression: "pH = −lg[H⁺];   pH + pOH = 14 (25°C da)",
+        explanation: "Eritmadagi vodorod ionlari konsentratsiyasini ko‘rsatuvchi kattalik.",
+        usage: "Tibbiyot, tuproqshunoslik va analitik kimyoda.",
+      },
     ],
     exercises: [
       {
@@ -1296,6 +1809,44 @@ export const subjectsData: Record<string, SubjectData> = {
         hint: "CaCO₃ → CaO + CO₂↑. Nazariy hajm bilan amaliy hajmni solishtiring.",
         solution:
           "n(CaCO₃) = 200 / 100 = 2 mol ⇒ V(nazariy CO₂) = 2 · 22.4 = 44.8 L. Unum η = (33.6 / 44.8) · 100% = 75%.",
+      },
+      {
+        id: "kex-7",
+        title: "Gazning havoga nisbatan zichligi",
+        level: "Asosiy",
+        question:
+          "Karbonat angidridning (CO₂) havoga nisbatan zichligini hisoblang (M(havo) = 29 g/mol).",
+        hint: "D(havo) = M(CO₂) / M(havo).",
+        solution:
+          "M(CO₂) = 44 g/mol. D(havo) = 44 / 29 ≈ 1.52 (demak CO₂ havodan 1.52 marta og‘ir).",
+      },
+      {
+        id: "kex-8",
+        title: "Karbamid tarkibidagi azot ulushi",
+        level: "O‘rta",
+        question: "Karbamid o‘g‘iti CO(NH₂)₂ tarkibida azotning massa ulushi necha foiz?",
+        hint: "M(CO(NH₂)₂) = 12 + 16 + 2·(14 + 2) = 60 g/mol; ikkita azot massasi 28 g.",
+        solution: "w(N) = (28 / 60) · 100% ≈ 46.67%.",
+      },
+      {
+        id: "kex-9",
+        title: "Eritmalarni aralashtirish",
+        level: "Chuqurlashtirilgan",
+        question:
+          "200 g 10% li va 300 g 20% li tuz eritmalari aralashtirilsa, hosil bo‘lgan eritmaning konsentratsiyasi necha foiz bo‘ladi?",
+        hint: "Har ikki eritmadagi tuz massalarini qo‘shib, umumiy eritma massasiga bo‘ling.",
+        solution:
+          "m(tuz) = 200·0.1 + 300·0.2 = 20 + 60 = 80 g. m(eritma) = 500 g. w = (80 / 500)·100% = 16%.",
+      },
+      {
+        id: "kex-10",
+        title: "Neytrallanish reaksiyasi",
+        level: "O‘rta",
+        question:
+          "20 g natriy gidroksidni (NaOH, M = 40) to‘liq neytrallash uchun necha gramm xlorid kislota (HCl, M = 36.5) kerak?",
+        hint: "NaOH + HCl → NaCl + H₂O (1 : 1 mol nisbatda).",
+        solution:
+          "n(NaOH) = 20 / 40 = 0.5 mol ⇒ n(HCl) = 0.5 mol ⇒ m(HCl) = 0.5 · 36.5 = 18.25 gramm.",
       },
     ],
     quizzes: [
@@ -1386,6 +1937,43 @@ export const subjectsData: Record<string, SubjectData> = {
         explanation:
           "Natriy faol metall bo‘lgani uchun katodda suv qaytarilib vodorod (H₂) ajraladi.",
       },
+      {
+        id: "kq-13",
+        question: "Sulfat ionini (SO₄²⁻) aniqlash uchun qaysi reaktivdan foydalaniladi?",
+        options: ["Bariy xlorid (BaCl₂)", "Fenolftalein", "Kumush nitrat", "Natriy gidroksid"],
+        answer: 0,
+        explanation: "Ba²⁺ + SO₄²⁻ → BaSO₄↓ — kislotada erimaydigan oq cho‘kma hosil bo‘ladi.",
+      },
+      {
+        id: "kq-14",
+        question: "Kontakt usulida SO₂ ni SO₃ ga oksidlashda qaysi katalizator ishlatiladi?",
+        options: [
+          "Temir (Fe)",
+          "Vanadiy (V) oksidi (V₂O₅)",
+          "Platina (Pt) tolasi",
+          "Marganets (MnO₂)",
+        ],
+        answer: 1,
+        explanation:
+          "Sulfat kislota ishlab chiqarishda SO₂ ni oksidlashda V₂O₅ katalizatori qo‘llaniladi.",
+      },
+      {
+        id: "kq-15",
+        question: "Galogenlar ichida eng kuchli oksidlovchi va faol metallmas qaysi?",
+        options: ["Yod (I₂)", "Brom (Br₂)", "Xlor (Cl₂)", "Ftor (F₂)"],
+        answer: 3,
+        explanation:
+          "Ftor (F) davriy jadvaldagi eng elektrmanfiy (3.98) element va eng kuchli oksidlovchidir.",
+      },
+      {
+        id: "kq-16",
+        question:
+          "Kauchukni oltingugurt bilan qizdirib rezinaga aylantirish jarayoni nima deyiladi?",
+        options: ["Polimerlanish", "Kreking", "Vulkanizatsiya", "Gidrogenlash"],
+        answer: 2,
+        explanation:
+          "Vulkanizatsiya kauchuk molekulalarini oltingugurt ko‘priklari bilan bog‘lab mustahkam rezina beradi.",
+      },
     ],
     glossary: [
       {
@@ -1454,21 +2042,129 @@ export const subjectsData: Record<string, SubjectData> = {
         example: "Uglerodning allotropik shakl o‘zgarishlari: olmos, grafit va fulleren.",
       },
       {
-        term: "Elektrolit",
-        definition:
-          "Suvda eriganda yoki suyuqlanganda ionlarga ajralib elektr tokini o‘tkazuvchi modda.",
-        example: "Kislotalar, ishqorlar va eriydigan tuzlar (masalan, NaCl, H₂SO₄).",
-      },
-      {
-        term: "Amfoterlik",
-        definition:
-          "Birikmalarning sharoitga qarab ham kislotali, ham asosli xossa namoyon qilishi.",
-        example: "Al(OH)₃ va ZnO ham HCl, ham NaOH bilan reaksiyaga kirishadi.",
-      },
-      {
         term: "Peptid bog‘",
         definition: "Aminokislotalarni oqsil zanjiriga bog‘lovchi −CO−NH− kimyoviy bog‘lanish.",
         example: "Oqsillar polipeptid zanjirlaridan tashkil topgan.",
+      },
+      {
+        term: "Elektrmanfiylik",
+        definition:
+          "Element atomining kimyoviy bog‘da umumiy elektron juftini o‘ziga tortish qobiliyati.",
+        example: "Ftor (3.98) eng yuqori elektrmanfiylikka ega elementdir.",
+      },
+      {
+        term: "Vulkanizatsiya",
+        definition:
+          "Tabiiy yoki sintetik kauchukni oltingugurt bilan qizdirib elastik rezinaga aylantirish.",
+        example: "Avtomobil shinalari ishlab chiqarishda qo‘llaniladi.",
+      },
+      {
+        term: "Esterifikatsiya",
+        definition:
+          "Karbon kislota va spirtning o‘zaro ta’sirlashib murakkab efir va suv hosil qilishi.",
+        example: "Sirka kislota + etanol → etilatsetat + suv.",
+      },
+      {
+        term: "Denaturatsiya",
+        definition:
+          "Harorat, kislota yoki nurlanish ta’sirida oqsilning tabiiy fazoviy tuzilishining buzilishi.",
+        example: "Tuxum oqsili qizdirilganda qotib qolishi.",
+      },
+      {
+        term: "Stexiometriya",
+        definition:
+          "Kimyoviy reaksiyada qatnashuvchi moddalarning massa va hajmiy nisbatlarini o‘rganuvchi bo‘lim.",
+        example: "Reaksiya tenglamasi bo‘yicha hosil bo‘ladigan mahsulot massasini topish.",
+      },
+      {
+        term: "Passivlashuv",
+        definition:
+          "Metall sirtida himoya oksid pardasi hosil bo‘lib, keyingi reaksiyaning to‘xtashi.",
+        example: "Sovuq konsentrlangan HNO₃ temir va alyuminiyni passivlashtiradi.",
+      },
+      {
+        term: "Gomologlar",
+        definition:
+          "Tuzilishi va kimyoviy xossalari o‘xshash, bir-biridan bitta yoki bir nechta −CH₂− guruhiga farq qiluvchi moddalar.",
+        example: "Metan (CH₄), etan (C₂H₆), propan (C₃H₈).",
+      },
+      {
+        term: "Kreking",
+        definition:
+          "Neft tarkibidagi yirik uglevodorod molekulalarini yuqori haroratda kichik bo‘laklarga parchalash.",
+        example: "Mazutdan qo‘shimcha benzin olish jarayoni.",
+      },
+    ],
+    flashcards: [
+      {
+        id: "kfc-1",
+        front: "Avogadro doimiysi Nₐ nechaga teng?",
+        back: "6.02 · 10²³ mol⁻¹ (1 mol moddadagi zarrachalar soni)",
+      },
+      {
+        id: "kfc-2",
+        front: "Normal sharoitda (n.sh.) 1 mol gazning hajmi?",
+        back: "Vₘ = 22.4 litr/mol",
+      },
+      {
+        id: "kfc-3",
+        front: "pH < 7, pH = 7 va pH > 7 qanday muhit?",
+        back: "pH < 7 kislotali, pH = 7 neytral, pH > 7 ishqoriy muhit",
+      },
+      {
+        id: "kfc-4",
+        front: "Fenolftalein ishqorda qanday rangga kiradi?",
+        back: "To‘q qizil (malina) rangga; kislota va neytralda rangsiz",
+      },
+      {
+        id: "kfc-5",
+        front: "Alkan, alken va alkin umumiy formulalari?",
+        back: "Alkan: CₙH₂ₙ₊₂; Alken: CₙH₂ₙ; Alkin: CₙH₂ₙ₋₂",
+      },
+      {
+        id: "kfc-6",
+        front: "Xlorid (Cl⁻) va Sulfat (SO₄²⁻) sifat reaktivlari?",
+        back: "Cl⁻ uchun AgNO₃ (oq AgCl↓); SO₄²⁻ uchun BaCl₂ (oq BaSO₄↓)",
+      },
+      {
+        id: "kfc-7",
+        front: "Amfoter oksid va gidroksidlar (misollar)?",
+        back: "Al₂O₃, ZnO, BeO, Cr₂O₃ — ham kislota, ham ishqor bilan reaksiyaga kirishadi",
+      },
+      {
+        id: "kfc-8",
+        front: "Oksidlovchi va qaytaruvchi farqi?",
+        back: "Oksidlovchi elektron oladi (darajasi ↓); Qaytaruvchi elektron beradi (darajasi ↑)",
+      },
+      {
+        id: "kfc-9",
+        front: "Le Shatelye prinsipi nima deydi?",
+        back: "Muvozanatdagi tizimga tashqi ta’sir ko‘rsatilsa, muvozanat ta’sirni kamaytiruvchi tomonga siljiydi",
+      },
+      {
+        id: "kfc-10",
+        front: "Kraxmalning sifat reaktivi?",
+        back: "Yod (I₂) eritmasi bilan to‘q ko‘k rang hosil qiladi",
+      },
+      {
+        id: "kfc-11",
+        front: "Mendeleyev-Klapeyron tenglamasi?",
+        back: "P·V = n·R·T (bu yerda R = 8.314 J/(mol·K))",
+      },
+      {
+        id: "kfc-12",
+        front: "Havo tarkibi (hajm bo‘yicha)?",
+        back: "~78% Azot (N₂), ~21% Kislorod (O₂), ~1% Argon va CO₂",
+      },
+      {
+        id: "kfc-13",
+        front: "Kontakt usulida SO₂ → SO₃ katalizatori?",
+        back: "Vanadiy (V) oksidi — V₂O₅",
+      },
+      {
+        id: "kfc-14",
+        front: "Eng yengil metall va eng og‘ir (suyuq) metall?",
+        back: "Eng yengil — Litiy (Li); xona haroratida suyuq metall — Simob (Hg)",
       },
     ],
   },
@@ -1491,10 +2187,10 @@ export const subjectsData: Record<string, SubjectData> = {
       "Yorug‘likning qaytish, sinish qonunlari va linza formulasidan foydalanish",
     ],
     stats: {
-      lessons: 10,
-      references: 15,
-      quizzes: 12,
-      hours: "62 soat",
+      lessons: 14,
+      references: 20,
+      quizzes: 16,
+      hours: "84 soat",
     },
     lessons: [
       {
@@ -1776,6 +2472,146 @@ export const subjectsData: Record<string, SubjectData> = {
           },
         ],
       },
+      {
+        id: "fiz-11",
+        title: "Gidrostatika: Paskal qonuni va suyuqlik bosimi",
+        grade: "7–8-sinf",
+        duration: "35 daqiqa",
+        level: "Asosiy",
+        summary:
+          "Qattiq jism, suyuqlik va gaz bosimi, Paskal qonuni, gidravlik press hamda tutash idishlar qonuni.",
+        sections: [
+          {
+            heading: "Gidrostatik bosim va tutash idishlar",
+            content:
+              "Suyuqlik ustunining idish tubiga beradigan bosimi suyuqlik zichligi va ustun balandligiga proporsional bo‘lib, idish shakliga bog‘liq emas. Tutash idishlarda bir jinsli suyuqlik sathlari bir xil balandlikda turadi.",
+            formulaOrRule: "P = ρ · g · h;    P(atmosfera) ≈ 101 325 Pa = 760 mm sim. ust.",
+            example:
+              "10 metr chuqurlikdagi suv bosimi: P = 1000 · 10 · 10 = 100 000 Pa = 100 kPa (taxminan 1 atmosfera).",
+            keyTakeaways: [
+              "Dengizga chuqur tushgan sari bosim ortadi, tog‘ga chiqqanda atmosfera bosimi kamayadi.",
+              "Torrichelli tajribasida atmosfera bosimi birinchi marta o‘lchangan.",
+            ],
+          },
+          {
+            heading: "Paskal qonuni va gidravlik press",
+            content:
+              "Suyuqlik yoki gazga ko‘rsatilgan bosim hamma tomonga bir xil uzatiladi. Gidravlik pressda kichik porshenga kichik kuch berib, katta porshenda juda katta kuchdan yutish mumkin.",
+            formulaOrRule: "F₂ / F₁ = S₂ / S₁",
+            example:
+              "Kichik porshen yuzasi 5 sm², kattasiniki 200 sm². Kichigiga 100 N kuch berilsa, katta porshen 100 · (200/5) = 4000 N yukni ko‘taradi.",
+            keyTakeaways: [
+              "Gidravlik tormozlar, domkratlar va ekskavatorlar Paskal qonunida ishlaydi.",
+              "Kuchdan necha marta yutilsak, masofadan shuncha marta yutqazamiz (ish saqlanadi).",
+            ],
+          },
+        ],
+      },
+      {
+        id: "fiz-12",
+        title: "Aylanma harakat va Butun olam tortishish qonuni",
+        grade: "9–10-sinf",
+        duration: "40 daqiqa",
+        level: "O‘rta",
+        summary:
+          "Chiziqli va burchak tezlik, markazga intilma tezlanish, Nyutonning tortishish qonuni va birinchi kosmik tezlik.",
+        sections: [
+          {
+            heading: "Aylana bo‘ylab tekis harakat",
+            content:
+              "Jism aylana bo‘ylab doimiy v tezlikda harakatlanganda ham tezlik yo‘nalishi uzluksiz o‘zgarib turgani uchun markazga intilma tezlanishga ega bo‘ladi.",
+            formulaOrRule: "v = ω · R = 2πR / T;    a(m.i.) = v² / R = ω² · R",
+            example:
+              "Radiusi 20 m burilishdan 10 m/s tezlikda o‘tayotgan avtomobilning markazga intilma tezlanishi: a = 10² / 20 = 5 m/s².",
+            keyTakeaways: [
+              "Burchak tezlik ω = 2πν radian/sekund (rad/s) da o‘lchanadi.",
+              "Markazga intilma kuch F = mv²/R doimo aylana markaziga yo‘nalgan.",
+            ],
+          },
+          {
+            heading: "Butun olam tortishish qonuni",
+            content:
+              "Koinotdagi har ikki jism bir-birini massalari ko‘paytmasiga to‘g‘ri, oralaridagi masofa kvadratiga teskari proporsional kuch bilan tortadi.",
+            formulaOrRule: "F = G · (m₁ · m₂) / r²   (G = 6.67 · 10⁻¹¹ N·m²/kg²);   v₁ ≈ 7.9 km/s",
+            example:
+              "Yer sun’iy yo‘ldoshiga aylanish uchun jismga Yer sirtiga parallel ravishda kamida 7.9 km/s (birinchi kosmik) tezlik berish kerak.",
+            keyTakeaways: [
+              "Sayyoralar Quyosh atrofida ellips orbitalari bo‘ylab harakatlanadi (Kepler qonunlari).",
+              "Yerning tortishish tezlanishi g = G·M(Yer) / R² ≈ 9.8 m/s².",
+            ],
+          },
+        ],
+      },
+      {
+        id: "fiz-13",
+        title: "Elektr maydoni, potensial va kondensatorlar",
+        grade: "10-sinf",
+        duration: "40 daqiqa",
+        level: "Chuqurlashtirilgan",
+        summary:
+          "Kulon qonuni, elektr maydon kuchlanganligi, kuchlanish, kondensator sig‘imi va elektr maydon energiyasi.",
+        sections: [
+          {
+            heading: "Kulon qonuni va maydon kuchlanganligi",
+            content:
+              "Vakuumdagi ikki nuqtaviy zaryadning o‘zaro ta’sir kuchi Kulon qonuni bilan aniqlanadi. Kuchlanganlik E esa birlik musbat zaryadga maydon tomonidan ta’sir etuvchi kuchdir.",
+            formulaOrRule: "F = k · |q₁q₂| / r²  (k = 9·10⁹);   E = F / q = U / d",
+            example:
+              "Bir jinsli elektr maydonida ikki plastinka orasidagi masofa d = 0.05 m va kuchlanish U = 100 V bo‘lsa, kuchlanganlik E = 100 / 0.05 = 2000 V/m.",
+            keyTakeaways: [
+              "Bir xil ishorali zaryadlar itarishadi, qarama-qarshi ishoralilari tortishadi.",
+              "Yopiq tizimda elektr zaryadlarning algebraik yig‘indisi saqlanadi.",
+            ],
+          },
+          {
+            heading: "Kondensator sig‘imi va energiyasi",
+            content:
+              "Kondensator — elektr zaryadi va energiyasini to‘plovchi qurilma. Uning asosiy xarakteristikasi elektr sig‘im C bo‘lib, Farad (F) da o‘lchanadi.",
+            formulaOrRule: "C = q / U = εε₀S / d;    W = C · U² / 2 = q · U / 2",
+            example:
+              "Sig‘imi C = 20 mkF (20·10⁻⁶ F) bo‘lgan kondensator U = 100 V kuchlanishgacha zaryadlanganda to‘plangan energiya: W = 20·10⁻⁶ · 100² / 2 = 0.1 J.",
+            keyTakeaways: [
+              "Kondensatorlar parallel ulanganda sig‘imlar qo‘shiladi: C = C₁ + C₂.",
+              "Ketma-ket ulanganda 1/C = 1/C₁ + 1/C₂ formula ishlatiladi.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "fiz-14",
+        title: "Nisbiylik nazariyasi va lazer fizikasi asoslari",
+        grade: "11-sinf",
+        duration: "40 daqiqa",
+        level: "Chuqurlashtirilgan",
+        summary:
+          "Eynshteyn maxsus nisbiylik nazariyasi postulatlari, vaqt va uzunlik nisbiyligi, lazerlarning ishlash prinsipi va qo‘llanilishi.",
+        sections: [
+          {
+            heading: "Maxsus nisbiylik nazariyasi",
+            content:
+              "Eynshteynning ikki postulati: 1) Barcha inersial sanoq tizimlarida tabiat qonunlari bir xildir; 2) Vakuumdagi yorug‘lik tezligi c barcha sanoq tizimlarida o‘zgarmas (3·10⁸ m/s) va tabiatdagi eng katta tezlikdir.",
+            formulaOrRule: "τ = τ₀ / √(1 − v²/c²);    l = l₀ · √(1 − v²/c²)",
+            example:
+              "Juda katta (yorug‘lik tezligiga yaqin) tezlikda harakatlanayotgan kosmik kemada vaqt Yerda turgan kuzatuvchiga nisbatan sekinroq o‘tadi.",
+            keyTakeaways: [
+              "Hech qanday moddiy zarracha vakuumdagi yorug‘lik tezligi c dan tez harakatlana olmaydi.",
+              "Tinchlikdagi energiya E₀ = mc² bilan aniqlanadi.",
+            ],
+          },
+          {
+            heading: "Lazer nurlanishi va xossalari",
+            content:
+              "Lazer — atomlarning majburiy nurlanishi asosida monoxromatik (bir rangli), kogerent va o‘ta ingichka yo‘nalgan yorug‘lik oqimini hosil qiluvchi kvant generatoridir.",
+            formulaOrRule: "LASER = Light Amplification by Stimulated Emission of Radiation",
+            example:
+              "Lazerlar optik tolali internet aloqasida, ko‘z jarrohligida, metall kesishda va uzoq masofalarni (masalan, Oyga masofani) o‘lchashda qo‘llaniladi.",
+            keyTakeaways: [
+              "Lazer nuri juda kichik yuzaga ulkan energiya zichligini to‘play oladi.",
+              "O‘zbekistonda Fanlar akademiyasining Fizika-texnika institutida quyosh energiyasi va lazer texnologiyalari tadqiq etiladi.",
+            ],
+          },
+        ],
+      },
     ],
     references: [
       {
@@ -1885,6 +2721,42 @@ export const subjectsData: Record<string, SubjectData> = {
         explanation: "Jism massasi bilan uning to‘liq energiyasi orasidagi fundamental nisbat.",
         usage: "Yadro energetikasi va nisbiylik nazariyasida.",
       },
+      {
+        id: "fref-16",
+        title: "Gidrostatik bosim va Paskal pressi",
+        expression: "P = ρ·g·h;   F₂ / F₁ = S₂ / S₁",
+        explanation: "Suyuqlik ustuni bosimi va gidravlik mashinada kuchdan yutish nisbati.",
+        usage: "Suv omborlari, sho‘ng‘ish va gidravlik qurilmalarda.",
+      },
+      {
+        id: "fref-17",
+        title: "Butun olam tortishish qonuni",
+        expression: "F = G · (m₁ · m₂) / r²   (G = 6.67·10⁻¹¹)",
+        explanation: "Massaga ega bo‘lgan ikki jism orasidagi gravitatsion tortishish kuchi.",
+        usage: "Astronomiya va kosmik parvozlar hisobida.",
+      },
+      {
+        id: "fref-18",
+        title: "Markazga intilma tezlanish",
+        expression: "a = v² / R = ω² · R",
+        explanation: "Aylana bo‘ylab harakatda tezlik yo‘nalishining o‘zgarishini belgilaydi.",
+        usage: "Burilishlar, sentrifuga va orbital harakatlarda.",
+      },
+      {
+        id: "fref-19",
+        title: "Kulon qonuni",
+        expression: "F = k · |q₁ · q₂| / r²   (k = 9·10⁹ N·m²/Kl²)",
+        explanation: "Qo‘zg‘almas ikki nuqtaviy zaryadning o‘zaro elektrostatik ta’sir kuchi.",
+        usage: "Elektrostatika masalalarini yechishda.",
+      },
+      {
+        id: "fref-20",
+        title: "Kondensator energiyasi",
+        expression: "W = C · U² / 2 = q² / (2C)",
+        explanation:
+          "Zaryadlangan kondensator plastinkalari orasida to‘plangan elektr maydon energiyasi.",
+        usage: "Elektron sxemalar va impuls qurilmalarda.",
+      },
     ],
     exercises: [
       {
@@ -1940,6 +2812,42 @@ export const subjectsData: Record<string, SubjectData> = {
           "Boshlang‘ich massasi 64 g bo‘lgan radioaktiv moddaning yarim yemirilish davri 5 soat. 15 soatdan keyin bu moddadan necha gramm qoladi?",
         hint: "Nechta yarim yemirilish davri o‘tganini toping: n = t / T½ = 15 / 5 = 3.",
         solution: "m = m₀ / 2ⁿ = 64 / 2³ = 64 / 8 = 8 gramm qoladi.",
+      },
+      {
+        id: "fex-7",
+        title: "Gidravlik pressda kuch hisobi",
+        level: "Asosiy",
+        question:
+          "Gidravlik press kichik porshenining yuzi 4 sm², katta porshenining yuzi 120 sm². Kichik porshenga 50 N kuch bilan bosilsa, katta porshen qancha kuchni ko‘tara oladi?",
+        hint: "F₂ / F₁ = S₂ / S₁ nisbatdan F₂ ni toping.",
+        solution: "F₂ = 50 · (120 / 4) = 50 · 30 = 1500 N.",
+      },
+      {
+        id: "fex-8",
+        title: "Markazga intilma tezlanish",
+        level: "O‘rta",
+        question:
+          "Velosipedchi radiusi 25 m bo‘lgan aylana shaklidagi trekda 10 m/s o‘zgarmas tezlik bilan harakatlanmoqda. Uning markazga intilma tezlanishini toping.",
+        hint: "a = v² / R.",
+        solution: "a = 10² / 25 = 100 / 25 = 4 m/s².",
+      },
+      {
+        id: "fex-9",
+        title: "Kondensator energiyasi",
+        level: "O‘rta",
+        question:
+          "Elektr sig‘imi 40 mkF bo‘lgan kondensator 50 V kuchlanishga ulansa, unda necha milijoul energiya to‘planadi?",
+        hint: "W = C · U² / 2. 40 mkF = 40 · 10⁻⁶ F.",
+        solution: "W = (40·10⁻⁶ · 50²) / 2 = 20·10⁻⁶ · 2500 = 0.05 J = 50 mJ.",
+      },
+      {
+        id: "fex-10",
+        title: "Issiqlik miqdori va solishtirma issiqlik sig‘imi",
+        level: "Asosiy",
+        question:
+          "2 kg suvni (c = 4200 J/(kg·°C)) 20°C dan 70°C gacha isitish uchun qancha issiqlik miqdori kerak?",
+        hint: "Q = c · m · (t₂ − t₁).",
+        solution: "Q = 4200 · 2 · (70 − 20) = 4200 · 100 = 420 000 J = 420 kJ.",
       },
     ],
     quizzes: [
@@ -2034,6 +2942,43 @@ export const subjectsData: Record<string, SubjectData> = {
         answer: 2,
         explanation: "α-zarracha ikki proton va ikki neytrondan tashkil topgan ₂⁴He yadrosidir.",
       },
+      {
+        id: "fq-13",
+        question: "Normal atmosfera bosimi simob ustuni hisobida taxminan nechaga teng?",
+        options: ["700 mm sim. ust.", "760 mm sim. ust.", "820 mm sim. ust.", "1000 mm sim. ust."],
+        answer: 1,
+        explanation: "Normal atmosfera bosimi 760 mm simob ustuni (yoki ~101.3 kPa) ga teng.",
+      },
+      {
+        id: "fq-14",
+        question:
+          "Birinchi kosmik tezlik (Yer sun’iy yo‘ldoshiga aylanish tezligi) taxminan qancha?",
+        options: ["3.2 km/s", "7.9 km/s", "11.2 km/s", "16.7 km/s"],
+        answer: 1,
+        explanation:
+          "Yer yaqinida aylanish uchun v₁ ≈ 7.9 km/s, Yerdan uchib ketish uchun v₂ ≈ 11.2 km/s kerak.",
+      },
+      {
+        id: "fq-15",
+        question: "Kondensatorlar parallel ulanganda umumiy elektr sig‘imi qanday topiladi?",
+        options: ["C = C₁ + C₂", "1/C = 1/C₁ + 1/C₂", "C = C₁ · C₂", "C = (C₁ − C₂)/2"],
+        answer: 0,
+        explanation:
+          "Parallel ulanganda kondensatorlarning plastinka yuzalari qo‘shilgandek bo‘ladi: C = C₁ + C₂.",
+      },
+      {
+        id: "fq-16",
+        question: "Suyuqlik ustuni bosimi (P = ρgh) qaysi kattalikka bog‘liq EMAS?",
+        options: [
+          "Suyuqlik zichligiga",
+          "Ustun balandligiga",
+          "Idish tubining shakliga",
+          "Erkin tushish tezlanishiga",
+        ],
+        answer: 2,
+        explanation:
+          "Gidrostatik bosim idishning shakli va suyuqlik hajmiga emas, faqat ρ, g va h ga bog‘liq.",
+      },
     ],
     glossary: [
       {
@@ -2117,6 +3062,105 @@ export const subjectsData: Record<string, SubjectData> = {
           "Fizik kattalikning (masalan, energiyaning) qabul qilishi mumkin bo‘lgan eng kichik bo‘linmas porsiyasi.",
         example: "Elektromagnit maydon kvanti — foton.",
       },
+      {
+        term: "Ampermetr",
+        definition: "Elektr zanjiridagi tok kuchini o‘lchash uchun ketma-ket ulanadigan asbob.",
+        example: "Ideal ampermetrning ichki qarshiligi nolga yaqin bo‘ladi.",
+      },
+      {
+        term: "Voltmetr",
+        definition:
+          "Zanjir qismidagi elektr kuchlanishini o‘lchash uchun parallel ulanadigan asbob.",
+        example: "Ideal voltmetrning ichki qarshiligi juda katta bo‘ladi.",
+      },
+      {
+        term: "Adiabatik jarayon",
+        definition:
+          "Tashqi muhit bilan issiqlik almashinuvisiz (Q = 0) sodir bo‘ladigan termodinamik jarayon.",
+        example: "Dizel dvigatelida havoning tez siqilishi.",
+      },
+      {
+        term: "Suyuqlikning sirt tarangligi",
+        definition:
+          "Suyuqlik sirtining o‘z maydonini iloji boricha kichraytirishga intilish xossasi.",
+        example: "Suv tomchisining sharsimon shakl olishi va hasharotlarning suv yuzida yurishi.",
+      },
+      {
+        term: "Diffuziya",
+        definition:
+          "Ikki modda molekulalarining issiqlik harakati natijasida o‘z-o‘zidan bir-biriga aralashishi.",
+        example: "Atir hidining xona bo‘ylab tarqalishi yoki choyning suvda rang berishi.",
+      },
+      {
+        term: "Elektromagnit to‘lqin",
+        definition:
+          "O‘zgaruvchan elektr va magnit maydonlarining fazoda yorug‘lik tezligida tarqalishi.",
+        example: "Radioto‘lqinlar, rentgen nurlari va ko‘rinadigan yorug‘lik.",
+      },
+    ],
+    flashcards: [
+      {
+        id: "ffc-1",
+        front: "Nyutonning II qonuni formulasi?",
+        back: "F = m · a (Kuch = massa × tezlanish)",
+      },
+      {
+        id: "ffc-2",
+        front: "Mexanik ish va Quvvat birliklari?",
+        back: "Ish A — Joul (J); Quvvat P = A/t — Vatt (W)",
+      },
+      {
+        id: "ffc-3",
+        front: "Arximed (itaruvchi) kuchi formulasi?",
+        back: "Fₐ = ρ(suyuqlik) · g · V(botgan)",
+      },
+      {
+        id: "ffc-4",
+        front: "Mendeleyev-Klapeyron (ideal gaz) tenglamasi?",
+        back: "P · V = ν · R · T (R = 8.31 J/(mol·K))",
+      },
+      {
+        id: "ffc-5",
+        front: "Termodinamikaning I qonuni?",
+        back: "Q = ΔU + A (berilgan issiqlik ichki energiyani oshiradi va ish bajaradi)",
+      },
+      {
+        id: "ffc-6",
+        front: "Zanjir qismi uchun Om qonuni?",
+        back: "I = U / R (Tok kuchi kuchlanishga to‘g‘ri, qarshilikka teskari proporsional)",
+      },
+      {
+        id: "ffc-7",
+        front: "Joul-Lens qonuni?",
+        back: "Q = I² · R · t (o‘tkazgichdan ajralgan issiqlik)",
+      },
+      {
+        id: "ffc-8",
+        front: "Yupqa linza formulasi va optik kuchi?",
+        back: "1/F = 1/d + 1/f;  D = 1/F (dioptriya)",
+      },
+      {
+        id: "ffc-9",
+        front: "Matematik mayatnik davri T = ?",
+        back: "T = 2π√(l / g) — ip uzunligiga bog‘liq, massaga emas",
+      },
+      {
+        id: "ffc-10",
+        front: "Yorug‘likning vakuumdagi tezligi c = ?",
+        back: "c ≈ 3 · 10⁸ m/s (300 000 km/s)",
+      },
+      {
+        id: "ffc-11",
+        front: "Birinchi va ikkinchi kosmik tezliklar?",
+        back: "v₁ ≈ 7.9 km/s (Yer atrofida aylanish); v₂ ≈ 11.2 km/s (Yerdan uchib ketish)",
+      },
+      { id: "ffc-12", front: "Gidrostatik bosim formulasi?", back: "P = ρ · g · h" },
+      {
+        id: "ffc-13",
+        front: "Amper kuchi va Lorens kuchi?",
+        back: "Fₐ = I·B·l·sinα;  F_L = |q|·v·B·sinα",
+      },
+      { id: "ffc-14", front: "Eynshteyn fotoeffekt tenglamasi?", back: "hν = A(chiqish) + mv²/2" },
     ],
   },
 
@@ -2139,10 +3183,10 @@ export const subjectsData: Record<string, SubjectData> = {
       "Ekotizimlar, oziq zanjirlari va biologik xilma-xillikni asrash tamoyillarini egallash",
     ],
     stats: {
-      lessons: 10,
-      references: 15,
-      quizzes: 12,
-      hours: "58 soat",
+      lessons: 14,
+      references: 20,
+      quizzes: 16,
+      hours: "78 soat",
     },
     lessons: [
       {
@@ -2433,6 +3477,153 @@ export const subjectsData: Record<string, SubjectData> = {
           },
         ],
       },
+      {
+        id: "bio-11",
+        title: "O‘simliklar dunyosi: vegetativ va generativ organlar",
+        grade: "5–6-sinf",
+        duration: "35 daqiqa",
+        level: "Asosiy",
+        summary:
+          "Ildiz, poya va barg tuzilishi, gul va meva hosil bo‘lishi, gulli o‘simliklarda qo‘sh urug‘lanish va o‘simliklar tasnifi.",
+        sections: [
+          {
+            heading: "Vegetativ organlar: ildiz, poya va barg",
+            content:
+              "O‘simlikning oziqlanishi, suv shimishi va o‘sishini ta’minlovchi a’zolar vegetativ organlardir. Ildiz tuproqdan suv va mineral tuzlarni so‘radi, poyadagi ksilema (yog‘ochlik) naylari suvni yuqoriga, floema (lub) esa bargda hosil bo‘lgan organik moddalarni pastga tashiydi.",
+            formulaOrRule: "Ksilema (suv + mineral, ↑);    Floema (organik moddalar, ↓)",
+            example:
+              "Ikki pallali o‘simliklarda (olma, g‘o‘za) o‘q ildiz tizimi, bir pallalilarda (bug‘doy, piyoz) esa popuk ildiz tizimi bo‘ladi.",
+            keyTakeaways: [
+              "Barg ostidagi og‘izchalar gaz almashinuvi va suv bug‘lanishini (transpiratsiya) boshqaradi.",
+              "Kambiy hujayralarining bo‘linishi hisobiga daraxt poyasi eniga o‘sadi va yillik halqalar hosil bo‘ladi.",
+            ],
+          },
+          {
+            heading: "Gul, changlanish va qo‘sh urug‘lanish",
+            content:
+              "Gul — gulli (yopiq urug‘li) o‘simliklarning ko‘payish organi. 1898-yilda S. G. Navashin gulli o‘simliklarda qo‘sh urug‘lanish hodisasini kashf etgan: bitta spermiy tuxum hujayrani (2n murtak), ikkinchisi esa markaziy hujayrani (3n endosperm) urug‘lantiradi.",
+            formulaOrRule:
+              "Spermiy (n) + Tuxum (n) → Murtak (2n);   Spermiy (n) + Markaziy (2n) → Endosperm (3n)",
+            example:
+              "Urug‘chi tugunchasidan meva, urug‘kurtakdan esa urug‘ rivojlanadi; hasharotlar bilan changlanadigan gullar yirik, rangli va nektarli bo‘ladi.",
+            keyTakeaways: [
+              "Yo‘sin, qirqquloq va ochiq urug‘lilar (archa, qarag‘ay) da gullar va mevalar bo‘lmaydi.",
+              "O‘zbekiston florasi 4500 ga yaqin yovvoyi o‘simlik turlarini o‘z ichiga oladi.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "bio-12",
+        title: "Hayvonot olami: umurtqasizlar va umurtqalilar",
+        grade: "7-sinf",
+        duration: "40 daqiqa",
+        level: "Asosiy",
+        summary:
+          "Bir hujayralilar, bo‘shliqichlilar, bo‘g‘imoyoqlilar hamda baliqlar, suvda ham quruqlikda yashovchilar, sudralib yuruvchilar, qushlar va sutemizuvchilar.",
+        sections: [
+          {
+            heading: "Umurtqasiz hayvonlarning xilma-xilligi",
+            content:
+              "Hayvonlar turlarining 95% dan ortig‘ini umurtqasizlar tashkil qiladi. Bo‘g‘imoyoqlilar (qisqichbaqasimonlar, o‘rgimchaksimonlar va hasharotlar) xitin tashqi skeletiga va bo‘g‘imli oyoqlarga ega.",
+            formulaOrRule:
+              "Hasharotlar: 3 juft (6 ta) oyoq;   O‘rgimchaksimonlar: 4 juft (8 ta) oyoq",
+            example:
+              "Tut ipak qurti (Bombyx mori) to‘liq o‘zgarish bilan rivojlanadi: tuxum → qurt (lichinka) → g‘umbak → kapalak (imago).",
+            keyTakeaways: [
+              "Yomg‘ir chuvalchangi tuproqni yumshatib gumus qatlamini boyitadi.",
+              "Asalari gulli o‘simliklarni changlatuvchi eng muhim foydali hasharotdir.",
+            ],
+          },
+          {
+            heading: "Umurtqali hayvonlarda yurak va qon aylanish evolutsiyasi",
+            content:
+              "Xordalilar orasida yurak kameralari va qon aylanish doiralari murakkablashib borgan: baliqlarda 2 kamerali yurak (1 doira), amfibiya va sudralib yuruvchilarda 3 kamerali, qushlar va sutemizuvchilarda esa to‘liq 4 kamerali yurak va issiqqonlilik shakllangan.",
+            formulaOrRule:
+              "Baliq (2 kam.) → Amfibiya/Reptiliya (3 kam.) → Qush/Sutemizuvchi (4 kam.)",
+            example:
+              "Issiqqonlilik (gomoyotermiya) qushlar va sutemizuvchilarga qishda ham faol hayot kechirish imkonini beradi.",
+            keyTakeaways: [
+              "Baliqlar jabra bilan, amfibiyalar teri va o‘pka bilan, qushlar esa o‘pka va havo xaltachalari bilan nafas oladi.",
+              "Qizil kitobga O‘zbekistonning nodir hayvonlari — qor qoploni, Jayron, Buxoro bug‘usi va tuvaloq kiritilgan.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "bio-13",
+        title: "Odam tayanch-harakat tizimi (Skelet va muskullar)",
+        grade: "8-sinf",
+        duration: "35 daqiqa",
+        level: "Asosiy",
+        summary:
+          "Suyaklarning tarkibi va birikishi, bosh, gavda va qo‘l-oyoq skeleti, ko‘ndalang-targ‘il muskullarning qisqarishi va qomat gigiyenasi.",
+        sections: [
+          {
+            heading: "Suyaklar tuzilishi va skelet bo‘limlari",
+            content:
+              "Odam skeletida 200 dan ortiq suyak bo‘lib, ular tarkibidagi organik moddalar (ossein) suyakka elastiklik, mineral tuzlar (kalsiy va fosfor) esa qattiqlik beradi. Umurtqa pog‘onasi 33–34 ta umurtqadan iborat.",
+            formulaOrRule:
+              "Suyak = Organik modda (~1/3, qayishqoqlik) + Mineral tuzlar (~2/3, qattiqlik)",
+            example:
+              "Ko‘krak qafasi 12 juft qovurg‘a, ko‘krak umurtqalari va to‘sh suyagidan tuzilib, yurak hamda o‘pkalarni himoya qiladi.",
+            keyTakeaways: [
+              "Suyaklarning harakatchan birikishi bo‘g‘im deb ataladi.",
+              "Yassitovonlik va skoliozning oldini olish uchun to‘g‘ri o‘tirish va sport bilan shug‘ullanish zarur.",
+            ],
+          },
+          {
+            heading: "Muskullar turlari va ishlashi",
+            content:
+              "Odam organizmida uch xil muskul to‘qimasi bor: skelet (ko‘ndalang-targ‘il, ixtiyoriy), silliq (ichki organlar, ixtiyorsiz) va yurak muskuli. Muskullar qisqarishi uchun ATF energiyasi va Ca²⁺ ionlari zarur.",
+            formulaOrRule:
+              "Statik ish (ushlab turish) → tez charchatadi;   Dinamik ish (harakat) → chidamliroq",
+            example:
+              "Muskullar uzoq vaqt zo‘riqib ishlaganda kislorod yetishmay sut kislota to‘planadi — bu muskul charchashi deb ataladi.",
+            keyTakeaways: [
+              "Aktiv dam olish (bir faoliyat turini boshqasiga almashtirish) charchoqni tezroq ketkazadi.",
+              "Bosh miya bilan birga umurtqa pog‘onasi ichida orqa miya joylashgan.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "bio-14",
+        title: "Sezgi organlari va oliy asab faoliyati",
+        grade: "8–9-sinf",
+        duration: "40 daqiqa",
+        level: "O‘rta",
+        summary:
+          "Ko‘rish analizatori (ko‘z tuzilishi, uzoqdan va yaqindan ko‘rish), eshitish analizatori (quloq) hamda shartli va shartsiz reflekslar.",
+        sections: [
+          {
+            heading: "Ko‘z va quloq tuzilishi (Analizatorlar)",
+            content:
+              "Har bir analizator 3 qismdan iborat: retseptor → o‘tkazuvchi nerv → bosh miya po‘stlog‘idagi markaz. Ko‘zda tasvir gavhar orqali to‘r pardada teskari holda hosil bo‘ladi; tayoqchalar qorong‘ida, kolbachalar esa rangli ko‘rishni ta’minlaydi.",
+            formulaOrRule:
+              "Miopiya (yaqindan ko‘rish) → Botik (sochuvchi) linza;   Gipermetropiya → Qavariq (yig‘uvchi) linza",
+            example:
+              "O‘rta quloqda uchta eshitish suyakchasi (bolg‘acha, sandoncha, uzangi) tovush tebranishlarini kuchaytirib ichki quloqdagi chig‘anoqqa uzatadi.",
+            keyTakeaways: [
+              "Yevstaxiy nayi o‘rta quloqdagi havo bosimini atmosfera bosimi bilan tenglashtiradi.",
+              "Ichki quloqdagi yarim doira kanallar muvozanat (vestibulyar) organi vazifasini bajaradi.",
+            ],
+          },
+          {
+            heading: "Shartsiz va shartli reflekslar",
+            content:
+              "I. P. Pavlov ta’limotiga ko‘ra shartsiz reflekslar tug‘ma va tur uchun doimiy bo‘ladi (masalan, emish, yo‘tal, tizza refleksi). Shartli reflekslar esa hayot davomida bosh miya katta yarim sharlari po‘stlog‘ida orttiriladi.",
+            formulaOrRule:
+              "Shartsiz refleks = Tug‘ma;    Shartli refleks = Tajriba va o‘qish natijasi",
+            example:
+              "O‘quvchining dars qo‘ng‘irog‘ini eshitganda partasiga o‘tirishi yoki ovqat hididan so‘lak ajralishi shartli refleksdir.",
+            keyTakeaways: [
+              "Odamda nutq va tafakkur bilan bog‘liq ikkinchi signal tizimi rivojlangan.",
+              "Sog‘lom uyqu (8 soat) miya neyronlarining tiklanishi va xotirani mustahkamlash uchun zarur.",
+            ],
+          },
+        ],
+      },
     ],
     references: [
       {
@@ -2543,6 +3734,42 @@ export const subjectsData: Record<string, SubjectData> = {
         explanation: "Karl Linney tomonidan asos solingan biologik tasniflash iyerarxiyasi.",
         usage: "Botanika va zoologiya taksonomiyasida.",
       },
+      {
+        id: "bref-16",
+        title: "Gulli o‘simliklarda qo‘sh urug‘lanish",
+        expression: "Murtak = 2n (1-spermiy + tuxum);  Endosperm = 3n (2-spermiy + markaziy)",
+        explanation: "Yopiq urug‘li o‘simliklarga xos noyob ko‘payish jarayoni (S. G. Navashin).",
+        usage: "Botanika va genetika masalalarida.",
+      },
+      {
+        id: "bref-17",
+        title: "Odam skeleti va yurak urishi me’yori",
+        expression: "Suyaklar > 200 ta;  Puls = 60–80 zarba/daq;  Bosim ≈ 120/80 mm sim. ust.",
+        explanation: "Sog‘lom katta odamning asosiy anatomik va fiziologik ko‘rsatkichlari.",
+        usage: "Odam fiziologiyasi va tibbiyot asoslarida.",
+      },
+      {
+        id: "bref-18",
+        title: "Odam nafas olish hajmlari",
+        expression: "Tinch nafas ≈ 500 ml;   O‘pkaning tiriklik sig‘imi ≈ 3500–4500 ml",
+        explanation: "Spirometr asbobi yordamida o‘lchanadigan o‘pka havo sig‘imlari.",
+        usage: "Nafas olish tizimi gigiyenasida.",
+      },
+      {
+        id: "bref-19",
+        title: "DNK va RNK nukleotidlari farqi",
+        expression: "DNK: A, T, G, S (dezoksiriboza);   RNK: A, U, G, S (riboza)",
+        explanation: "DNK qo‘sh zanjirli va Timinli, RNK esa bir zanjirli va Uratsillidir.",
+        usage: "Transkripsiya va molekulyar biologiyada.",
+      },
+      {
+        id: "bref-20",
+        title: "O‘tkazuvchi to‘qimalar (Ksilema va Floema)",
+        expression:
+          "Ksilema: suv va tuzlar (ildiz → barg);  Floema: organik moddalar (barg → ildiz)",
+        explanation: "O‘simlik tanasida moddalarning ikki yo‘nalishli tashilishi.",
+        usage: "O‘simliklar anatomiyasi va fiziologiyasida.",
+      },
     ],
     exercises: [
       {
@@ -2600,6 +3827,43 @@ export const subjectsData: Record<string, SubjectData> = {
           "Hujayrada 4 mol glyukoza to‘liq (aerob) oksidlanganda jami necha mol ATF energiyasi hosil bo‘ladi?",
         hint: "1 mol glyukoza to‘liq oksidlanganda 38 mol ATF hosil bo‘ladi (2 glikolizda + 36 mitoxondriyada).",
         solution: "4 · 38 = 152 mol ATF hosil bo‘ladi.",
+      },
+      {
+        id: "bex-7",
+        title: "DNK dan iRNK sintezi (Transkripsiya)",
+        level: "O‘rta",
+        question:
+          "DNK zanjiri A-T-G-S-S-A-T-G-A ketma-ketlikka ega. Undan sintezlanadigan iRNK zanjirini yozing.",
+        hint: "Komplementarlik: A→U, T→A, G→S, S→G (RNK da T o‘rniga U yoziladi).",
+        solution: "iRNK ketma-ketligi: U-A-S-G-G-U-A-S-U.",
+      },
+      {
+        id: "bex-8",
+        title: "Gulli o‘simliklarda xromosoma soni",
+        level: "Chuqurlashtirilgan",
+        question:
+          "Makka­jo‘xori barg hujayrasida 20 ta xromosoma (2n = 20) bor. Uning tuxum hujayrasi va triploid endospermida nechta xromosoma bo‘ladi?",
+        hint: "Tuxum hujayra gaploid (n), endosperm esa triploid (3n).",
+        solution:
+          "n = 20 / 2 = 10 ta (tuxum hujayrada). Endospermda 3n = 3 · 10 = 30 ta xromosoma.",
+      },
+      {
+        id: "bex-9",
+        title: "Qon aylanish tezligi",
+        level: "Asosiy",
+        question:
+          "Yurak minutiga 70 marta urib, har qisqarishda 70 ml qon haydaydi. 10 daqiqada yurak jami necha litr qon haydaydi?",
+        hint: "1 daqiqadagi hajmni topib 10 ga ko‘paytiring va litrga o‘tkazing (1 L = 1000 ml).",
+        solution: "1 daqiqada: 70 · 70 = 4900 ml = 4.9 L. 10 daqiqada: 4.9 · 10 = 49 litr qon.",
+      },
+      {
+        id: "bex-10",
+        title: "Diduragay chatishtirish nisbati",
+        level: "O‘rta",
+        question:
+          "Mendelning uchinchi qonuniga ko‘ra AaBb × AaBb chatishtirishda 160 ta avlod olinsa, shundan nechtasida ikkala retsessiv belgi (aabb) namoyon bo‘ladi?",
+        hint: "Fenotipik nisbat 9 : 3 : 3 : 1 (jami 16 qismdan 1 qismi aabb).",
+        solution: "160 · (1 / 16) = 10 ta avlodda ikkala retsessiv belgi ko‘rinadi.",
       },
     ],
     quizzes: [
@@ -2699,6 +3963,40 @@ export const subjectsData: Record<string, SubjectData> = {
         explanation:
           "Bakteriofag — «bakteriyalarni yutuvchi» virus bo‘lib, faqat bakteriya hujayrasida ko‘payadi.",
       },
+      {
+        id: "bq-13",
+        question: "Gulli o‘simliklarda endospermdagi xromosomalar to‘plami qanday bo‘ladi?",
+        options: ["Gaploid (n)", "Diploid (2n)", "Triploid (3n)", "Tetraploid (4n)"],
+        answer: 2,
+        explanation:
+          "Qo‘sh urug‘lanishda 2n markaziy hujayraga n spermiy qo‘shilib 3n endosperm hosil qiladi.",
+      },
+      {
+        id: "bq-14",
+        question:
+          "O‘simliklarda suv va mineral tuzlar qaysi to‘qima orqali ildizdan bargga ko‘tariladi?",
+        options: ["Floema", "Ksilema (yog‘ochlik)", "Po‘stloq", "Kambiy"],
+        answer: 1,
+        explanation:
+          "Ksilema naychalari suv va minerallarni yuqoriga, floema esa organik moddalarni pastga tashiydi.",
+      },
+      {
+        id: "bq-15",
+        question: "Odam qon guruhlari tizimida qaysi guruh «universal donor» hisoblanadi?",
+        options: ["I (0) guruhi", "II (A) guruhi", "III (B) guruhi", "IV (AB) guruhi"],
+        answer: 0,
+        explanation:
+          "I (0) guruh eritrotsitlarida A va B agglyutinogenlari yo‘qligi uchun boshqa guruhlarga mos keladi.",
+      },
+      {
+        id: "bq-16",
+        question:
+          "Yaqindan ko‘rish (miopiya) nuqsonini tuzatish uchun qanday linzali ko‘zoynak taqiladi?",
+        options: ["Qavariq (yig‘uvchi)", "Botiq (sochuvchi)", "Yassi oyna", "Prizma"],
+        answer: 1,
+        explanation:
+          "Miopiyada tasvir to‘r parda oldida tushadi, uni orqaga surish uchun botiq (sochuvchi) linza ishlatiladi.",
+      },
     ],
     glossary: [
       {
@@ -2769,16 +4067,114 @@ export const subjectsData: Record<string, SubjectData> = {
         example: "Insulin, adrenalin va tiroksin.",
       },
       {
-        term: "Mutatsiya",
-        definition:
-          "Genetik material (DNK yoki xromosomalar) tuzilishining tasodifiy va irsiy o‘zgarishi.",
-        example: "Yangi belgi paydo bo‘lishi yoki irsiy kasalliklar sababi.",
-      },
-      {
         term: "Antitelo",
         definition:
           "Immun tizimi tomonidan yot modda (antigen) yoki mikroblarni zararsizlantirish uchun ishlab chiqariladigan oqsil.",
         example: "Emlashdan keyin qonda himoya antitelolari shakllanadi.",
+      },
+      {
+        term: "Endosperm",
+        definition:
+          "Urug‘ tarkibida rivojlanayotgan murtakni oziq moddalar bilan ta’minlovchi to‘qima.",
+        example: "Bug‘doy donining asosiy unli qismi triploid endospermdir.",
+      },
+      {
+        term: "Ksilema",
+        definition:
+          "O‘simliklarda suv va mineral tuzlarni ildizdan poya va barglarga tashuvchi naylar tizimi.",
+        example: "Daraxt tanasining yog‘ochlik qismini tashkil etadi.",
+      },
+      {
+        term: "Analizator",
+        definition:
+          "Tashqi ta’sirni qabul qilib tahlil etuvchi tizim: retseptor, nerv yo‘li va miya markazi.",
+        example: "Ko‘rish, eshitish, hid bilish va ta’m bilish analizatorlari.",
+      },
+      {
+        term: "Antropogenez",
+        definition:
+          "Insonning biologik tur sifatida paydo bo‘lishi va tarixiy rivojlanish jarayoni.",
+        example: "Avstralopitekdan Homo sapiens gacha bo‘lgan evolyutsion yo‘l.",
+      },
+      {
+        term: "Bakteriofag",
+        definition: "Faqat bakteriyalar hujayrasini zararlab, ularda ko‘payadigan viruslar guruhi.",
+        example: "Ichak infeksiyalariga qarshi tibbiyotda qo‘llaniladi.",
+      },
+      {
+        term: "Nefron",
+        definition: "Buyrakning qonni filtrlab siydik hosil qiluvchi asosiy mikroskopik birligi.",
+        example: "Har bir buyrakda taxminan 1 millionta nefron ishlaydi.",
+      },
+      {
+        term: "Allopatriya",
+        definition:
+          "Populyatsiyalarning geografik to‘siqlar (tog‘, daryo) tufayli ajralib yangi tur hosil qilishi.",
+        example: "Orollarda yashovchi qush turlarining alohida shakllanishi.",
+      },
+    ],
+    flashcards: [
+      {
+        id: "bfc-1",
+        front: "Hujayrada ATF sintezlovchi «energetik stansiya»?",
+        back: "Mitoxondriya (1 mol glyukozadan jami 38 mol ATF)",
+      },
+      {
+        id: "bfc-2",
+        front: "Oqsillar qaysi organoidda sintezlanadi?",
+        back: "Ribosoma (iRNK ma’lumoti asosida aminokislotalardan)",
+      },
+      {
+        id: "bfc-3",
+        front: "Fotosintez umumiy tenglamasi?",
+        back: "6CO₂ + 6H₂O —(yorug‘lik)→ C₆H₁₂O₆ + 6O₂",
+      },
+      { id: "bfc-4", front: "Chargaff qoidasi (DNK)?", back: "A = T, G = S;  (A + G) = (T + S)" },
+      {
+        id: "bfc-5",
+        front: "DNK va RNK dagi azotli asoslar farqi?",
+        back: "DNK da Timin (T), RNK da esa uning o‘rnida Uratsil (U) bo‘ladi",
+      },
+      {
+        id: "bfc-6",
+        front: "Mitoz va Meyoz bo‘linish natijalari?",
+        back: "Mitoz: 2 ta diploid (2n) hujayra; Meyoz: 4 ta gaploid (n) hujayra",
+      },
+      {
+        id: "bfc-7",
+        front: "Odam xromosomalari soni?",
+        back: "Somatik hujayrada 46 ta (2n), jinsiy hujayrada 23 ta (n)",
+      },
+      {
+        id: "bfc-8",
+        front: "Mendel II va III qonunlari ajralish nisbati?",
+        back: "Monoduragay (II): 3 : 1; Diduragay (III): 9 : 3 : 3 : 1",
+      },
+      {
+        id: "bfc-9",
+        front: "Vitamin C va Vitamin D yetishmasligi kasalliklari?",
+        back: "Vitamin C → Singa; Vitamin D → Raxit (suyak yumshashi)",
+      },
+      {
+        id: "bfc-10",
+        front: "Oshqozon osti bezi gormoni Insulin vazifasi?",
+        back: "Qondagi ortiqcha glyukozani glikogenga aylantirib qandni pasaytiradi",
+      },
+      { id: "bfc-11", front: "Buyrakning asosiy tuzilish birligi?", back: "Nefron" },
+      {
+        id: "bfc-12",
+        front: "Lindeman 10% ekologik qoidasi?",
+        back: "Oziq zanjirining keyingi pog‘onasiga energiyaning ~10% i o‘tadi",
+      },
+      {
+        id: "bfc-13",
+        front: "Gulli o‘simliklar murtagi va endospermi ploidligi?",
+        back: "Murtak diploid (2n), endosperm triploid (3n)",
+      },
+      {
+        id: "bfc-14",
+        front: "Universal donor va universal retsipiyent qon guruhlari?",
+        back: "Donor: I (0); Retsipiyent: IV (AB)",
       },
     ],
   },
@@ -2801,10 +4197,10 @@ export const subjectsData: Record<string, SubjectData> = {
       "1991-yil O‘zbekiston mustaqilligi va zamonaviy demokratik islohotlar xronologiyasini bilish",
     ],
     stats: {
-      lessons: 10,
-      references: 16,
-      quizzes: 12,
-      hours: "56 soat",
+      lessons: 14,
+      references: 20,
+      quizzes: 16,
+      hours: "76 soat",
     },
     lessons: [
       {
@@ -3097,6 +4493,153 @@ export const subjectsData: Record<string, SubjectData> = {
           },
         ],
       },
+      {
+        id: "tar-11",
+        title: "Qadimgi Misr, Mesopotamiya, Hindiston va Xitoy",
+        grade: "6-sinf",
+        duration: "35 daqiqa",
+        level: "Asosiy",
+        summary:
+          "Buyuk daryo vodiylarida vujudga kelgan ilk sivilizatsiyalar, iyeroglif va mixxat yozuvlari, Xammurapi qonunlari hamda Buyuk Xitoy devori.",
+        sections: [
+          {
+            heading: "Qadimgi Misr va Ikki daryo oralig‘i (Mesopotamiya)",
+            content:
+              "Nil daryosi vodiysida Qadimgi Misr (mil. avv. IV ming yillik oxiri), Dajla va Frot daryolari oralig‘ida esa Shumer, Akkad va Bobil davlatlari vujudga keldi. Bobil shohi Xammurapi insoniyat tarixidagi ilk yozma qonunlar majmuasini tuzdirgan.",
+            formulaOrRule:
+              "Misr: iyeroglif yozuvi va papirus;   Mesopotamiya: mixxat yozuvi va sopol taxtachalar",
+            example:
+              "Misr fir’avni Xufu (Xeops) sharafiga qurilgan piramida Qadimgi dunyoning yetti mo‘jizasidan bugungi kungacha saqlanib qolgan yagona obidadir.",
+            keyTakeaways: [
+              "Shumerliklar g‘ildirakni ixtiro qilgan va 60 lik sanoq tizimiga (soatda 60 daqiqa) asos solganlar.",
+              "Misrda 365 kunlik quyosh taqvimi yaratilgan.",
+            ],
+          },
+          {
+            heading: "Qadimgi Hindiston va Qadimgi Xitoy yutuqlari",
+            content:
+              "Hind va Gang vodiylarida shaharsozlik (Mohenjodoro, Xarappa), shaxmat o‘yini hamda o‘nlik sanoq raqamlari («nol» tushunchasi) paydo bo‘ldi. Qadimgi Xitoyda esa ipak, qog‘oz, kompas va porox kashf etilib, Sin Shixuandi davrida Buyuk Xitoy devori qurildi.",
+            formulaOrRule: "Xitoyning 4 buyuk ixtirosi: Qog‘oz · Kompas · Porox · Kitob bosish",
+            example:
+              "Xitoylik olim Chjan Syan mil. avv. 138-yilda Farg‘ona (Davan) vodiysiga kelib, Buyuk Ipak yo‘lining shakllanishiga hissa qo‘shgan.",
+            keyTakeaways: [
+              "Konfutsiy Qadimgi Xitoyning buyuk mutafakkiri va axloqiy ta’limot asoschisidir.",
+              "Mil. avv. III asrda Hindistonni podsho Ashoka yagona davlatga birlashtirdi.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "tar-12",
+        title: "Qoraxoniylar, G‘aznaviylar va Xorazmshohlar davlati",
+        grade: "7-sinf",
+        duration: "40 daqiqa",
+        level: "O‘rta",
+        summary:
+          "IX–XIII asr boshlarida Markaziy Osiyo davlatchiligi, Yusuf Xos Hojib va Mahmud Koshg‘ariy merosi, Jaloliddin Manguberdining jasorati.",
+        sections: [
+          {
+            heading: "Qoraxoniylar va turkiy adabiyot yuksalishi",
+            content:
+              "X asr oxirida tashkil topgan Qoraxoniylar davlatida turkiy til va madaniyat yuksak darajada rivojlandi. Buxorodagi Minorai Kalon (1127) va Vobkent minorasi ushbu davr me’morchiligining nodir namunalaridir.",
+            formulaOrRule:
+              "«Qutadg‘u bilig» (Yusuf Xos Hojib, 1069);   «Devonu lug‘otit-turk» (Mahmud Koshg‘ariy, 1072–1074)",
+            example:
+              "Mahmud Koshg‘ariy yaratgan «Devonu lug‘otit-turk» asarida turkiy qabilalar tili bilan birga dunyoning ilk doiraviy xaritasidan biri ham berilgan.",
+            keyTakeaways: [
+              "Ahmad Yassaviy «Devoni hikmat» asari bilan tasavvuf adabiyotini boshlab berdi.",
+              "G‘aznaviylar davlatida Mahmud G‘aznaviy va Al-Beruniy faoliyat yuritgan.",
+            ],
+          },
+          {
+            heading: "Xorazmshohlar va Jaloliddin Manguberdi",
+            content:
+              "XII asr oxiri – XIII asr boshlarida Anushteginiylar sulolasi boshchiligidagi Xorazmshohlar davlati Sharqdagi eng yirik saltanatlardan biriga aylandi. 1219–1221-yillardagi mo‘g‘ul bosqiniga qarshi Najmiddin Kubro, Temur Malik va Jaloliddin Manguberdi mardonavor kurash olib bordilar.",
+            formulaOrRule:
+              "1221-yil — Parvon va Sind daryosi janglari;   1999-yil — Jaloliddin Manguberdi ordeni ta’sisi",
+            example:
+              "Jaloliddin Manguberdi Parvon jangida mo‘g‘ul qo‘shinini mag‘lub etib, Sind daryosi bo‘yida mislsiz jasorat ko‘rsatgani uchun Chingizxonning o‘zi ham uni e’tirof etgan.",
+            keyTakeaways: [
+              "Xorazm poytaxti Gurganj (Ko‘hna Urganch) mudofaasida shayx Najmiddin Kubro «Yo Vatan, yo sharafli o‘lim» shiori bilan shahid bo‘ldi.",
+              "O‘zbekistonda Jaloliddin Manguberdining vatanparvarligi milliy qahramonlik timsoli sanaladi.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "tar-13",
+        title: "Shayboniylar, Ashtarxoniylar va Uch xonlik davri",
+        grade: "8-sinf",
+        duration: "40 daqiqa",
+        level: "O‘rta",
+        summary:
+          "XVI–XIX asrlarda Buxoro xonligi (amirligi), Xiva va Qo‘qon xonliklarining tashkil topishi, Abdullaxon II islohotlari va me’morchilik.",
+        sections: [
+          {
+            heading: "Shayboniylar va Abdullaxon II davri",
+            content:
+              "1500-yilda Muhammad Shayboniyxon Movarounnahrda Shayboniylar sulolasiga asos soldi (poytaxt avval Samarqand, keyin Buxoro). Abdullaxon II (1557–1598) davrida mamlakat siyosiy jihatdan birlashtirilib, karvonsaroylar, sardobalar, ko‘priklar va madrasalar qurildi.",
+            formulaOrRule:
+              "1512-yil — Xiva xonligi (Ilbarsxon);   1709-yil — Qo‘qon xonligi (Shohruxbiy);   1756-yil — Buxoroda Mang‘itlar",
+            example:
+              "Samarqanddagi Registon maydonini bezab turgan Sherdor va Tillakori madrasalari XVII asrda Samarqand hokimi Yalangto‘sh Bahodir tashabbusi bilan bunyod etilgan.",
+            keyTakeaways: [
+              "Ashtarxoniylar davrida (1601–1756) Subhonqulixon tibbiyot va kutubxonachilikka katta e’tibor berdi.",
+              "Xiva xonligida Abulg‘oziy Bahodirxon «Shajarayi turk» tarixiy asarini yozdi.",
+            ],
+          },
+          {
+            heading: "Qo‘qon adabiy muhiti va xonliklar taqdiri",
+            content:
+              "XIX asr boshlarida Qo‘qon xoni Umarxon va uning rafiqasi Nodirabegim homiyligida kuchli adabiy muhit shakllanib, Uvaysiy, Maxmur, Gulxaniy kabi shoirlar ijod qildilar. XIX asr ikkinchi yarmida esa uch xonlik chor Rossiyasi tomonidan bosib olindi.",
+            formulaOrRule:
+              "1865-yil — Toshkent mudofaasi;   1868–1873-yillar — Buxoro va Xiva protektoratlari",
+            example:
+              "Xiva shahridagi Ichan qal’a majmuasi, Kalta Minor va Toshhovli saroyi XIX asr Xorazm me’morchiligining durdonasidir.",
+            keyTakeaways: [
+              "Muhammad Rahimxon II (Feruz) Xivada birinchi toshbosma nashriyotni ochgan.",
+              "1916-yilda Turkistonda mardikorlikka olishga qarshi Jizzax va boshqa shaharlarda qo‘zg‘olon ko‘tarildi.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "tar-14",
+        title: "O‘zbekistonning YuNESKO merosi va buyuk obidalari",
+        grade: "5–11-sinf",
+        duration: "35 daqiqa",
+        level: "Asosiy",
+        summary:
+          "Ichan qal’a, Samarqand, Buxoro va Shahrisabz tarixiy markazlari, Chotqol biosfera qo‘riqxonasi va nomoddiy madaniy meros.",
+        sections: [
+          {
+            heading: "YuNESKO Butunjahon merosi ro‘yxatidagi shaharlar",
+            content:
+              "O‘zbekiston hududidagi noyob me’moriy obidalar umumjahon ahamiyatiga ega. 1990-yilda Xivadagi Ichan qal’a Markaziy Osiyoda birinchi bo‘lib YuNESKO Butunjahon merosi ro‘yxatiga kiritildi.",
+            formulaOrRule:
+              "1990 — Ichan qal’a (Xiva);  1993 — Buxoro;  2000 — Shahrisabz;  2001 — Samarqand",
+            example:
+              "Samarqanddagi Registon ansambli (Ulug‘bek, Sherdor, Tillakori madrasalari) va Go‘ri Amir maqbarasi O‘zbekistonning dunyoga mashhur tashrif qog‘ozidir.",
+            keyTakeaways: [
+              "G‘arbiy Tyan-Shan (Chotqol qo‘riqxonasi) va Turon cho‘llari YuNESKO tabiiy merosi ro‘yxatidan joy olgan.",
+              "Navoiy viloyatidagi Sarmishsoy qoyatosh suratlari ming yillik qadimiy san’at yodgorligidir.",
+            ],
+          },
+          {
+            heading: "Nomoddiy madaniy meros durdonalari",
+            content:
+              "Shashmaqom, Katta ashula, Navro‘z bayrami, Palov tayyorlash an’anasi, Askiya, Baxsichilik san’ati, Atlas va adras to‘qish texnologiyasi hamda Kulolchilik maktabi YuNESKOning nomoddiy madaniy meros ro‘yxatiga kiritilgan.",
+            formulaOrRule:
+              "Shashmaqom · Navro‘z · Askiya · Baxshichilik · Marg‘ilon atlasi · Xorazm lazgisi",
+            example:
+              "1997-yilda Buxoro va Xiva shaharlarining 2500 yilligi, 2007-yilda esa Samarqandning 2750 yilligi xalqaro miqyosda nishonlandi.",
+            keyTakeaways: [
+              "Tarixiy yodgorliklarni asrab-avaylash har bir fuqaroning konstitutsiyaviy burchidir.",
+              "O‘zbekistonda ziyorat turizmi va ekoturizm jadal rivojlanmoqda.",
+            ],
+          },
+        ],
+      },
     ],
     references: [
       {
@@ -3214,6 +4757,35 @@ export const subjectsData: Record<string, SubjectData> = {
           "Umumxalq referendumida O‘zbekistonning yangi tahrirdagi Konstitutsiyasi qabul qilindi.",
         usage: "Zamonaviy huquqiy islohotlarda.",
       },
+      {
+        id: "tref-17",
+        title: "«Qutadg‘u bilig» asari yozilishi",
+        expression: "1069–1070-yillar (Yusuf Xos Hojib)",
+        explanation: "Qoraxoniylar davrida yaratilgan ilk yirik turkiy badiiy-siyosiy doston.",
+        usage: "O‘zbek va turkiy xalqlar madaniyati tarixida.",
+      },
+      {
+        id: "tref-18",
+        title: "Ichan qal’a YuNESKO ro‘yxatiga kirishi",
+        expression: "1990-yil (Xiva)",
+        explanation: "Markaziy Osiyoda YuNESKO Butunjahon merosiga kiritilgan ilk yodgorlik.",
+        usage: "Madaniy meros va turizm tarixida.",
+      },
+      {
+        id: "tref-19",
+        title: "Minorai Kalon qurilishi",
+        expression: "1127-yil (Buxoro, Arslonxon)",
+        explanation:
+          "Qoraxoniylar davri muhandislik va me’morchilik mo‘jizasi (balandligi 46.5 m).",
+        usage: "O‘rta asrlar me’morchiligi tarixida.",
+      },
+      {
+        id: "tref-20",
+        title: "Shayboniylar davlati boshlanishi",
+        expression: "1500-yil (Muhammad Shayboniyxon)",
+        explanation: "Movarounnahrda Shayboniylar sulolasi hukmronligining boshlanishi.",
+        usage: "XVI asr O‘rta Osiyo tarixida.",
+      },
     ],
     exercises: [
       {
@@ -3275,6 +4847,46 @@ export const subjectsData: Record<string, SubjectData> = {
         hint: "Matematika, tibbiyot, astronomiya va adabiyot namoyandalarini ajrating.",
         solution:
           "Birinchi Renessans: Al-Xorazmiy, Abu Rayhon Beruniy, Abu Ali ibn Sino (shuningdek Al-Farg‘oniy, Imom Buxoriy). Ikkinchi Renessans: Mirzo Ulug‘bek, Alisher Navoiy, Ali Qushchi (shuningdek Qozizoda Rumiy, Kamoliddin Behzod).",
+      },
+      {
+        id: "tex-7",
+        title: "Yildan asrni aniqlash",
+        level: "Asosiy",
+        question:
+          "Quyidagi yillar qaysi asrga tegishli: 622-yil, 1004-yil, 1370-yil, 1991-yil, 2000-yil?",
+        hint: "Oxirgi ikki raqam 00 dan katta bo‘lsa, yuzlikka 1 qo‘shiladi.",
+        solution:
+          "622 — VII asr; 1004 — XI asr; 1370 — XIV asr; 1991 — XX asr; 2000 — XX asr (asrning so‘nggi yili).",
+      },
+      {
+        id: "tex-8",
+        title: "YuNESKO ro‘yxatidagi shaharlar",
+        level: "O‘rta",
+        question:
+          "O‘zbekistonning qaysi 4 ta tarixiy shahri (majmuasi) YuNESKO Butunjahon merosi ro‘yxatiga kiritilgan?",
+        hint: "Xorazm, Buxoro, Qashqadaryo va Samarqand viloyatlaridagi tarixiy markazlar.",
+        solution:
+          "1) Ichan qal’a (Xiva, 1990); 2) Buxoro tarixiy markazi (1993); 3) Shahrisabz tarixiy markazi (2000); 4) Samarqand — madaniyatlar chorrahasi (2001).",
+      },
+      {
+        id: "tex-9",
+        title: "Qadimgi sivilizatsiya ixtirolarini moslash",
+        level: "Asosiy",
+        question:
+          "1) Qadimgi Misr, 2) Shumer, 3) Qadimgi Hindiston, 4) Qadimgi Xitoy — ularning asosiy kashfiyotlarini ko‘rsating.",
+        hint: "Papirus, mixxat, nol raqami va kompas/qog‘oz.",
+        solution:
+          "1) Misr — papirus va 365 kunlik taqvim; 2) Shumer — mixxat va 60 lik sanoq; 3) Hindiston — shaxmat va o‘nlik raqamlar; 4) Xitoy — qog‘oz, kompas, ipak.",
+      },
+      {
+        id: "tex-10",
+        title: "Xonliklar asoschilarini aniqlash",
+        level: "O‘rta",
+        question:
+          "Xiva (1512), Qo‘qon (1709) xonliklari va Buxoroda Mang‘itlar sulolasi (1756) asoschilari kimlar edi?",
+        hint: "Ilbarsxon, Shohruxbiy va Muhammad Rahimbiy.",
+        solution:
+          "Xiva xonligi — Ilbarsxon; Qo‘qon xonligi — Shohruxbiy; Buxoroda Mang‘itlar sulolasi (amirlik) — Muhammad Rahimbiy.",
       },
     ],
     quizzes: [
@@ -3393,6 +5005,40 @@ export const subjectsData: Record<string, SubjectData> = {
         explanation:
           "1994-yil 1-iyuldan O‘zbekistonning to‘laqonli milliy valyutasi — so‘m muomalaga kiritildi.",
       },
+      {
+        id: "tq-13",
+        question: "«Devonu lug‘otit-turk» asarining muallifi kim?",
+        options: ["Yusuf Xos Hojib", "Mahmud Koshg‘ariy", "Ahmad Yugnakiy", "Alisher Navoiy"],
+        answer: 1,
+        explanation:
+          "XI asrda Mahmud Koshg‘ariy turkiy tillar qomusini — «Devonu lug‘otit-turk»ni yaratdi.",
+      },
+      {
+        id: "tq-14",
+        question:
+          "O‘zbekistondan birinchi bo‘lib YuNESKO Butunjahon merosi ro‘yxatiga kiritilgan obida qaysi?",
+        options: ["Registon ansambli", "Buxoro arki", "Ichan qal’a (Xiva)", "Oqsaroy"],
+        answer: 2,
+        explanation:
+          "1990-yilda Xivadagi Ichan qal’a Markaziy Osiyoda birinchi bo‘lib YuNESKO ro‘yxatiga kirdi.",
+      },
+      {
+        id: "tq-15",
+        question: "Qadimgi dunyoda «mixxat» yozuvi va 60 lik sanoq tizimini kimlar ixtiro qilgan?",
+        options: ["Misrliklar", "Shumerliklar", "Finikiyaliklar", "Yunonlar"],
+        answer: 1,
+        explanation:
+          "Mesopotamiyadagi shumerliklar sopol taxtachalarga mixxat yozgan va soatni 60 daqiqaga bo‘lgan.",
+      },
+      {
+        id: "tq-16",
+        question:
+          "Jaloliddin Manguberdi mo‘g‘ullar ustidan yirik g‘alaba qozongan mashhur jang qaysi?",
+        options: ["Parvon jangi (1221)", "Jangoy jangi", "Dandanakon jangi", "Anqara jangi"],
+        answer: 0,
+        explanation:
+          "1221-yilda Parvon yaqinida Jaloliddin Manguberdi qo‘shini mo‘g‘ullarning yirik lashkarini tor-mor etgan.",
+      },
     ],
     glossary: [
       {
@@ -3476,6 +5122,108 @@ export const subjectsData: Record<string, SubjectData> = {
           "Davlat va jamiyat hayotining eng muhim masalalari bo‘yicha o‘tkaziladigan umumxalq ovoz berishi.",
         example:
           "2023-yil 30-aprelda yangilangan Konstitutsiya bo‘yicha umumxalq referendumi o‘tkazildi.",
+      },
+      {
+        term: "Protektorat",
+        definition:
+          "Bir davlatning tashqi siyosati va mudofaasi boshqa kuchli davlat nazoratiga o‘tgan qaramlik shakli.",
+        example:
+          "XIX asr oxirida Buxoro amirligi va Xiva xonligi Rossiya imperiyasi protektoratiga aylangan.",
+      },
+      {
+        term: "Muarrix",
+        definition: "Tarixiy voqealarni o‘rganib, yozib qoldiruvchi tarixchi olim, solnomachi.",
+        example: "Sharafiddin Ali Yazdiy («Zafarnoma» muallifi) mashhur muarrixdir.",
+      },
+      {
+        term: "Sardoba",
+        definition:
+          "Qadimgi savdo yo‘llari va cho‘l hududlarida yomg‘ir hamda qor suvini saqlash uchun qurilgan gumbazli suv ombori.",
+        example: "Malikcho‘l va Qarshi cho‘lidagi tarixiy sardobalar.",
+      },
+      {
+        term: "Iyeroglif",
+        definition: "So‘z yoki bo‘g‘inni anglatuvchi qadimgi tasviriy yozuv belgisi.",
+        example: "Qadimgi Misr ehromlari va maqbaralaridagi bitiklar.",
+      },
+      {
+        term: "Polis",
+        definition:
+          "Qadimgi Yunonistonda o‘z qonunlari va boshqaruviga ega mustaqil shahar-davlat.",
+        example: "Afina va Sparta eng mashhur yunon polislari bo‘lgan.",
+      },
+      {
+        term: "Maorif",
+        definition: "Aholi orasida bilim, madaniyat, maktab va savodxonlikni yoyish tizimi.",
+        example: "Jadidlar xalq maorifini yuksaltirishni bosh maqsad deb bilganlar.",
+      },
+    ],
+    flashcards: [
+      {
+        id: "tfc-1",
+        front: "Spitamen qo‘zg‘oloni qachon bo‘lgan?",
+        back: "Mil. avv. 329–327-yillar (Aleksandr Makedonskiyga qarshi)",
+      },
+      {
+        id: "tfc-2",
+        front: "Buyuk Ipak yo‘liga asos solingan davr?",
+        back: "Mil. avv. II asr (mil. avv. 138-yildan boshlab)",
+      },
+      {
+        id: "tfc-3",
+        front: "Xorazm Ma’mun akademiyasi faoliyat yillari?",
+        back: "1004–1017-yillar (Urganchda, Beruniy va Ibn Sino davri)",
+      },
+      {
+        id: "tfc-4",
+        front: "Amir Temur qachon Movarounnahr amiri etib saylangan?",
+        back: "1370-yil (Balx qurultoyida)",
+      },
+      {
+        id: "tfc-5",
+        front: "«Al-jabr val-muqobala» va «Tib qonunlari» mualliflari?",
+        back: "Muhammad al-Xorazmiy va Abu Ali ibn Sino",
+      },
+      {
+        id: "tfc-6",
+        front: "Mirzo Ulug‘bekning mashhur astronomik asari?",
+        back: "«Ziji jadidi Ko‘ragoniy» (1018 ta yulduz jadvali)",
+      },
+      {
+        id: "tfc-7",
+        front: "«Qutadg‘u bilig» va «Devonu lug‘otit-turk» mualliflari?",
+        back: "Yusuf Xos Hojib (1069) va Mahmud Koshg‘ariy (1072)",
+      },
+      {
+        id: "tfc-8",
+        front: "Birinchi o‘zbek dramasi «Padarkush» muallifi?",
+        back: "Mahmudxo‘ja Behbudiy (1911-yil)",
+      },
+      {
+        id: "tfc-9",
+        front: "O‘zbekiston Mustaqilligi va BMTga a’zolik sanalari?",
+        back: "Mustaqillik: 1991-yil 31-avgust; BMT: 1992-yil 2-mart",
+      },
+      {
+        id: "tfc-10",
+        front: "Davlat bayrog‘i, gerbi va madhiyasi sanalari?",
+        back: "Bayroq: 18.11.1991; Gerb: 02.07.1992; Madhiya: 10.12.1992",
+      },
+      {
+        id: "tfc-11",
+        front: "Konstitutsiya va Milliy valyuta (So‘m) sanalari?",
+        back: "Konstitutsiya: 1992-yil 8-dekabr (yangilangani: 30.04.2023); So‘m: 1994-yil 1-iyul",
+      },
+      {
+        id: "tfc-12",
+        front: "YuNESKO ro‘yxatidagi O‘zbekistonning 4 ta tarixiy shahri?",
+        back: "Xiva (Ichan qal’a, 1990), Buxoro (1993), Shahrisabz (2000), Samarqand (2001)",
+      },
+      { id: "tfc-13", front: "BMT tashkil topgan aniq sana?", back: "1945-yil 24-oktabr" },
+      {
+        id: "tfc-14",
+        front: "Ilk Olimpiya o‘yinlari qachon va qayerda o‘tkazilgan?",
+        back: "Mil. avv. 776-yil, Qadimgi Yunoniston (Olimpiya)",
       },
     ],
   },

@@ -32,11 +32,13 @@ describe("Darslar va Davriy jadval ma'lumotlari", () => {
       expect(subject).toBeDefined();
       if (!subject) continue;
 
-      expect(subject.lessons).toHaveLength(10);
-      expect(subject.references.length).toBeGreaterThanOrEqual(15);
-      expect(subject.exercises).toHaveLength(6);
-      expect(subject.quizzes).toHaveLength(12);
-      expect(subject.glossary).toHaveLength(14);
+      expect(subject.lessons).toHaveLength(14);
+      expect(subject.references).toHaveLength(20);
+      expect(subject.exercises).toHaveLength(10);
+      expect(subject.quizzes).toHaveLength(16);
+      expect(subject.glossary).toHaveLength(20);
+      expect(new Set(subject.glossary.map((g) => g.term)).size).toBe(20);
+      expect(subject.flashcards).toHaveLength(14);
 
       expect(subject.stats.lessons).toBe(subject.lessons.length);
       expect(subject.stats.references).toBe(subject.references.length);
