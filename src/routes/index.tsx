@@ -20,6 +20,7 @@ import {
   Dumbbell,
   Play,
   Info,
+  GraduationCap,
 } from "lucide-react";
 import teacher from "@/assets/teacher.png";
 import students from "@/assets/students.jpg";
@@ -56,6 +57,7 @@ export const Route = createFileRoute("/")({
 const nav = [
   { icon: Home, label: "Bosh sahifa", path: "/" },
   { icon: Globe, label: "Tillar", path: "/tillar" },
+  { icon: GraduationCap, label: "Darslar", path: "/darslar" },
   { icon: Bot, label: "AI Ustoz", path: "/ai-ustoz" },
   { icon: Users, label: "To‘garaklar", path: "/togaraklar" },
   { icon: Award, label: "Sertifikatlar", path: "/sertifikatlar" },
@@ -141,7 +143,7 @@ function Index() {
               <br />
               8-maktab
             </p>
-            <nav className="mt-8 w-full space-y-2">
+            <nav className="mt-6 w-full space-y-1.5">
               {nav.map((n, i) => {
                 if (n.path) {
                   return (

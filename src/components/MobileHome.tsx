@@ -18,6 +18,7 @@ import {
   Dumbbell,
   Play,
   Info,
+  GraduationCap,
 } from "lucide-react";
 import teacher from "@/assets/teacher.png";
 import students from "@/assets/students.jpg";
@@ -36,6 +37,7 @@ import { HomeSearch } from "@/components/HomeSearch";
 const tabs = [
   { icon: Home, label: "Bosh", to: "/" },
   { icon: Globe, label: "Tillar", to: "/tillar" },
+  { icon: GraduationCap, label: "Darslar", to: "/darslar" },
   { icon: Bot, label: "AI Ustoz", to: "/ai-ustoz" },
   { icon: Users, label: "To‘garak", to: "/togaraklar" },
   { icon: BookOpen, label: "Kitob", to: "/kutubxona" },
@@ -303,7 +305,7 @@ export function MobileHome({
 
       {/* Pastki navigatsiya */}
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md">
-        <ul className="grid grid-cols-6">
+        <ul className="grid grid-cols-7">
           {tabs.map((t, i) => (
             <li key={t.label} className="min-w-0">
               <Link

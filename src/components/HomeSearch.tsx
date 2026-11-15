@@ -1,7 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Search, X, ArrowRight, Bot, Award, BookOpen, Headphones, Users } from "lucide-react";
+import {
+  Search,
+  X,
+  ArrowRight,
+  Bot,
+  Award,
+  BookOpen,
+  Headphones,
+  Users,
+  GraduationCap,
+} from "lucide-react";
 import { FlagIcon } from "@/components/FlagIcon";
+import { SubjectLogo } from "@/components/SubjectLogo";
 import { books, audioBooks } from "@/data/books";
 
 interface SearchItem {
@@ -9,7 +20,7 @@ interface SearchItem {
   title: string;
   subtitle: string;
   to: string;
-  kind: "lang" | "club" | "book" | "audio" | "page";
+  kind: "lang" | "club" | "subject" | "book" | "audio" | "page";
   code?: string;
   keywords: string;
 }
@@ -127,6 +138,59 @@ const staticItems: SearchItem[] = [
     to: "/togaraklar/sport",
     kind: "club",
     keywords: "sport shaxmat atletika soglom turmush togarak",
+  },
+  {
+    id: "page-darslar",
+    title: "Darslar — Asosiy fanlar",
+    subtitle: "Matematika, Kimyo, Fizika, Biologiya va Tarix",
+    to: "/darslar",
+    kind: "subject",
+    keywords: "darslar fanlar maktab matematika kimyo fizika biologiya tarix",
+  },
+  {
+    id: "subject-matematika",
+    title: "Matematika darslari",
+    subtitle: "5–11-sinf · Algebra, geometriya, formulalar va testlar",
+    to: "/darslar/matematika",
+    kind: "subject",
+    code: "matematika",
+    keywords: "matematika darslar algebra geometriya formula test masala",
+  },
+  {
+    id: "subject-kimyo",
+    title: "Kimyo darslari",
+    subtitle: "7–11-sinf · Davriy jadval (118 element), mol, reaksiyalar va testlar",
+    to: "/darslar/kimyo",
+    kind: "subject",
+    code: "kimyo",
+    keywords: "kimyo darslar davriy jadval mendeleyev elementlar atom mol reaksiya eritma organik",
+  },
+  {
+    id: "subject-fizika",
+    title: "Fizika darslari",
+    subtitle: "6–11-sinf · Mexanika, elektr, optika, qonunlar va testlar",
+    to: "/darslar/fizika",
+    kind: "subject",
+    code: "fizika",
+    keywords: "fizika darslar nyuton om qonuni energiya elektr optika",
+  },
+  {
+    id: "subject-biologiya",
+    title: "Biologiya darslari",
+    subtitle: "5–11-sinf · Hujayra, fotosintez, anatomiya va genetika",
+    to: "/darslar/biologiya",
+    kind: "subject",
+    code: "biologiya",
+    keywords: "biologiya darslar hujayra fotosintez dnk genetika anatomiya",
+  },
+  {
+    id: "subject-tarix",
+    title: "Tarix darslari",
+    subtitle: "5–11-sinf · Qadimgi dunyo, Renessans, Temuriylar va xronologiya",
+    to: "/darslar/tarix",
+    kind: "subject",
+    code: "tarix",
+    keywords: "tarix darslar amir temur renessans jadidchilik mustaqillik sana",
   },
   {
     id: "page-ai",
@@ -263,6 +327,15 @@ export function HomeSearch({ mobile = false }: { mobile?: boolean }) {
                       ) : item.kind === "club" ? (
                         <span className="flex h-7 w-9 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-600">
                           <Users className="h-4 w-4" />
+                        </span>
+                      ) : item.kind === "subject" && item.code ? (
+                        <SubjectLogo
+                          subjectId={item.code}
+                          className="h-7 w-7 shrink-0 rounded-lg"
+                        />
+                      ) : item.kind === "subject" ? (
+                        <span className="flex h-7 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-100 text-teal-600">
+                          <GraduationCap className="h-4 w-4" />
                         </span>
                       ) : item.kind === "audio" ? (
                         <span className="flex h-7 w-9 shrink-0 items-center justify-center rounded-lg bg-sky-100 text-sky-600">
